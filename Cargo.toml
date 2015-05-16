@@ -1,0 +1,15 @@
+[package]
+name = "libdo"
+version = "0.1.0"
+authors = ["Kevin K. <kbknapp@gmail.com>"]
+description = "A library wrapper for the DigitalOcean API v2"
+license = "MIT"
+repository = "https://github.com/kbknapp/libdo-rs.git"
+documentation = "http://kbknapp.github.io/libdo-rs"
+readme = "README.md"
+keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
+
+[dependencies]
+serde = "*"
+serde_macros = "*"
+hyper = "*"
