@@ -2,60 +2,50 @@ use std::io::Read;
 use std::fmt;
 
 use hyper::client::Request;
-use hyper::{Error, Result, Url};
+use hyper::{self, Error, Url};
 use hyper::method::Method;
 use hyper::net::Fresh;
 use hyper::header::{ContentType, Authorization};
 
-pub struct Account<'a> {
-    url: &'static str,
-    auth: &'a str
-}
+use serde::json::{self, Value};
 
-impl<'a> Account<'a> {
-    pub fn with_token(t: &'a str) -> Account {
-        Account {
-            url: "https://api.digitalocean.com/v2/account",
-            auth: t
-        }
+use response;
+
+pub struct Account<'u, 't>(Request<'u, 't>);
+
+impl<'u, 't> Account<'u, 't> {
+    pub fn with_token(token: &'t str) -> Account {
+        Account( Request::new("https://api.digitalocean.com/v2/account", token) )
     }
 
-    pub fn raw_request(&self) -> Result<Request<Fresh>> {
-        let url = match Url::parse(self.url) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        Ok(fresh_req)
+    pub fn request(&self) -> hyper::Result<Request<Fresh>> {
+        let Account(ref req) = self;
+        req.request()
     }
 
-    pub fn send(&self) -> Result<String> {
-        let url = match Url::parse(self.url) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        let streaming_req = try!(fresh_req.start());
-        let mut response = try!(streaming_req.send());
-        let mut s = String::new();
-        try!(response.read_to_string(&mut s));
-        Ok(s)
+    pub fn retrieve_json(&self) -> hyper::Result<String> {
+        let Account(ref req) = self;
+        req.retrieve_json()
+    }
+
+    pub fn retrieve(&self) -> Result<response::Account, String> {
+        let Account(ref req) = self;
+        req.retrieve("account")
+    }
+
+    pub fn action<'b>(&self, id: &'b str) -> Result<response::Action, String> {
+        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
+        req.retrieve("action")
+    }
+
+    pub fn action_request<'b>(&self, id: &'b str) -> hyper::Result<Request<Fresh>> {
+        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
+        req.request()
+    }
+
+    pub fn retrieve_action_json<'b>(&self, id: &'b str) -> hyper::Result<String> {
+        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
+        req.retrieve_json()
     }
 }
 

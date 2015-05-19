@@ -5,8 +5,8 @@ extern crate serde;
 extern crate hyper;
 
 mod domanager;
-mod request;
-mod response;
+pub mod request;
+pub mod response;
 
 pub use domanager::DoManager;
 
