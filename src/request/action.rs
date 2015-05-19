@@ -1,159 +1,95 @@
 
-use std::io::Read;
 use std::fmt;
 
-use hyper::client::Request;
-use hyper::{self, Error, Url};
-use hyper::method::Method;
-use hyper::net::Fresh;
-use hyper::header::{ContentType, Authorization};
+use serde::json;
 
-use serde::json::{self, Value};
+use request::basic::BasicRequest;
+use request::Request;
+use response::{self, RawActions};
 
-use response;
+pub struct Action<'t>(BasicRequest<'t>);
+pub struct Actions<'t>(BasicRequest<'t>);
 
-pub struct Action<'a> {
-    request: Request<'a>
-}
-
-impl<'a> Action<'a> {
-    pub fn with_token(t: &'a str) -> Account {
-        Account {
-            url: "https://api.digitalocean.com/v2/actions",
-            auth: t
-        }
-    }
-
-    pub fn request<'b>(&self, id: &'b str) -> hyper::Result<Request<Fresh>> {
-        let url = match Url::parse(format!("{}/{}", self.url, id))) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        Ok(fresh_req)
-    }
-
-    pub fn retrieve_json(&self) -> hyper::Result<String> {
-        let url = match Url::parse(self.url) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        let streaming_req = try!(fresh_req.start());
-        let mut response = try!(streaming_req.send());
-        let mut s = String::new();
-        try!(response.read_to_string(&mut s));
-        Ok(s)
-    }
-
-    pub fn retrieve(&self) -> Result<response::Account, String> {
-        match self.retrieve_json() {
-            Ok(ref s) => {
-                match json::from_str::<Value>(s) {
-                    Ok(obj) => {
-                        match obj.find("account") {
-                            Some(a) => {
-                                match json::from_value(a.clone()) {
-                                    Ok(a) => Ok(a),
-                                    Err(e) => Err(e.into())
-                                }
-                            },
-                            None => Err(json::Error::MissingFieldError("account").into())
-                        }
-                    },
-                    Err(e) => Err(e.into())
-                }
-            },
-            Err(e) => Err(e.into())
-        }
-    }
-
-    pub fn action_request<'a>(&self, id: &'a str) -> Action {
-
-    }
-
-    pub fn action_request<'a>(&self, id: &'a str) -> hyper::Result<Request<Fresh>> {
-        let url = match Url::parse(self.url) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        Ok(fresh_req)
-    }
-
-    pub fn retrieve_action_json<'a>(&self, id: &'a str) -> hyper::Result<String> {
-        let url = match Url::parse(self.url) {
-            Ok(url) => url,
-            Err(e) => return Err(Error::Uri(e)),
-        };
-        let mut fresh_req = match Request::new(Method::Get, url) {
-            Ok(req) => req,
-            Err(e)  => return Err(e)
-        };
-        let mut auth_s = String::new();
-        auth_s.push_str("Bearer ");
-        auth_s.push_str(self.auth);
-        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
-        fresh_req.headers_mut().set(Authorization(auth_s));
-        let streaming_req = try!(fresh_req.start());
-        let mut response = try!(streaming_req.send());
-        let mut s = String::new();
-        try!(response.read_to_string(&mut s));
-        Ok(s)
-    }
-
-    pub fn retrieve_action<'a>(&self, id: &'a str) -> Result<response::Action, String> {
-        match self.retrieve_json() {
-            Ok(ref s) => {
-                match json::from_str::<Value>(s) {
-                    Ok(obj) => {
-                        match obj.find("account") {
-                            Some(a) => {
-                                match json::from_value(a.clone()) {
-                                    Ok(a) => Ok(a),
-                                    Err(e) => Err(e.into())
-                                }
-                            },
-                            None => Err(json::Error::MissingFieldError("action").into())
-                        }
-                    },
-                    Err(e) => Err(e.into())
-                }
-            },
-            Err(e) => Err(e.into())
-        }
+impl<'t> Action<'t> {
+    pub fn new(url: String, token: &'t str) -> Action<'t>{
+        Action(BasicRequest::new(url, token))
     }
 }
 
-impl<'a> fmt::Display for Account<'a> {
+impl<'t> Request for Action<'t> {
+    type RespT = response::Action;
+    fn auth(&self) -> &str {
+        self.0.auth_token
+    }
+    fn url(&self) -> &str {
+        &self.0.url_str[..]
+    }
+    fn retrieve(&self) -> Result<response::Action, String> {
+        self.0.retrieve_obj("action".to_owned())
+    }
+}
+
+impl<'t> fmt::Display for Action<'t> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "method: GET\n\
-                content-type: application/json\n\
-                authorization: Bearer {}\n\
-                url: {}", self.auth, self.url)
+        self.0.fmt(f)
     }
+}
+
+impl<'t> Actions<'t> {
+    pub fn new(url: String, token: &'t str) -> Actions<'t> {
+        Actions(BasicRequest::new(url, token))
+    }
+
+    fn retrieve_single_page(url: String, token: &str) -> Result<RawActions, String> {
+        let a = Actions(BasicRequest::new(url, token));
+
+        match a.retrieve_json() {
+            Ok(ref s) => {
+                match json::from_str::<RawActions>(s) {
+                    Ok(val) => {
+                        Ok(val)
+                    },
+                    Err(e) => Err(e.to_string())
+                }
+            },
+            Err(e) => Err(e.to_string())
+        }
+    }
+}
+
+impl<'t> Request for Actions<'t> {
+    type RespT = response::Actions;
+    fn auth(&self) -> &str {
+        &self.0.auth_token[..]
+    }
+    fn url(&self) -> &str {
+        &self.0.url_str[..]
+    }
+    fn retrieve(&self) -> Result<response::Actions, String> {
+        match self.retrieve_json() {
+            Ok(ref s) => {
+                match json::from_str::<RawActions>(s) {
+                    Ok(ref mut val) => {
+                        let mut acts = response::Actions {
+                            actions: vec![]
+                        };
+                        acts.actions.append(&mut val.actions);
+                        while let Ok(ref mut val) = Actions::retrieve_single_page(val.links.pages.next.clone(), self.0.auth_token) {
+                            acts.actions.append(&mut val.actions);
+                        }
+                        Ok(acts)
+                    },
+                    Err(e) => Err(e.to_string())
+                }
+            },
+            Err(e) => Err(e.to_string())
+        }
+    }
+}
+
+impl<'t> fmt::Display for Actions<'t> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.0.fmt(f)
+    }
+
 }

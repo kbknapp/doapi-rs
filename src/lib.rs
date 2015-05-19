@@ -1,4 +1,4 @@
-#![feature(custom_derive, plugin)]
+#![feature(custom_derive, custom_attribute, collections, plugin)]
 #![plugin(serde_macros)]
 
 extern crate serde;
@@ -9,6 +9,7 @@ pub mod request;
 pub mod response;
 
 pub use domanager::DoManager;
+pub use request::Request;
 
 #[cfg(test)]
 mod tests{

@@ -1,3 +1,0 @@
-struct Link {
-    pages: Pages
-}

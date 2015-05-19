@@ -1,13 +1,17 @@
 use super::request::Account;
 
-pub struct DoManager<'a> {
-    pub account: Account<'a>
+pub struct DoManager<'t> {
+    pub account: Account<'t>
 }
 
-impl<'a> DoManager<'a> {
-    pub fn with_token(t: &'a str) -> DoManager {
+impl<'t> DoManager<'t> {
+    pub fn with_token(t: &'t str) -> DoManager {
         DoManager {
             account: Account::with_token(t)
         }
+    }
+
+    pub fn account(&self) -> &Account {
+        &self.account
     }
 }

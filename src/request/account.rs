@@ -1,59 +1,42 @@
-use std::io::Read;
 use std::fmt;
 
-use hyper::client::Request;
-use hyper::{self, Error, Url};
-use hyper::method::Method;
-use hyper::net::Fresh;
-use hyper::header::{ContentType, Authorization};
-
-use serde::json::{self, Value};
-
 use response;
+use request::Request;
+use request::basic::BasicRequest;
+use request::action::{Action, Actions};
 
-pub struct Account<'u, 't>(Request<'u, 't>);
+pub struct Account<'t>(BasicRequest<'t>);
 
-impl<'u, 't> Account<'u, 't> {
+impl<'t> Account<'t> {
     pub fn with_token(token: &'t str) -> Account {
-        Account( Request::new("https://api.digitalocean.com/v2/account", token) )
+        Account( BasicRequest::new("https://api.digitalocean.com/v2/account".to_owned(), token) )
     }
 
-    pub fn request(&self) -> hyper::Result<Request<Fresh>> {
-        let Account(ref req) = self;
-        req.request()
+    pub fn action(&self, id: &str) -> Action {
+        Action::new(format!("https://api.digitalocean.com/v2/actions/{}", id), self.0.auth_token)
     }
 
-    pub fn retrieve_json(&self) -> hyper::Result<String> {
-        let Account(ref req) = self;
-        req.retrieve_json()
+    pub fn actions(&self) -> Actions {
+        Actions::new("https://api.digitalocean.com/v2/actions".to_owned(), self.0.auth_token)
     }
 
-    pub fn retrieve(&self) -> Result<response::Account, String> {
-        let Account(ref req) = self;
-        req.retrieve("account")
-    }
+}
 
-    pub fn action<'b>(&self, id: &'b str) -> Result<response::Action, String> {
-        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
-        req.retrieve("action")
+impl<'t> Request for Account<'t> {
+    type RespT = response::Account;
+    fn auth(&self) -> &str {
+        self.0.auth_token
     }
-
-    pub fn action_request<'b>(&self, id: &'b str) -> hyper::Result<Request<Fresh>> {
-        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
-        req.request()
+    fn url(&self) -> &str {
+        &self.0.url_str[..]
     }
-
-    pub fn retrieve_action_json<'b>(&self, id: &'b str) -> hyper::Result<String> {
-        let req = Request::new(&format!("https://api.digitalocean.com/v2/actions/{}", id), self.auth);
-        req.retrieve_json()
+    fn retrieve(&self) -> Result<response::Account, String> {
+        self.0.retrieve_obj::<response::Account>("account".to_owned())
     }
 }
 
-impl<'a> fmt::Display for Account<'a> {
+impl<'t> fmt::Display for Account<'t> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "method: GET\n\
-                content-type: application/json\n\
-                authorization: Bearer {}\n\
-                url: {}", self.auth, self.url)
+        self.0.fmt(f)
     }
 }
