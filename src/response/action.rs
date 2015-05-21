@@ -1,3 +1,13 @@
+// id             number            A unique numeric ID that can be used to identify and reference an action.
+// status         string            The current status of the action. This can be "in-progress", "completed", or "errored".
+// type           string            This is the type of action that the object represents. For example, this could be "transfer" to represent the state of an image transfer action.
+// started_at     string            A time value given in ISO8601 combined date and time format that represents when the action was initiated.
+// completed_at   string            A time value given in ISO8601 combined date and time format that represents when the action was completed.
+// resource_id    number            A unique identifier for the resource that the action is associated with.
+// resource_type  string            The type of resource that the action is associated with.
+// region         nullable string   (deprecated) A slug representing the region where the action occurred.
+// region_slug    nullable string   A slug representing the region where the action occurred.
+
 use std::slice::Iter;
 use std::fmt;
 
@@ -21,16 +31,15 @@ pub struct Action {
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Account Action:\n\t\
-                        ID: {}\n\t\
-                        Status: {}\n\t\
-                        Type: {}\n\t\
-                        Started At: {}\n\t\
-                        Completed At: {}\n\t\
-                        Resource ID: {}\n\t\
-                        Resource Type: {}\n\t\
-                        {}\
-                        Region Slug: {}\n",
+       write!(f, "ID: {}\n\t\
+                  Status: {}\n\t\
+                  Type: {}\n\t\
+                  Started At: {}\n\t\
+                  Completed At: {}\n\t\
+                  Resource ID: {}\n\t\
+                  Resource Type: {}\n\t\
+                  Region Slug: {}\n\t\
+                     {}",
                 self.id,
                 self.status,
                 self.action_type,
@@ -38,8 +47,8 @@ impl fmt::Display for Action {
                 self.completed_at,
                 self.resource_id,
                 self.resource_type,
-                self.region.to_string().replace("\n", "\n\t"),
-                if self.region_slug.is_some() { self.region_slug.clone().unwrap() } else { "None".to_owned() })
+                if self.region_slug.is_some() { self.region_slug.clone().unwrap() } else { "None".to_owned() },
+                self.region.to_string().replace("\n", "\n\t"))
     }
 }
 
@@ -59,24 +68,3 @@ pub struct RawActions {
     pub links: Links,
     pub meta: Meta
 }
-
-//{"actions":
-//  [{  "id":48658518,
-//      "status":"completed",
-//      "type":"power_on",
-//      "started_at":"2015-04-21T17:02:51Z",
-//      "completed_at":"2015-04-21T17:02:56Z",
-//      "resource_id":3193993,
-//      "resource_type":"droplet",
-//      "region":
-//          {"name":"New York 3",
-//          "slug":"nyc3",
-//          "sizes":["512mb","1gb","2gb","4gb","8gb","16gb","32gb","48gb","64gb"],
-//          "features":["virtio","private_networking","backups","ipv6","metadata"],
-//          "available":true},
-//      "region_slug":"nyc3"},
-//"links":
-//  {"pages":
-//      {"last":"https://api.digitalocean.com/v2/actions?page=2",
-//      "next":"https://api.digitalocean.com/v2/actions?page=2"}},
-//"meta":{"total":24}}

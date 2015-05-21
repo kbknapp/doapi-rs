@@ -1,12 +1,9 @@
+// droplet_limit    number      The total number of droplets the user may have
+// email            string      The email the user has registered for Digital Ocean with
+// uuid             string      The universal identifier for this user
+// email_verified   boolean     If true, the user has verified their account via email. False otherwise.                
 
 use std::fmt;
-
-// TODO: Implement response headers:
-// content-type: application/json; charset=utf-8
-// status: 200 OK
-// ratelimit-limit: 1200
-// ratelimit-remaining: 1137
-// ratelimit-reset: 1415984218
 
 #[derive(Deserialize, Debug)]
 pub struct Account {
@@ -20,14 +17,20 @@ pub struct Account {
 
 impl fmt::Display for Account {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DigitalOcean Account:\n\t\
-                        Email: {}\n\t\
-                        Droplet Limit: {:.0}\n\t\
-                        UUID: {}\n\t\
-                        E-Mail Verified: {}",
+        write!(f, "Email: {}\n\t\
+                   Droplet Limit: {:.0}\n\t\
+                   UUID: {}\n\t\
+                   E-Mail Verified: {}",
                 self.email,
                 self.droplet_limit,
                 self.uuid,
                 self.email_verified)
     }
 }
+
+// TODO: Implement response headers:
+// content-type: application/json; charset=utf-8
+// status: 200 OK
+// ratelimit-limit: 1200
+// ratelimit-remaining: 1137
+// ratelimit-reset: 1415984218

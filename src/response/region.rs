@@ -1,11 +1,11 @@
+// slug         string      A human-readable string that is used as a unique identifier for each region.
+// name         string      The display name of the region. This will be a full name that is used in the control panel and other interfaces.
+// sizes        array       This attribute is set to an array which contains the identifying slugs for the sizes available in this region.
+// available    boolean     This is a boolean value that represents whether new Droplets can be created in this region.
+// features     array       This attribute is set to an array which contains features available in this region
+
 use std::fmt;
 
-//      "region":
-//          {"name":"New York 3",
-//          "slug":"nyc3",
-//          "sizes":["512mb","1gb","2gb","4gb","8gb","16gb","32gb","48gb","64gb"],
-//          "features":["virtio","private_networking","backups","ipv6","metadata"],
-//          "available":true},
 #[derive(Deserialize, Debug)]
 pub struct Region {
     name: String,

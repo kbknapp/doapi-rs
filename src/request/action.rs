@@ -3,29 +3,22 @@ use std::fmt;
 
 use serde::json;
 
-use request::basic::BasicRequest;
-use request::Request;
+use request::{NamedRequest, Request, DoRequest};
 use response::{self, RawActions};
 
-pub struct Action<'t>(BasicRequest<'t>);
-pub struct Actions<'t>(BasicRequest<'t>);
+pub struct Action<'t>(DoRequest<'t>);
+pub struct Actions<'t>(DoRequest<'t>);
 
 impl<'t> Action<'t> {
     pub fn new(url: String, token: &'t str) -> Action<'t>{
-        Action(BasicRequest::new(url, token))
+        Action(DoRequest::new(url, token))
     }
 }
 
-impl<'t> Request for Action<'t> {
+impl<'t> NamedRequest for Action<'t> {
     type RespT = response::Action;
-    fn auth(&self) -> &str {
-        self.0.auth_token
-    }
-    fn url(&self) -> &str {
-        &self.0.url_str[..]
-    }
-    fn retrieve(&self) -> Result<response::Action, String> {
-        self.0.retrieve_obj("action".to_owned())
+    fn name(&self) -> &str {
+        "action"
     }
 }
 
@@ -57,14 +50,14 @@ impl<'t> Actions<'t> {
     }
 }
 
-impl<'t> Request for Actions<'t> {
+impl<'t> NamedRequest for Actions<'t> {
     type RespT = response::Actions;
-    fn auth(&self) -> &str {
-        &self.0.auth_token[..]
+    fn name(&self) -> &str {
+        "actions"
     }
-    fn url(&self) -> &str {
-        &self.0.url_str[..]
-    }
+}
+
+impl<'t> Request for Actions<'t> {
     fn retrieve(&self) -> Result<response::Actions, String> {
         match self.retrieve_json() {
             Ok(ref s) => {
