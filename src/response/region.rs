@@ -5,6 +5,9 @@
 // features     array       This attribute is set to an array which contains features available in this region
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Region {
@@ -30,3 +33,11 @@ impl fmt::Display for Region {
                 self.available)
     }
 }
+
+impl NamedResponse for Region {
+    fn name<'a>() -> Cow<'a, str> {
+        "region".into()
+    }
+}
+
+pub type Regions = Vec<Region>;

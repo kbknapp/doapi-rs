@@ -6,9 +6,12 @@
 // memory           number      The amount of RAM allocated to Droplets created of this size. The value is represented in megabytes.
 // vcpus            number      The number of virtual CPUs allocated to Droplets of this size.
 // disk             number      The amount of disk space set aside for Droplets of this size. The value is represented in gigabytes.
-// regions          array       An array containing the region slugs where this size is available for Droplet creates.
+// sizes          array       An array containing the region slugs where this size is available for Droplet creates.
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Size {
@@ -20,7 +23,7 @@ pub struct Size {
     memory: f64,
     vcpus: f64,
     disk: f64,
-    regions: Vec<String>,
+    sizes: Vec<String>,
 }
 
 impl fmt::Display for Size {
@@ -34,7 +37,7 @@ impl fmt::Display for Size {
                         Memory: {} MB\n\t\
                         Virtual CPUs: {:.0}\n\t\
                         Disk Space: {} GB\n\t\
-                        Regions: {}\n",
+                        Sizes: {}\n",
                 self.slug,
                 self.available,
                 self.transfer,
@@ -43,7 +46,15 @@ impl fmt::Display for Size {
                 self.memory,
                 self.vcpus,
                 self.disk,
-                self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]))
-                
+                self.sizes.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]))
+
     }
 }
+
+impl NamedResponse for Size {
+    fn name<'a>() -> Cow<'a, str> {
+        "size".into()
+    }
+}
+
+pub type Sizes = Vec<Size>;

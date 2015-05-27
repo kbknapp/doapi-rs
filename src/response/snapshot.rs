@@ -1,21 +1,22 @@
+
 use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
-pub struct Kernel;
+pub struct Snapshot;
 
-impl fmt::Display for Kernel {
+impl fmt::Display for Snapshot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", "kernel!")
+        write!(f, "{}", "snapshot")
     }
 }
 
-impl NamedResponse for Kernel {
+pub type Snapshots = Vec<Snapshot>;
+
+impl NamedResponse for Snapshot {
     fn name<'a>() -> Cow<'a, str> {
-        "kernel".into()
+        "snapshot".into()
     }
 }
-
-pub type Kernels = Vec<Kernel>;

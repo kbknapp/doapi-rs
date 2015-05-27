@@ -8,12 +8,11 @@
 // region         nullable string   (deprecated) A slug representing the region where the action occurred.
 // region_slug    nullable string   A slug representing the region where the action occurred.
 
-use std::slice::Iter;
 use std::fmt;
+use std::borrow::Cow;
 
-use response::meta::Meta;
 use response::region::Region;
-use response::links::Links;
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Action {
@@ -52,19 +51,10 @@ impl fmt::Display for Action {
     }
 }
 
-pub struct Actions {
-    pub actions: Vec<Action>,
-}
+pub type Actions = Vec<Action>;
 
-impl Actions {
-    pub fn iter(&self) -> Iter<Action> {
-        self.actions.iter()
+impl NamedResponse for Action {
+    fn name<'a>() -> Cow<'a, str> {
+        "action".into()
     }
-}
-
-#[derive(Deserialize)]
-pub struct RawActions {
-    pub actions: Vec<Action>,
-    pub links: Links,
-    pub meta: Meta
 }

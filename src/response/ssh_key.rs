@@ -4,6 +4,9 @@
 // name             string      This is the human-readable display name for the given SSH key. This is used to easily identify the SSH keys when they are displayed.
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct SshKey {
@@ -11,6 +14,12 @@ pub struct SshKey {
     fingerprint: String,
     public_key: String,
     name: String,
+}
+
+impl NamedResponse for SshKey {
+    fn name<'a>() -> Cow<'a, str> {
+        "ssh_key".into()
+    }
 }
 
 impl fmt::Display for SshKey {
@@ -26,3 +35,5 @@ impl fmt::Display for SshKey {
                 self.name)
     }
 }
+
+pub type SshKeys = Vec<SshKey>;

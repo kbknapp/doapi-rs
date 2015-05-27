@@ -8,6 +8,9 @@
 // min_disk_size    number              The minimum 'disk' required for a size to use this image.
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Image {
@@ -47,3 +50,11 @@ impl fmt::Display for Image {
                 self.min_disk_size)
     }
 }
+
+impl NamedResponse for Image {
+    fn name<'a>() -> Cow<'a, str> {
+        "image".into()
+    }
+}
+
+pub type Images = Vec<Image>;

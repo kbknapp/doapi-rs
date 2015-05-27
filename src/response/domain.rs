@@ -3,6 +3,9 @@
 // zone_file   string  This attribute contains the complete contents of the zone file for the selected domain. Individual domain record resources should be used to get more granular control over records. However, this attribute can also be used to get information about the SOA record, which is created automatically and is not accessible as an individual record resource.
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Domain {
@@ -20,6 +23,13 @@ impl fmt::Display for Domain {
                 self.name,
                 self.ttl,
                 self.zone_file)
-                
+    }
+}
+
+pub type Domains = Vec<Domain>;
+
+impl NamedResponse for Domain {
+    fn name<'a>() -> Cow<'a, str> {
+        "domain".into()
     }
 }

@@ -4,6 +4,9 @@
 // email_verified   boolean     If true, the user has verified their account via email. False otherwise.                
 
 use std::fmt;
+use std::borrow::Cow;
+
+use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Account {
@@ -25,6 +28,12 @@ impl fmt::Display for Account {
                 self.droplet_limit,
                 self.uuid,
                 self.email_verified)
+    }
+}
+
+impl NamedResponse for Account {
+    fn name<'a>() -> Cow<'a, str> {
+        "account".into()
     }
 }
 

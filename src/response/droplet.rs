@@ -18,8 +18,9 @@
 // next_backup_window   nullable object     The details of the Droplet's backups feature, if backups are configured for the Droplet. This object contains keys for the start and end times of the window during which the backup will start.
 
 use std::fmt;
+use std::borrow::Cow;
 
-use response::{Kernel, Backup, Network, Region, Image, Size};
+use response::{Kernel, Region, Backup, Network, Image, Size, NamedResponse};
 
 #[derive(Deserialize, Debug)]
 pub struct Droplet {
@@ -57,7 +58,7 @@ impl fmt::Display for Droplet {
                         Backup IDs: {}\n\t\
                         Snapshot IDs: {}\n\t\
                         Features: {}\n\t\
-                        Region: \n\t{}\n\
+                        Droplet: \n\t{}\n\
                         Image: \n\t{}\n\
                         Size: \n\t{}\n\
                         Size Slug: {}\n\t\
@@ -90,6 +91,14 @@ impl fmt::Display for Droplet {
                 } else {
                     "None\n".to_owned()
                 })
-                
+
     }
 }
+
+impl NamedResponse for Droplet {
+    fn name<'a>() -> Cow<'a, str> {
+        "droplet".into()
+    }
+}
+
+pub type Droplets = Vec<Droplet>;
