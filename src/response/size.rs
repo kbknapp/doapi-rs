@@ -6,7 +6,7 @@
 // memory           number      The amount of RAM allocated to Droplets created of this size. The value is represented in megabytes.
 // vcpus            number      The number of virtual CPUs allocated to Droplets of this size.
 // disk             number      The amount of disk space set aside for Droplets of this size. The value is represented in gigabytes.
-// sizes          array       An array containing the region slugs where this size is available for Droplet creates.
+// regions          array       An array containing the region slugs where this size is available for Droplet creates.
 
 use std::fmt;
 use std::borrow::Cow;
@@ -23,7 +23,7 @@ pub struct Size {
     memory: f64,
     vcpus: f64,
     disk: f64,
-    sizes: Vec<String>,
+    regions: Vec<String>,
 }
 
 impl fmt::Display for Size {
@@ -46,7 +46,7 @@ impl fmt::Display for Size {
                 self.memory,
                 self.vcpus,
                 self.disk,
-                self.sizes.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]))
+                self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]))
 
     }
 }

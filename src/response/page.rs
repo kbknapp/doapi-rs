@@ -1,8 +1,6 @@
-use std::slice::Iter;
-
 use response::{Meta, Links};
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Pages {
     pub next: String,
     pub last: String
