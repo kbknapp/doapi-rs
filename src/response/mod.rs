@@ -2,7 +2,7 @@ pub use self::account::Account;
 pub use self::action::{Actions, Action};
 pub use self::meta::Meta;
 pub use self::error::DoError;
-pub use self::page::{Pages, PagedResponse, RawPagedResponse, NewIter};
+pub use self::page::{Pages, RawPagedResponse, NewIter};
 pub use self::links::Links;
 pub use self::region::{Regions, Region};
 pub use self::size::{Sizes, Size};

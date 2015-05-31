@@ -8,18 +8,18 @@ pub struct Pages {
     pub last: String
 }
 
-#[derive(Deserialize)]
-pub struct PagedResponse<T>(pub Vec<T>);
+// #[derive(Deserialize)]
+// pub struct PagedResponse<T>(pub Vec<T>);
 
-impl<T> PagedResponse<T> {
-    pub fn iter(&self) -> Iter<T> {
-        self.0.iter()
-    }
-}
+// impl<T> PagedResponse<T> {
+//     pub fn iter(&self) -> Iter<T> {
+//         self.0.iter()
+//     }
+// }
 
 #[derive(Deserialize)]
 pub struct RawPagedResponse<T> {
-    pub collection: PagedResponse<T>,
+    pub collection: Vec<T>,
     pub links: Links,
     pub meta: Meta
 }

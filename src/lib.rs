@@ -3,6 +3,7 @@
 
 extern crate serde;
 extern crate hyper;
+extern crate regex;
 
 mod domanager;
 #[macro_use]

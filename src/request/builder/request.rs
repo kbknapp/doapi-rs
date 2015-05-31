@@ -55,7 +55,12 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
         rb.url = Some(url);
         match rb.retrieve_json() {
             Ok(ref s) => {
-                match json::from_str::<RawPagedResponse<I>>(s) {
+                 // FIXME \/ \/
+                let mut name = <I as NamedResponse>::name().into_owned();
+                name.push('s');
+                let re = regex!(&format!("\"{}\"", name));
+                match json::from_str::<response::RawPagedResponse<I>>(&re.replace(&s[..], "\"collection\"")) {
+                // FIXME ^^
                     Ok(val) => {
                         Ok(val)
                     },
@@ -69,19 +74,22 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
 
 impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                                 where I: Deserialize + NamedResponse {
-                                // T: Deserialize + NamedResponse {
     fn retrieve(&self) -> Result<Vec<I>, String> {
         match self.retrieve_json() {
             Ok(ref s) => {
-                match json::from_str::<response::RawPagedResponse<I>>(s) {
-                    Ok(ref mut val) => {
+                 // FIXME \/ \/
+                let mut name = <I as NamedResponse>::name().into_owned();
+                name.push('s');
+                let re = regex!(&format!("\"{}\"", name));
+                let res = &re.replace(&s[..], "\"collection\"");
+                match json::from_str::<response::RawPagedResponse<I>>(res) {
+                // FIXME ^^
+                    Ok(mut val) => {
                         let mut regs = vec![];
-                        regs.append(&mut val.collection.0);
-                        while let Ok(ref mut val) = self.retrieve_single_page(val.links.pages.next.clone()) {
-                            regs.append(&mut val.collection.0);
+                        regs.append(&mut val.collection);
+                        while let Ok(mut val) = self.retrieve_single_page(val.links.pages.next.clone()) {
+                            regs.append(&mut val.collection);
                         }
-                        // let ret = <T as NewIter>::new();
-                        // ret.append(&mut regs);
                         Ok(regs)
                     },
                     Err(e) => Err(e.to_string())
