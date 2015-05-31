@@ -3,7 +3,7 @@ use std::fmt;
 
 use serde::{json, Deserialize};
 
-use response::{self, RawPagedResponse, NamedResponse};
+use response::{self, RawPagedResponse, Pages, NamedResponse};
 use request::{BaseRequest, DoRequest};
 use request::PagedRequest;
 
@@ -87,10 +87,11 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                     Ok(mut val) => {
                         let mut regs = vec![];
                         regs.append(&mut val.collection);
-                        while let Some(mut val) = val.links.pages.clone() {
-                            if let Ok(mut val) = self.retrieve_single_page(val.next) {
-                                regs.append(&mut val.collection);
-                            }
+                        while let Ok(mut val) = self.retrieve_single_page(val.links.pages.clone().unwrap_or(Pages{
+                            next: String::new(),
+                            last: String::new()
+                        }).next.clone()) {
+                            regs.append(&mut val.collection);
                         }
                         Ok(regs)
                     },
