@@ -5,6 +5,7 @@
 // slug             nullable string     A uniquely identifying string that is associated with each of the DigitalOcean-provided public images. These can be used to reference a public image as an alternative to the numeric id.
 // public           boolean             This is a boolean value that indicates whether the image in question is public or not. An image that is public is available to all accounts. A non-public image is only accessible from your account.
 // regions          array               This attribute is an array of the regions that the image is available in. The regions are represented by their identifying slug values.
+// created_at       String
 // min_disk_size    number              The minimum 'disk' required for a size to use this image.
 
 use std::fmt;
@@ -18,28 +19,28 @@ pub struct Image {
     name: String,
     #[serde(rename = "type")]
     image_type: String,
-    distrobution: String,
+    distribution: String,
     slug: Option<String>,
     public: bool,
+    created_at: String,
     regions: Vec<String>,
     min_disk_size: f64,
 }
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Image:\n\t\
-                        ID: {:.0}\n\t\
-                        Name: {}\n\t\
-                        Type: {}\n\t\
-                        Distrobution: ${}\n\t\
-                        Slug: ${}\n\t\
-                        Public: {} MB\n\t\
-                        Regions: {}\n\t\
-                        Minimum Disk Size: {} GB\n",
+       write!(f, "ID: {:.0}\n\t\
+                  Name: {}\n\t\
+                  Type: {}\n\t\
+                  Distribution: ${}\n\t\
+                  Slug: ${}\n\t\
+                  Public: {} MB\n\t\
+                  Regions: {}\n\t\
+                  Minimum Disk Size: {} GB\n",
                 self.id,
                 self.name,
                 self.image_type,
-                self.distrobution,
+                self.distribution,
                 if let Some(ref s) = self.slug {
                     s.clone()
                 } else {

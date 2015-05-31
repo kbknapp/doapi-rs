@@ -28,16 +28,15 @@ pub struct Size {
 
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Size:\n\t\
-                        Slug: {}\n\t\
-                        Available: {}\n\t\
-                        Transfer Bandwidth: {}\n\t\
-                        Monthly Price: ${}\n\t\
-                        Hourly Price: ${}\n\t\
-                        Memory: {} MB\n\t\
-                        Virtual CPUs: {:.0}\n\t\
-                        Disk Space: {} GB\n\t\
-                        Sizes: {}\n",
+       write!(f, "Slug: {}\n\t\
+                  Available: {}\n\t\
+                  Transfer Bandwidth: {}\n\t\
+                  Monthly Price: ${}\n\t\
+                  Hourly Price: ${}\n\t\
+                  Memory: {} MB\n\t\
+                  Virtual CPUs: {:.0}\n\t\
+                  Disk Space: {} GB\n\t\
+                  Sizes: {}\n",
                 self.slug,
                 self.available,
                 self.transfer,

@@ -12,7 +12,7 @@ use serde::de::Deserialize;
 use response::{self, DoError, NamedResponse};
 
 pub trait BaseRequest {
-    fn url(&self) -> String;
+    fn url(&self) -> &str;
     fn auth(&self) -> &str;
 }
 

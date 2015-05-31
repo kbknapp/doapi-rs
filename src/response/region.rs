@@ -20,12 +20,11 @@ pub struct Region {
 
 impl fmt::Display for Region {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Region:\n\t\
-                        Name: {}\n\t\
-                        Slug: {}\n\t\
-                        Sizes:{}\n\t\
-                        Features:{}\n\t\
-                        Available: {}\n",
+       write!(f, "Name: {}\n\t\
+                  Slug: {}\n\t\
+                  Sizes:{}\n\t\
+                  Features:{}\n\t\
+                  Available: {}\n",
                 self.name,
                 self.slug,
                 self.sizes.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),

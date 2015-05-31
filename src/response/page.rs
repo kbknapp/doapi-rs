@@ -2,8 +2,10 @@ use response::{Meta, Links};
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Pages {
-    pub next: String,
-    pub last: String
+    pub first: Option<String>,
+    pub prev: Option<String>,
+    pub next: Option<String>,
+    pub last: Option<String>
 }
 
 // #[derive(Deserialize)]
