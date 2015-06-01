@@ -2,7 +2,7 @@
 name = "doapi"
 version = "0.1.0"
 authors = ["Kevin K. <kbknapp@gmail.com>"]
-description = "A library wrapper for the DigitalOcean API v2"
+description = "A wrapper library for the DigitalOcean API v2"
 license = "MIT"
 repository = "https://github.com/kbknapp/doapi-rs.git"
 documentation = "http://kbknapp.github.io/doapi-rs"
@@ -16,4 +16,6 @@ serde_macros = {path = "../serde/serde_macros"}
 regex = "*"
 
 [features]
+default = []
+
 debug = []

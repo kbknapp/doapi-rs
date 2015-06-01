@@ -69,13 +69,15 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                         return Ok(val)
                     },
                     Err(e) => {
-                        println!("error {}", e.to_string());
-                        println!("Raw JSON {}", json_str);
+                        debug!("Error getting objects: {}", e.to_string());
                         return Err(e.to_string())
                     }
                 }
             },
-            Err(e) => return Err(e.to_string())
+            Err(e) => {
+                debug!("Error getting json: {}", e.to_string());
+                return Err(e.to_string())
+            }
         }
     }
 }
@@ -83,16 +85,22 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
 impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                                 where I: Deserialize + NamedResponse {
     fn retrieve(&self) -> Result<Vec<I>, String> {
+        debug!("Inside retrieve() for  paged request");
+        debug!("Getting json...");
         match self.retrieve_json() {
             Ok(ref s) => {
+                debug!("Sucessfully retrieved json");
                  // FIXME \/ \/
                 let mut name = <I as NamedResponse>::name().into_owned();
                 name.push('s');
+                debug!("Replacing {} with collection", &name[..]);
                 let re = regex!(&format!("\"{}\"", name));
                 let res = &re.replace(&s[..], "\"collection\"");
+                debug!("Getting object from json string");
                 match json::from_str::<response::RawPagedResponse<I>>(res) {
                 // FIXME ^^
                     Ok(mut val) => {
+                        debug!("Sucessfully retrieved object");
                         let mut regs = vec![];
                         regs.append(&mut val.collection);
                         let mut url = if val.links.pages.is_some() && val.links.pages.clone().unwrap().next.is_some() {
@@ -100,23 +108,28 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                         } else {
                             String::new()
                         };
-                        debug!("(BEFORE) URL: {}", &url[..]);
+                        debug!("Next page URL: {}", &url[..]);
                         while let Ok(mut page) = self.retrieve_single_page(url.clone()) {
-                            debug!("(IN) URL: {}", &url[..]);
                             regs.append(&mut page.collection);
                             url = if page.links.pages.is_some() && page.links.pages.clone().unwrap().next.is_some() {
                                 page.links.pages.clone().unwrap().next.clone().unwrap()
                             } else {
                                 String::new()
                             };
+                            debug!("Next page URL: {}", &url[..]);
                         }
-                        debug!("(AFTER) URL: {}", &url[..]);
                         Ok(regs)
                     },
-                    Err(e) => Err(e.to_string())
+                    Err(e) => {
+                        debug!("Error getting object: {}", e.to_string());
+                        Err(e.to_string())
+                    }
                 }
             },
-            Err(e) => Err(e.to_string())
+            Err(e) => {
+                debug!("Error getting json: {}", e.to_string());
+                Err(e.to_string())
+            }
         }
     }
 }
