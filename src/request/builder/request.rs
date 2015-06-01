@@ -45,11 +45,15 @@ impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
 // Can't use because of impl for DoRequest<Vec<T>>, waiting on negative trait bounds
 // impl<'t, T: !Iterator> DoRequest<T> for RequestBuilder<'t, T> { }
 
-impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>> 
+impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                                               where I: Deserialize + NamedResponse {
     type Item = I;
     fn retrieve_single_page(&self, url: String) -> Result<RawPagedResponse<I>, String> {
-        if url.is_empty() { return Err("No URL provided".to_owned()) }
+        debug!("Inside retrieve_single_page() with url: {}", &url[..]);
+        if url.is_empty() {
+            debug!("No url provided");
+            return Err("No URL provided".to_owned())
+        }
         let mut rb: RequestBuilder<'t, Vec<I>> = RequestBuilder::with_auth(self.auth);
         rb.url = url.clone();
         match rb.retrieve_json() {
@@ -65,8 +69,8 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                         return Ok(val)
                     },
                     Err(e) => {
-                        println!("DEBUG: error {}", e.to_string());
-                        println!("DEBUG: Raw JSON {}", json_str);
+                        println!("error {}", e.to_string());
+                        println!("Raw JSON {}", json_str);
                         return Err(e.to_string())
                     }
                 }
@@ -96,9 +100,9 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                         } else {
                             String::new()
                         };
-                        println!("(BEFORE) URL: {}", &url[..]);
+                        debug!("(BEFORE) URL: {}", &url[..]);
                         while let Ok(mut page) = self.retrieve_single_page(url.clone()) {
-                            println!("(IN) URL: {}", &url[..]);
+                            debug!("(IN) URL: {}", &url[..]);
                             regs.append(&mut page.collection);
                             url = if page.links.pages.is_some() && page.links.pages.clone().unwrap().next.is_some() {
                                 page.links.pages.clone().unwrap().next.clone().unwrap()
@@ -106,7 +110,7 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                                 String::new()
                             };
                         }
-                        println!("(AFTER) URL: {}", &url[..]);
+                        debug!("(AFTER) URL: {}", &url[..]);
                         Ok(regs)
                     },
                     Err(e) => Err(e.to_string())

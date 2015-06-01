@@ -14,3 +14,6 @@ hyper = "*"
 serde = {path = "../serde"}
 serde_macros = {path = "../serde/serde_macros"}
 regex = "*"
+
+[features]
+debug = []

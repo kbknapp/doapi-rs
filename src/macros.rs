@@ -1,24 +1,13 @@
-// macro_rules! multi_retrieve {
-//     ($me:ident, $col:ident) => {
-//         match $me.retrieve_json() {
-//             Ok(ref s) => {
-//                 match ::serde::json::from_str::<response::RawPagedResponse<response::$col>>(s) {
-//                     Ok(ref mut val) => {
-//                         let mut regs = vec![];
-//                         regs.append(&mut val.collection.0);
-//                         while let Ok(ref mut val) = $me.retrieve_single_page(val.links.pages.next.clone()) {
-//                             regs.append(&mut val.collection.0);
-//                         }
-//                         return Ok(regs)
-//                     },
-//                     Err(e) => return Err(e.to_string())
-//                 }
-//             },
-//             Err(e) => return Err(e.to_string())
-//         }
-//     }
-// }
-
+#[cfg(feature = "debug")]
+macro_rules! debug {
+    ($fmt:expr) => (println!(concat!("**DEBUG** ", $fmt)));
+    ($fmt:expr, $($arg:tt)*) => (println!(concat!("**DEBUG** ",$fmt), $($arg)*));
+}
+#[cfg(not(feature = "debug"))]
+macro_rules! debug {
+    ($fmt:expr) => ();
+    ($fmt:expr, $($arg:tt)*) => ();
+}
 
 // Taken from https://github.com/kbknapp/clap-rs
 macro_rules! doapi_enum {
