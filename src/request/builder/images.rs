@@ -1,5 +1,7 @@
 use std::marker::PhantomData;
 
+use hyper::method::Method;
+
 use response;
 use request::RequestBuilder;
 use request::DoRequest;
@@ -12,75 +14,55 @@ impl<'t> RequestBuilder<'t, response::Image> {
         unimplemented!()
     }
     pub fn show(mut self, slug: &str) -> RequestBuilder<'t, response::Image> {
-        // https://api.digitalocean.com/v2/images/$SLUG
+        // GET: https://api.digitalocean.com/v2/images/$SLUG
         self.url.push('/');
         self.url.push_str(slug);
-        RequestBuilder {
-            url: self.url,
-            auth: self.auth,
-            resp_t: PhantomData
-        }
-    }
-    pub fn list_distros(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
-    }
-    pub fn list_applications(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
-    }
-    pub fn list_user_images(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
+        self
     }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
+        // GET: https://api.digitalocean.com/v2/images/$SLUG
         self.url.push_str("/actions");
         RequestBuilder {
             url: self.url,
             auth: self.auth,
+            method: self.method,
             resp_t: PhantomData
         }
     }
-    pub fn update(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
+    pub fn update(mut self, name: &str) -> RequestBuilder<'t, response::Image> {
+        // PUT: https://api.digitalocean.com/v2/images/$NAME
+        self.url.push('/');
+        self.url.push_str(name);
+        RequestBuilder {
+            method: Method::Put,
+            .. self
+        }
     }
     pub fn delete(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
-    }
-    pub fn action(&self, id: &str) -> RequestBuilder<'t, response::Action> {
         unimplemented!()
     }
 }
 
 impl<'t> RequestBuilder<'t, response::Images> {
     pub fn applications(mut self) -> RequestBuilder<'t, response::Images> {
+        // GET: https://api.digitalocean.com/v2/images?type=applications
         self.url.push_str("?type=applications");
-        RequestBuilder {
-            url: self.url,
-            auth: self.auth,
-            resp_t: PhantomData
-        }
+        self
     }
     pub fn distributions(mut self) -> RequestBuilder<'t, response::Images> {
+        // GET: https://api.digitalocean.com/v2/images?type=distribtutions
         self.url.push_str("?type=distributions");
-        RequestBuilder {
-            url: self.url,
-            auth: self.auth,
-            resp_t: PhantomData
-        }
+        self
     }
     pub fn private(mut self) -> RequestBuilder<'t, response::Images> {
+        // GET: https://api.digitalocean.com/v2/images?type=private
         self.url.push_str("?type=private");
-        RequestBuilder {
-            url: self.url,
-            auth: self.auth,
-            resp_t: PhantomData
-        }
+        self
     }
     pub fn available(mut self) -> RequestBuilder<'t, response::Images> {
+        // GET: https://api.digitalocean.com/v2/images?type=available
         self.url.push_str("?type=available");
-        RequestBuilder {
-            url: self.url,
-            auth: self.auth,
-            resp_t: PhantomData
-        }
+        self
     }
 
 }

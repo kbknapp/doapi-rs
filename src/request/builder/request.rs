@@ -3,6 +3,7 @@ use std::iter::Iterator;
 use std::fmt;
 
 use serde::{json, Deserialize};
+use hyper::method::Method;
 
 use response::{self, RawPagedResponse, NamedResponse};
 use request::{BaseRequest, DoRequest};
@@ -10,15 +11,27 @@ use request::PagedRequest;
 
 pub struct RequestBuilder<'t, T> {
     pub auth: &'t str,
+    pub method: Method,
     pub url: String,
     pub resp_t: PhantomData<*const T>
 }
 
 impl<'t, T> RequestBuilder<'t, T> {
-    pub fn with_auth(t: &'t str) -> RequestBuilder<'t, T> {
+    pub fn with_auth(auth: &'t str) -> RequestBuilder<'t, T> {
         RequestBuilder {
-            auth: t,
+            auth: auth,
+            method: Method::Get,
             url: String::new(),
+            resp_t: PhantomData
+        }
+    }
+    pub fn new<S>(auth: &'t str, url: S)
+                  -> RequestBuilder<'t, T>
+                  where S: Into<String> {
+        RequestBuilder {
+            auth: auth,
+            method: Method::Get,
+            url: url.into(),
             resp_t: PhantomData
         }
     }
@@ -26,10 +39,10 @@ impl<'t, T> RequestBuilder<'t, T> {
 
 impl<'t, T> fmt::Display for RequestBuilder<'t, T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "method: GET\n\
+        write!(f, "method: {}\n\
                 content-type: application/json\n\
                 authorization: Bearer {}\n\
-                url: {}", self.auth, if !self.url.is_empty() { self.url.clone() } else { "None".to_owned() })
+                url: {}", self.method, self.auth, if !self.url.is_empty() { self.url.clone() } else { "None".to_owned() })
     }
 }
 
@@ -39,6 +52,9 @@ impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
     }
     fn url(&self) -> &str {
         &self.url[..]
+    }
+    fn method(&self) -> Method {
+        self.method.clone()
     }
 }
 

@@ -14,6 +14,7 @@ use response::{self, DoError, NamedResponse};
 pub trait BaseRequest {
     fn url(&self) -> &str;
     fn auth(&self) -> &str;
+    fn method(&self) -> Method;
 }
 
 pub trait DoRequest<T> : BaseRequest
@@ -23,7 +24,7 @@ pub trait DoRequest<T> : BaseRequest
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
-        let mut fresh_req = match client::Request::new(Method::Get, url) {
+        let mut fresh_req = match client::Request::new(self.method(), url) {
             Ok(req) => req,
             Err(e)  => return Err(e)
         };
@@ -87,4 +88,3 @@ pub trait DoRequest<T> : BaseRequest
         self.retrieve_obj(<T as response::NamedResponse>::name().into_owned())
     }
 }
-

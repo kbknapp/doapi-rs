@@ -15,43 +15,23 @@ impl<'t> DoManager<'t> {
     }
 
     pub fn account(&self) -> RequestBuilder<'t, response::Account> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/account".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/account")
     }
 
     pub fn regions(&self) -> RequestBuilder<'t, response::Regions> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/regions".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/regions")
     }
 
     pub fn sizes(&self) -> RequestBuilder<'t, response::Sizes> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/sizes".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/sizes")
     }
 
     pub fn image(&self, id: &str) -> RequestBuilder<'t, response::Image> {
-        RequestBuilder {
-            auth: self.auth,
-            url: format!("https://api.digitalocean.com/v2/images/{}", id),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/images/{}", id))
     }
 
     pub fn images(&self) -> RequestBuilder<'t, response::Images> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/images".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/images")
     }
 
     pub fn ssh_keys(&self) -> RequestBuilder<'t, response::SshKeys> {
@@ -63,34 +43,18 @@ impl<'t> DoManager<'t> {
     }
 
     pub fn droplet(&self, id: &str) -> RequestBuilder<'t, response::Droplet> {
-        RequestBuilder {
-            auth: self.auth,
-            url: format!("https://api.digitalocean.com/v2/droplet/{}", id),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/droplet/{}", id))
     }
 
     pub fn droplets(&self) -> RequestBuilder<'t, response::Droplets> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/droplet".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/droplet")
     }
 
     pub fn domains(&self) -> RequestBuilder<'t, response::Domains> {
-        RequestBuilder {
-            auth: self.auth,
-            url: "https://api.digitalocean.com/v2/domains".to_owned(),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/domains")
     }
 
     pub fn domain(&self, id: &str) -> RequestBuilder<'t, response::Domain> {
-        RequestBuilder {
-            auth: self.auth,
-            url: format!("https://api.digitalocean.com/v2/domains/{}", id),
-            resp_t: PhantomData
-        }
+        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/domains/{}", id))
     }
 }
