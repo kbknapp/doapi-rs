@@ -113,7 +113,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
 }
 
 impl<'t> RequestBuilder<'t, response::DnsRecord> {
-    pub fn update(mut self, id: &str, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn update(mut self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
         // PUT: "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
         // body:
         //      "type" : "MX"           // All records
@@ -122,8 +122,6 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         //      "priority" : "20"       // MX, SRV
         //      "port" : "80"           // SRV
         //      "weight" : "200"        // SRV
-        self.url.push('/');
-        self.url.push_str(id);
         // FIXME: Don't unwrap()
         RequestBuilder {
             method: Method::Put,
