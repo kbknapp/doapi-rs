@@ -4,6 +4,7 @@ use std::fmt;
 
 use serde::{json, Deserialize};
 use hyper::method::Method;
+use hyper::client::response::Response;
 
 use response::{self, RawPagedResponse, NamedResponse};
 use request::{BaseRequest, DoRequest};
@@ -147,5 +148,11 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                 Err(e.to_string())
             }
         }
+    }
+}
+
+impl<'t> DoRequest<response::HeaderOnly> for RequestBuilder<'t, response::HeaderOnly> {
+    fn retrieve(&self) -> Result<response::HeaderOnly, String> {
+        self.retrieve_header()
     }
 }

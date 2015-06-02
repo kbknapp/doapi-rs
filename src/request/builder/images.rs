@@ -29,6 +29,13 @@ impl<'t> RequestBuilder<'t, response::Image> {
             resp_t: PhantomData
         }
     }
+    pub fn action(mut self, id: &str) -> RequestBuilder<'t, response::Action> {
+        // GET: https://api.digitalocean.com/v2/images/$IMG_ID/actions/$ID
+        self.url.push_str("/actions/");
+        self.url.push_str(id);
+        RequestBuilder::new(self.auth, self.url)
+    }
+
     pub fn update(mut self, name: &str) -> RequestBuilder<'t, response::Image> {
         // PUT: https://api.digitalocean.com/v2/images/$NAME
         self.url.push('/');
@@ -38,8 +45,14 @@ impl<'t> RequestBuilder<'t, response::Image> {
             .. self
         }
     }
-    pub fn delete(&self) -> RequestBuilder<'t, response::Image> {
-        unimplemented!()
+    pub fn delete(self) -> RequestBuilder<'t, response::Image> {
+        // PUT: https://api.digitalocean.com/v2/images/$NAME
+        RequestBuilder {
+            method: Method::Delete,
+            auth: self.auth,
+            url: self.url,
+            resp_t: PhantomData
+        }
     }
 }
 

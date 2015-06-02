@@ -16,8 +16,10 @@ pub use self::image::{Image, Images};
 pub use self::dns::{DnsRecord, DnsRecords};
 pub use self::namedresponse::NamedResponse;
 pub use self::snapshot::{Snapshot, Snapshots};
+pub use self::header::HeaderOnly;
 
 mod account;
+mod header;
 mod network;
 mod kernel;
 mod backup;

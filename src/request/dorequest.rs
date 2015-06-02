@@ -57,6 +57,40 @@ pub trait DoRequest<T> : BaseRequest
         Ok(s)
     }
 
+    fn retrieve_raw_response(&self) -> hyper::Result<client::response::Response> {
+        let url = match Url::parse(&self.url()) {
+            Ok(url) => url,
+            Err(e) => return Err(Error::Uri(e)),
+        };
+        let mut fresh_req = match client::Request::new(Method::Get, url) {
+            Ok(req) => req,
+            Err(e)  => return Err(e)
+        };
+        let mut auth_s = String::new();
+        auth_s.push_str("Bearer ");
+        auth_s.push_str(self.auth());
+        fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
+        fresh_req.headers_mut().set(Authorization(auth_s));
+        let streaming_req = try!(fresh_req.start());
+        let response = try!(streaming_req.send());
+        Ok(response)
+    }
+
+    fn retrieve_header(&self) -> Result<response::HeaderOnly, String> {
+        debug!("Inside retrieve_header()");
+        debug!("Getting raw response...");
+        match self.retrieve_raw_response() {
+            Ok(resp) => {
+                let header = try!(response::HeaderOnly::from_response(resp));
+                Ok(header)
+            },
+            Err(e) => {
+                debug!("Error getting json: {}", e.to_string());
+                Err(e.to_string())
+            }
+        }
+    }
+
     fn retrieve_obj(&self, obj: String) -> Result<T, String> {
         match self.retrieve_json() {
             Ok(ref s) => {
