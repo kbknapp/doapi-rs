@@ -42,11 +42,11 @@ impl<'t> DoManager<'t> {
 
 
     pub fn droplet(&self, id: &str) -> RequestBuilder<'t, response::Droplet> {
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/droplet/{}", id))
+        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/droplets/{}", id))
     }
 
     pub fn droplets(&self) -> RequestBuilder<'t, response::Droplets> {
-        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/droplet")
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/droplets")
     }
 
     pub fn domains(&self) -> RequestBuilder<'t, response::Domains> {

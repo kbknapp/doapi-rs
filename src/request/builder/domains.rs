@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::marker::PhantomData;
 
 use hyper::method::Method;
@@ -15,16 +14,17 @@ impl<'t> RequestBuilder<'t, response::Domains> {
         // body:
         //      "ip_address" : "192.168.1.1"
         //      "name" : "supercool.com"
-        let mut hm = HashMap::new();
-        hm.insert("name", name.to_owned());
-        hm.insert("ip_address", ip.to_owned());
         RequestBuilder {
             method: Method::Delete,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm) 
+            body: Some(format!("{{\"name\":\"{}\",\"ip_address\":\"{}\"}}", name, ip)) 
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("name", name.to_owned());
+        // hm.insert("ip_address", ip.to_owned());
     }
 }
 

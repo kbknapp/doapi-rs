@@ -1,6 +1,5 @@
 use std::marker::PhantomData;
 use std::iter::Iterator;
-use std::collections::HashMap;
 use std::fmt;
 
 use serde::{json, Deserialize};
@@ -15,32 +14,7 @@ pub struct RequestBuilder<'t, T> {
     pub method: Method,
     pub url: String,
     pub resp_t: PhantomData<*const T>,
-    pub body: Option<RequestBody>
-}
-
-pub type RequestBody = HashMap<&'static str, String>;
-pub trait ToJsonString {
-    fn to_json(&self) -> String;
-}
-
-impl ToJsonString for RequestBody {
-    fn to_json(&self) -> String {
-        let mut s = String::with_capacity(100);
-        s.push('{');
-        for (k, v) in self.iter() {
-            s.push('"');
-            s.push_str(&k[..]);
-            s.push('"');
-            s.push(':');
-            s.push('"');
-            s.push_str(&v[..]);
-            s.push('"');
-            s.push(',');
-        }
-        s.push('}');
-        s.shrink_to_fit();
-        s
-    }
+    pub body: Option<String>
 }
 
 impl<'t, T> RequestBuilder<'t, T> {
@@ -86,11 +60,7 @@ impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
         self.method.clone()
     }
     fn body(&self) -> Option<String> {
-        if let Some(ref hm) = self.body {
-            Some(hm.to_json())
-        } else {
-            None
-        }
+        self.body.clone()
     }
 }
 

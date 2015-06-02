@@ -1,5 +1,4 @@
 use std::marker::PhantomData;
-use std::collections::HashMap;
 
 use hyper::method::Method;
 
@@ -15,16 +14,17 @@ impl<'t> RequestBuilder<'t, response::SshKeys> {
         // body:
         //      "public_key" : "lkajflasndvioanvinasd"
         //      "name" : "my super key"
-        let mut hm = HashMap::new();
-        hm.insert("name", name.to_owned());
-        hm.insert("public_key", pub_key.to_owned());
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(format!("{{\"name\":\"{}\",\"public_key\":\"{}\"}}", name, pub_key)) 
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("name", name.to_owned());
+        // hm.insert("public_key", pub_key.to_owned());
     }
 }
 
@@ -35,15 +35,16 @@ impl<'t> RequestBuilder<'t, response::SshKey> {
         // PUT: "https://api.digitalocean.com/v2/account/keys/$FINGER"
         // body:
         //      "name" : "new_name"
-        let mut hm = HashMap::new();
-        hm.insert("name", name.to_owned());
         RequestBuilder {
             method: Method::Put,
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(format!("{{\"name\":\"{}\"}}", name)) 
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("name", name.to_owned());
     }
     pub fn destroy(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/account/keys/$ID"

@@ -46,25 +46,24 @@ pub struct Droplet {
 
 impl fmt::Display for Droplet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Droplet:\n\t\
-                        ID: {:.0}\n\t\
-                        Name: {}\n\t\
-                        Memory: {} MB\n\t\
-                        Virtual CPUs: {:.0}\n\t\
-                        Disk: {} GB\n\t\
-                        Locked: {}\n\t\
-                        Created At: {}\n\t\
-                        Status: {}\n\t\
-                        Backup IDs: {}\n\t\
-                        Snapshot IDs: {}\n\t\
-                        Features: {}\n\t\
-                        Droplet: \n\t{}\n\
-                        Image: \n\t{}\n\
-                        Size: \n\t{}\n\
-                        Size Slug: {}\n\t\
-                        Network: \n\t{}\n\
-                        Kernel: {}\
-                        Next Backup Window: {}",
+       write!(f, "ID: {:.0}\n\t\
+                  Name: {}\n\t\
+                  Memory: {} MB\n\t\
+                  Virtual CPUs: {:.0}\n\t\
+                  Disk: {} GB\n\t\
+                  Locked: {}\n\t\
+                  Created At: {}\n\t\
+                  Status: {}\n\t\
+                  Backup IDs: {}\n\t\
+                  Snapshot IDs: {}\n\t\
+                  Features: {}\n\t\
+                  Region: \n\t{}\n\
+                  Image: \n\t{}\n\
+                  Size: \n\t{}\n\
+                  Size Slug: {}\n\t\
+                  Network: \n\t{}\n\
+                  Kernel: {}\
+                  Next Backup Window: {}",
                 self.id,
                 self.name,
                 self.memory,
@@ -102,3 +101,4 @@ impl NamedResponse for Droplet {
 }
 
 pub type Droplets = Vec<Droplet>;
+

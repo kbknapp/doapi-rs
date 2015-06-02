@@ -1,5 +1,4 @@
 use std::marker::PhantomData;
-use std::collections::HashMap;
 
 use hyper::method::Method;
 
@@ -12,31 +11,33 @@ impl<'t> RequestBuilder<'t, response::Image> {
         // POST: "https://api.digitalocean.com/v2/images/$ID/actions"
         // body:
         //      "type" : "transfer"
-        //      "name" : "new_name"
-        let mut hm = HashMap::new();
-        hm.insert("type", "transfer".to_owned());
-        hm.insert("region", region.to_owned());
+        //      "region" : "nyc2"
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(format!("{{\"type\":\"transfer\",\"region\":\"{}\"}}", region)) 
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("type", "transfer".to_owned());
+        // hm.insert("region", region.to_owned());
     }
     pub fn convert(self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/images/7938291/actions"
         // body:
-        //      "type" : "transfer"
-        let mut hm = HashMap::new();
-        hm.insert("type", "convert".to_owned());
+        //      "type" : "convert"
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(format!("{{\"type\":\"convert\"}}"))
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("type", "convert".to_owned());
     }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
         // GET: https://api.digitalocean.com/v2/images/$SLUG
@@ -60,15 +61,16 @@ impl<'t> RequestBuilder<'t, response::Image> {
         // PUT: https://api.digitalocean.com/v2/images/$ID
         // body:
         //      "name" : "new_name"
-        let mut hm = HashMap::new();
-        hm.insert("name", name.to_owned());
         RequestBuilder {
             method: Method::Put,
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(format!("{{\"name\":\"{}\"}}", name)) 
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("name", name.to_owned());
     }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: https://api.digitalocean.com/v2/images/$ID

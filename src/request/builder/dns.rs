@@ -1,8 +1,8 @@
 use std::fmt;
 use std::marker::PhantomData;
-use std::collections::HashMap;
 
 use hyper::method::Method;
+use serde::json;
 
 use response;
 use request::RequestBuilder;
@@ -21,8 +21,10 @@ doapi_enum! {
     }
 }
 
+#[derive(Serialize)]
 pub struct DnsRecord {
-    pub rec_type: DnsRecType,
+    #[serde(rename = "type")]
+    pub rec_type: String,
     pub name: Option<String>,
     pub priority: Option<u64>,
     pub port: Option<u64>,
@@ -79,30 +81,34 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
         //      "priority" : "20"       // MX, SRV
         //      "port" : "80"           // SRV
         //      "weight" : "200"        // SRV
-        let mut hm = HashMap::new();
-        hm.insert("type", rec.rec_type.to_string());
-        if let Some(ref n) = rec.name {
-            hm.insert("name", n.to_owned());
-        }
-        if let Some(ref d) = rec.data {
-            hm.insert("data", d.to_owned());
-        }
-        if let Some(p) = rec.priority {
-            hm.insert("priority", p.to_string());
-        }
-        if let Some(p) = rec.port {
-            hm.insert("name", p.to_string());
-        }
-        if let Some(w) = rec.weight {
-            hm.insert("name", w.to_string());
-        }
+
+        // FIXME: Don't unwrap()
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(json::to_string(rec).ok().unwrap())
         }
+
+
+        // let mut hm = HashMap::new();
+        // hm.insert("type", rec.rec_type.to_string());
+        // if let Some(ref n) = rec.name {
+        //     hm.insert("name", n.to_owned());
+        // }
+        // if let Some(ref d) = rec.data {
+        //     hm.insert("data", d.to_owned());
+        // }
+        // if let Some(p) = rec.priority {
+        //     hm.insert("priority", p.to_string());
+        // }
+        // if let Some(p) = rec.port {
+        //     hm.insert("name", p.to_string());
+        // }
+        // if let Some(w) = rec.weight {
+        //     hm.insert("name", w.to_string());
+        // }
     }
 }
 
@@ -116,32 +122,34 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         //      "priority" : "20"       // MX, SRV
         //      "port" : "80"           // SRV
         //      "weight" : "200"        // SRV
-        let mut hm = HashMap::new();
-        hm.insert("type", record.rec_type.to_string());
-        if let Some(ref n) = record.name {
-            hm.insert("name", n.to_owned());
-        }
-        if let Some(ref d) = record.data {
-            hm.insert("data", d.to_owned());
-        }
-        if let Some(p) = record.priority {
-            hm.insert("priority", p.to_string());
-        }
-        if let Some(p) = record.port {
-            hm.insert("name", p.to_string());
-        }
-        if let Some(w) = record.weight {
-            hm.insert("name", w.to_string());
-        }
         self.url.push('/');
         self.url.push_str(id);
+        // FIXME: Don't unwrap()
         RequestBuilder {
             method: Method::Put,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(hm)
+            body: Some(json::to_string(record).ok().unwrap())
         }
+
+        // let mut hm = HashMap::new();
+        // hm.insert("type", record.rec_type.to_string());
+        // if let Some(ref n) = record.name {
+        //     hm.insert("name", n.to_owned());
+        // }
+        // if let Some(ref d) = record.data {
+        //     hm.insert("data", d.to_owned());
+        // }
+        // if let Some(p) = record.priority {
+        //     hm.insert("priority", p.to_string());
+        // }
+        // if let Some(p) = record.port {
+        //     hm.insert("name", p.to_string());
+        // }
+        // if let Some(w) = record.weight {
+        //     hm.insert("name", w.to_string());
+        // }
     }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/domains/$id"
