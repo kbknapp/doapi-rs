@@ -1,4 +1,4 @@
-use std::io::Read;
+use std::io::{Read, Write};
 
 use hyper::client;
 use hyper::{self, Error, Url};
@@ -15,6 +15,7 @@ pub trait BaseRequest {
     fn url(&self) -> &str;
     fn auth(&self) -> &str;
     fn method(&self) -> Method;
+    fn body(&self) -> Option<String>;
 }
 
 pub trait DoRequest<T> : BaseRequest
@@ -50,7 +51,10 @@ pub trait DoRequest<T> : BaseRequest
         auth_s.push_str(self.auth());
         fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
         fresh_req.headers_mut().set(Authorization(auth_s));
-        let streaming_req = try!(fresh_req.start());
+        let mut streaming_req = try!(fresh_req.start());
+        if let Some(ref b) = self.body() { 
+            streaming_req.write(b.as_bytes()).unwrap();
+        }
         let mut response = try!(streaming_req.send());
         let mut s = String::new();
         try!(response.read_to_string(&mut s));
@@ -71,7 +75,10 @@ pub trait DoRequest<T> : BaseRequest
         auth_s.push_str(self.auth());
         fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
         fresh_req.headers_mut().set(Authorization(auth_s));
-        let streaming_req = try!(fresh_req.start());
+        let mut streaming_req = try!(fresh_req.start());
+        if let Some(ref b) = self.body() { 
+            streaming_req.write(b.as_bytes()).unwrap();
+        }
         let response = try!(streaming_req.send());
         Ok(response)
     }

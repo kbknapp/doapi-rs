@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 use std::iter::Iterator;
+use std::collections::HashMap;
 use std::fmt;
 
 use serde::{json, Deserialize};
@@ -14,7 +15,33 @@ pub struct RequestBuilder<'t, T> {
     pub auth: &'t str,
     pub method: Method,
     pub url: String,
-    pub resp_t: PhantomData<*const T>
+    pub resp_t: PhantomData<*const T>,
+    pub body: Option<RequestBody>
+}
+
+pub type RequestBody = HashMap<&'static str, String>;
+pub trait ToJsonString {
+    fn to_json(&self) -> String;
+}
+
+impl ToJsonString for RequestBody {
+    fn to_json(&self) -> String {
+        let mut s = String::with_capacity(100);
+        s.push('{');
+        for (k, v) in self.iter() {
+            s.push('"');
+            s.push_str(&k[..]);
+            s.push('"');
+            s.push(':');
+            s.push('"');
+            s.push_str(&v[..]);
+            s.push('"');
+            s.push(',');
+        }
+        s.push('}');
+        s.shrink_to_fit();
+        s
+    }
 }
 
 impl<'t, T> RequestBuilder<'t, T> {
@@ -23,7 +50,8 @@ impl<'t, T> RequestBuilder<'t, T> {
             auth: auth,
             method: Method::Get,
             url: String::new(),
-            resp_t: PhantomData
+            resp_t: PhantomData,
+            body: None
         }
     }
     pub fn new<S>(auth: &'t str, url: S)
@@ -33,7 +61,8 @@ impl<'t, T> RequestBuilder<'t, T> {
             auth: auth,
             method: Method::Get,
             url: url.into(),
-            resp_t: PhantomData
+            resp_t: PhantomData,
+            body: None
         }
     }
 }
@@ -56,6 +85,13 @@ impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
     }
     fn method(&self) -> Method {
         self.method.clone()
+    }
+    fn body(&self) -> Option<String> {
+        if let Some(ref hm) = self.body {
+            Some(hm.to_json())
+        } else {
+            None
+        }
     }
 }
 
