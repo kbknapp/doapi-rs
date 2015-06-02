@@ -45,8 +45,8 @@ impl<'t> RequestBuilder<'t, response::Image> {
             .. self
         }
     }
-    pub fn delete(self) -> RequestBuilder<'t, response::Image> {
-        // PUT: https://api.digitalocean.com/v2/images/$NAME
+    pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
+        // DELETE: https://api.digitalocean.com/v2/images/$ID
         RequestBuilder {
             method: Method::Delete,
             auth: self.auth,
