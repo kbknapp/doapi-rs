@@ -38,12 +38,6 @@ impl<'t> RequestBuilder<'t, response::Image> {
             body: Some(hm)
         }
     }
-    pub fn show(mut self, slug: &str) -> RequestBuilder<'t, response::Image> {
-        // GET: https://api.digitalocean.com/v2/images/$SLUG
-        self.url.push('/');
-        self.url.push_str(slug);
-        self
-    }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
         // GET: https://api.digitalocean.com/v2/images/$SLUG
         self.url.push_str("/actions");

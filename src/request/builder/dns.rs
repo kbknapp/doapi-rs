@@ -1,4 +1,8 @@
 use std::fmt;
+use std::marker::PhantomData;
+use std::collections::HashMap;
+
+use hyper::method::Method;
 
 use response;
 use request::RequestBuilder;
@@ -20,10 +24,10 @@ doapi_enum! {
 pub struct DnsRecord {
     pub rec_type: DnsRecType,
     pub name: Option<String>,
-    pub priority: Option<u32>,
-    pub port: Option<u32>,
+    pub priority: Option<u64>,
+    pub port: Option<u64>,
     pub data: Option<String>,
-    pub weight: Option<u32>,
+    pub weight: Option<u64>,
 }
 
 impl fmt::Display for DnsRecord {
@@ -64,21 +68,90 @@ impl fmt::Display for DnsRecord {
         )
     }
 }
+
+impl<'t> RequestBuilder<'t, response::DnsRecords> {
+    pub fn create(self, rec: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+        // POST: "https://api.digitalocean.com/v2/domains/$DOMAIN/records"
+        // body:
+        //      "type" : "MX"           // All records
+        //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
+        //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
+        //      "priority" : "20"       // MX, SRV
+        //      "port" : "80"           // SRV
+        //      "weight" : "200"        // SRV
+        let mut hm = HashMap::new();
+        hm.insert("type", rec.rec_type.to_string());
+        if let Some(ref n) = rec.name {
+            hm.insert("name", n.to_owned());
+        }
+        if let Some(ref d) = rec.data {
+            hm.insert("data", d.to_owned());
+        }
+        if let Some(p) = rec.priority {
+            hm.insert("priority", p.to_string());
+        }
+        if let Some(p) = rec.port {
+            hm.insert("name", p.to_string());
+        }
+        if let Some(w) = rec.weight {
+            hm.insert("name", w.to_string());
+        }
+        RequestBuilder {
+            method: Method::Post,
+            auth: self.auth,
+            url: self.url,
+            resp_t: PhantomData,
+            body: Some(hm)
+        }
+    }
+}
+
 impl<'t> RequestBuilder<'t, response::DnsRecord> {
-    pub fn create(&self, rec: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
+    pub fn update(mut self, id: &str, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+        // PUT: "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
+        // body:
+        //      "type" : "MX"           // All records
+        //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
+        //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
+        //      "priority" : "20"       // MX, SRV
+        //      "port" : "80"           // SRV
+        //      "weight" : "200"        // SRV
+        let mut hm = HashMap::new();
+        hm.insert("type", record.rec_type.to_string());
+        if let Some(ref n) = record.name {
+            hm.insert("name", n.to_owned());
+        }
+        if let Some(ref d) = record.data {
+            hm.insert("data", d.to_owned());
+        }
+        if let Some(p) = record.priority {
+            hm.insert("priority", p.to_string());
+        }
+        if let Some(p) = record.port {
+            hm.insert("name", p.to_string());
+        }
+        if let Some(w) = record.weight {
+            hm.insert("name", w.to_string());
+        }
+        self.url.push('/');
+        self.url.push_str(id);
+        RequestBuilder {
+            method: Method::Put,
+            auth: self.auth,
+            url: self.url,
+            resp_t: PhantomData,
+            body: Some(hm)
+        }
     }
-    pub fn records(&self) -> RequestBuilder<'t, response::DnsRecords> {
-        unimplemented!()
-    }
-    pub fn update(&self, id: &str, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
-    }
-    pub fn delete(&self, id: &str) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
-    }
-    pub fn show(&self, id: &str) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
+    pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
+        // DELETE: "https://api.digitalocean.com/v2/domains/$id"
+        RequestBuilder {
+            method: Method::Delete,
+            auth: self.auth,
+            url: self.url,
+            resp_t: PhantomData,
+            body: None
+        }
     }
 }
 

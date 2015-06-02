@@ -57,13 +57,6 @@ impl<'t> RequestBuilder<'t, response::SshKey> {
             body: None
         }
     }
-
-    pub fn show(self) -> RequestBuilder<'t, response::SshKey> {
-        // GET: "https://api.digitalocean.com/v2/account/keys/$ID"
-        // OR
-        // GET: "https://api.digitalocean.com/v2/account/keys/$FINGER"
-        self
-    }
 }
 
 impl<'t> DoRequest<response::SshKey> for RequestBuilder<'t, response::SshKey> {}

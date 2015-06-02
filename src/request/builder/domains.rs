@@ -29,15 +29,6 @@ impl<'t> RequestBuilder<'t, response::Domains> {
 }
 
 impl<'t> RequestBuilder<'t, response::Domain> {
-    pub fn create(&self, rec: &DomainRecord) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
-    }
-    pub fn records(&self) -> RequestBuilder<'t, response::DnsRecords> {
-        unimplemented!()
-    }
-    pub fn update(&self, id: &str) -> RequestBuilder<'t, response::DnsRecord> {
-        unimplemented!()
-    }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/domains/$id"
         RequestBuilder {
@@ -48,9 +39,17 @@ impl<'t> RequestBuilder<'t, response::Domain> {
             body: None
         }
     }
-    pub fn show(self) -> RequestBuilder<'t, response::Domain> {
-        // GET: "https://api.digitalocean.com/v2/domains/$ID"
-        self
+    pub fn dns_records(mut self) -> RequestBuilder<'t, response::DnsRecords> {
+        // GET: "https://api.digitalocean.com/v2/domains/$DOMAIN/records"
+        self.url.push('/');
+        self.url.push_str("records");
+        RequestBuilder::new(self.auth, self.url)
+    }
+    pub fn dns_record(mut self, id: &str) -> RequestBuilder<'t, response::DnsRecord> {
+        // GET "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
+        self.url.push('/');
+        self.url.push_str(id);
+        RequestBuilder::new(self.auth, self.url)
     }
 }
 

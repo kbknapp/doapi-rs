@@ -40,9 +40,6 @@ impl<'t> DoManager<'t> {
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/account/keys/{}", id))
     }
 
-    pub fn dns(&self) -> RequestBuilder<'t, response::DnsRecord> {
-        RequestBuilder::with_auth(self.auth)
-    }
 
     pub fn droplet(&self, id: &str) -> RequestBuilder<'t, response::Droplet> {
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/droplet/{}", id))
