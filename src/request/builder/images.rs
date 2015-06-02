@@ -62,7 +62,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
         RequestBuilder::new(self.auth, self.url)
     }
 
-    pub fn update(mut self, name: &str) -> RequestBuilder<'t, response::Image> {
+    pub fn update(self, name: &str) -> RequestBuilder<'t, response::Image> {
         // PUT: https://api.digitalocean.com/v2/images/$ID
         // body:
         //      "name" : "new_name"

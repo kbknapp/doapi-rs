@@ -5,7 +5,6 @@ use std::fmt;
 
 use serde::{json, Deserialize};
 use hyper::method::Method;
-use hyper::client::response::Response;
 
 use response::{self, RawPagedResponse, NamedResponse};
 use request::{BaseRequest, DoRequest};

@@ -35,7 +35,11 @@ impl<'t> DoManager<'t> {
     }
 
     pub fn ssh_keys(&self) -> RequestBuilder<'t, response::SshKeys> {
-        RequestBuilder::with_auth(self.auth)
+        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/account/keys")
+    }
+
+    pub fn ssh_key(&self, id: &str) -> RequestBuilder<'t, response::SshKey> {
+        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/account/keys/{}", id))
     }
 
     pub fn dns(&self) -> RequestBuilder<'t, response::DnsRecord> {
