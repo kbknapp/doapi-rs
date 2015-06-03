@@ -46,6 +46,7 @@ macro_rules! doapi_enum {
         }
 
         impl $e {
+            /// Lists all variants in a `Vec` of string slices
             fn variants() -> Vec<&'static str> {
                 vec![
                     $(stringify!($v),)+
