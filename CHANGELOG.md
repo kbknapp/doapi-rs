@@ -16,20 +16,26 @@
 * **SSH Keys**  implements ssh keys API ([ee35655e](https://github.com/kbknapp/doapi-rs/commit/ee35655e6673cfaaf24be17360031b699570b7d5), closes [#9](https://github.com/kbknapp/doapi-rs/issues/9))
 * **account**  implements account info ([079da60d](https://github.com/kbknapp/doapi-rs/commit/079da60dade586419820180c021ccfa3ee1ab4ad), closes [#1](https://github.com/kbknapp/doapi-rs/issues/1))
 
-#### Bug Fixes
-
-*   fixes issue with creating dns records ([2b3c2ebc](https://github.com/kbknapp/doapi-rs/commit/2b3c2ebc19212ed36d3bdd19e4873faf2edd0431))
-* **Account Actions**  fixes a bug where not all actions are displayed ([babaa84a](https://github.com/kbknapp/doapi-rs/commit/babaa84a0c9b381d07077bac9e0964350639f4c1))
-* **DNS Records**  fixes bug with duplicate record IDs ([09b47433](https://github.com/kbknapp/doapi-rs/commit/09b47433505ce1a58f742da3389a62ef40c53da9))
-
 #### Improvements
 
 * **Debugging**  adds debug! macro ([5291765e](https://github.com/kbknapp/doapi-rs/commit/5291765e2f7013426ec7bba08c42eb74fd09dd4f))
 
 #### Documentation
 
+*   adds more docs ([63a787f0](https://github.com/kbknapp/doapi-rs/commit/63a787f04f405cccce2530eca98713a784462317))
+*   fixes failing doc tests ([eab280d2](https://github.com/kbknapp/doapi-rs/commit/eab280d2e9762e75c0cc99dd9d049277a1c648a3))
+*   fixes typo in README.md ([ae9d4484](https://github.com/kbknapp/doapi-rs/commit/ae9d448425579921b73f5921799489543d4d0fee))
+*   Adds more docs ([417d4463](https://github.com/kbknapp/doapi-rs/commit/417d4463f94656bde756b19227403a5273827d4e))
+*   adds documentation ([ec9f379b](https://github.com/kbknapp/doapi-rs/commit/ec9f379be488a3ce3c145e42b6cb387c9a3adb79))
+*   adds changelog ([dc8758ce](https://github.com/kbknapp/doapi-rs/commit/dc8758ce6d381a0a8d66aa2bcc643e3888879e62))
 *   adding docs ([c1640458](https://github.com/kbknapp/doapi-rs/commit/c16404582d3cd1b50579d5d79cd8b396dcb924b8))
 * **README.md**  changes the name ([12df922e](https://github.com/kbknapp/doapi-rs/commit/12df922ee46b5c7a5396dd895ac6619b260b3a22))
+
+#### Bug Fixes
+
+*   fixes issue with creating dns records ([2b3c2ebc](https://github.com/kbknapp/doapi-rs/commit/2b3c2ebc19212ed36d3bdd19e4873faf2edd0431))
+* **Account Actions**  fixes a bug where not all actions are displayed ([babaa84a](https://github.com/kbknapp/doapi-rs/commit/babaa84a0c9b381d07077bac9e0964350639f4c1))
+* **DNS Records**  fixes bug with duplicate record IDs ([09b47433](https://github.com/kbknapp/doapi-rs/commit/09b47433505ce1a58f742da3389a62ef40c53da9))
 
 
 
