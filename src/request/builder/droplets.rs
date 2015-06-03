@@ -51,10 +51,10 @@ struct DropletWithId {
 impl DropletWithId {
     fn from_droplet(d: &Droplet) -> DropletWithId {
         DropletWithId {
-            name: d.name().clone(),
+            name: d.name.clone(),
             region: d.region.clone(),
             size: d.size.clone(),
-            image: &d.image[..].parse().ok().unwrap(),
+            image: d.image[..].parse().ok().unwrap(),
             ssh_keys: d.ssh_keys.clone(),
             backups: d.backups,
             ipv6: d.ipv6,
@@ -87,7 +87,40 @@ impl fmt::Display for Droplet {
              },
              self.backups,
              self.ipv6,
-             self.private_net,
+             self.private_networking,
+             if let Some(d) = self.user_data.clone() {
+                d
+             } else {
+                "None".to_owned()
+             }
+        )
+    }
+}
+
+impl fmt::Display for DropletWithId {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f,
+            "Name: {}\n\
+             Region: {}\n\
+             Size: {}\n\
+             Image: {}\n\
+             SSH Keys: {}\n\
+             Backups Enabled: {}\n\
+             IPv6 Enabled: {}\n\
+             Private Networking Enabled: {}\n\
+             User Data: {}\n",
+             self.name,
+             self.region,
+             self.size,
+             self.image,
+             if let Some(ref v) = self.ssh_keys {
+                v.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..])
+             } else {
+                "None".to_owned()
+             },
+             self.backups,
+             self.ipv6,
+             self.private_networking,
              if let Some(d) = self.user_data.clone() {
                 d
              } else {
@@ -111,7 +144,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"disable_backups\"}}"))
         }
     }
-    pub fn reboot(self) -> RequestBuilder<'t, response::Action> {
+    pub fn reboot(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "reboot"
@@ -124,7 +157,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"reboot\"}}"))
         }
     }
-    pub fn power_cycle(self) -> RequestBuilder<'t, response::Action> {
+    pub fn power_cycle(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "power_cycle"
@@ -137,7 +170,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"power_cycle\"}}"))
         }
     }
-    pub fn shutdown(self) -> RequestBuilder<'t, response::Action> {
+    pub fn shutdown(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "shutdown"
@@ -150,7 +183,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"shutdown\"}}"))
         }
     }
-    pub fn power_off(self) -> RequestBuilder<'t, response::Action> {
+    pub fn power_off(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "power_off"
@@ -163,7 +196,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"power_off\"}}"))
         }
     }
-    pub fn power_on(self) -> RequestBuilder<'t, response::Action> {
+    pub fn power_on(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "power_on"
@@ -176,14 +209,14 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"power_on\"}}"))
         }
     }
-    pub fn restore(self, img: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn restore(mut self, img: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "restore"
         //      "image": 12356          // number if ID, string if slug
         self.url.push_str("/actions");
         let image = match img.parse::<u64>() {
-            Ok(n)  => img.to_string(),
+            Ok(_)  => img.to_string(),
             Err(_) => format!("\"{}\"", img)
         };
         RequestBuilder {
@@ -194,7 +227,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"restore\",\"image\":{}}}", image))
         }
     }
-    pub fn reset_password(self) -> RequestBuilder<'t, response::Action> {
+    pub fn reset_password(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "password_reset"
@@ -207,7 +240,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"password_reset\"}}"))
         }
     }
-    pub fn resize(self, size: &str, disk: bool) -> RequestBuilder<'t, response::Action> {
+    pub fn resize(mut self, size: &str, disk: bool) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "resize"
@@ -222,14 +255,14 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"resize\",\"disk\":{},\"size\":{:?}}}", disk.to_string(), size))
         }
     }
-    pub fn rebuild(self, img: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn rebuild(mut self, img: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "rebuild"
         //      "image": 12356          // number if ID, string if slug
         self.url.push_str("/actions");
         let image = match img.parse::<u64>() {
-            Ok(n)  => img.to_string(),
+            Ok(_)  => img.to_string(),
             Err(_) => format!("\"{}\"", img)
         };
         RequestBuilder {
@@ -240,7 +273,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"rebuild\",\"image\":{}}}", image))
         }
     }
-    pub fn rename(self, name: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn rename(mut self, name: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "rename"
@@ -254,7 +287,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"rename\",\"name\":{:?}}}", name))
         }
     }
-    pub fn change_kernel(self, kernel: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn change_kernel(mut self, kernel: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "change_kernel"
@@ -268,7 +301,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"change_kernel\",\"kernel\":{}}}", kernel))
         }
     }
-    pub fn enable_ipv6(self) -> RequestBuilder<'t, response::Action> {
+    pub fn enable_ipv6(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "enable_ipv6"
@@ -281,7 +314,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"enable_ipv6\"}}"))
         }
     }
-    pub fn enable_private_networking(self) -> RequestBuilder<'t, response::Action> {
+    pub fn enable_private_networking(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "enable_private_networking"
@@ -294,7 +327,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"enable_private_networking\"}}"))
         }
     }
-    pub fn snapshot(self, name: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn snapshot(mut self, name: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "snapshot"
@@ -308,7 +341,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: Some(format!("{{\"type\":\"snapshot\",\"name\":{:?}}}", name))
         }
     }
-    pub fn upgrade(self) -> RequestBuilder<'t, response::Action> {
+    pub fn upgrade(mut self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/droplets/$ID/actions"
         // body:
         //      "type" : "upgrade"
@@ -383,7 +416,7 @@ impl<'t> RequestBuilder<'t, response::Droplets> {
 
         // FIXME: don't unwrap()
 
-        if &droplet.image[..].parse::<u64>().is_ok() {
+        if droplet.image[..].parse::<u64>().is_ok() {
             let d = DropletWithId::from_droplet(droplet);
             return RequestBuilder {
                 method: Method::Post,

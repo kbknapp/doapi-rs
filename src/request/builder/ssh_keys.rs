@@ -19,12 +19,8 @@ impl<'t> RequestBuilder<'t, response::SshKeys> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":\"{}\",\"public_key\":\"{}\"}}", name, pub_key)) 
+            body: Some(format!("{{\"name\":{:?},\"public_key\":{:?}}}", name, pub_key)) 
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("name", name.to_owned());
-        // hm.insert("public_key", pub_key.to_owned());
     }
 }
 
@@ -40,11 +36,8 @@ impl<'t> RequestBuilder<'t, response::SshKey> {
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":\"{}\"}}", name)) 
+            body: Some(format!("{{\"name\":{:?}}}", name)) 
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("name", name.to_owned());
     }
     pub fn destroy(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/account/keys/$ID"

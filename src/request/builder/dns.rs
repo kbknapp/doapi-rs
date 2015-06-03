@@ -21,6 +21,12 @@ doapi_enum! {
     }
 }
 
+// type     string  The record type (A, MX, CNAME, etc).    All Records
+// name     string  The host name, alias, or service being defined by the record.   A, AAAA, CNAME, TXT, SRV
+// data     string  Variable data depending on record type. See the [Domain Records]() section for more detail on each record type. A, AAAA, CNAME, MX, TXT, SRV, NS
+// priority    nullable number The priority of the host (for SRV and MX records. null otherwise).  MX, SRV
+// port     nullable number The port that the service is accessible on (for SRV records only. null otherwise).  SRV
+// weight   nullable number The weight of records with the same priority (for SRV records only. null otherwise).    SRV
 #[derive(Serialize)]
 pub struct DnsRecord {
     #[serde(rename = "type")]
@@ -78,9 +84,9 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
         //      "type" : "MX"           // All records
         //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
         //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
-        //      "priority" : "20"       // MX, SRV
-        //      "port" : "80"           // SRV
-        //      "weight" : "200"        // SRV
+        //      "priority" : 20       // MX, SRV
+        //      "port" : 80           // SRV
+        //      "weight" : 200        // SRV
 
         // FIXME: Don't unwrap()
         RequestBuilder {
@@ -90,38 +96,19 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
             resp_t: PhantomData,
             body: Some(json::to_string(rec).ok().unwrap())
         }
-
-
-        // let mut hm = HashMap::new();
-        // hm.insert("type", rec.rec_type.to_string());
-        // if let Some(ref n) = rec.name {
-        //     hm.insert("name", n.to_owned());
-        // }
-        // if let Some(ref d) = rec.data {
-        //     hm.insert("data", d.to_owned());
-        // }
-        // if let Some(p) = rec.priority {
-        //     hm.insert("priority", p.to_string());
-        // }
-        // if let Some(p) = rec.port {
-        //     hm.insert("name", p.to_string());
-        // }
-        // if let Some(w) = rec.weight {
-        //     hm.insert("name", w.to_string());
-        // }
     }
 }
 
 impl<'t> RequestBuilder<'t, response::DnsRecord> {
-    pub fn update(mut self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn update(self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
         // PUT: "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
         // body:
         //      "type" : "MX"           // All records
         //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
         //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
-        //      "priority" : "20"       // MX, SRV
-        //      "port" : "80"           // SRV
-        //      "weight" : "200"        // SRV
+        //      "priority" : 20       // MX, SRV
+        //      "port" : 80           // SRV
+        //      "weight" : 200        // SRV
         // FIXME: Don't unwrap()
         RequestBuilder {
             method: Method::Put,
@@ -130,24 +117,6 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
             resp_t: PhantomData,
             body: Some(json::to_string(record).ok().unwrap())
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("type", record.rec_type.to_string());
-        // if let Some(ref n) = record.name {
-        //     hm.insert("name", n.to_owned());
-        // }
-        // if let Some(ref d) = record.data {
-        //     hm.insert("data", d.to_owned());
-        // }
-        // if let Some(p) = record.priority {
-        //     hm.insert("priority", p.to_string());
-        // }
-        // if let Some(p) = record.port {
-        //     hm.insert("name", p.to_string());
-        // }
-        // if let Some(w) = record.weight {
-        //     hm.insert("name", w.to_string());
-        // }
     }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/domains/$id"

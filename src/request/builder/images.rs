@@ -17,12 +17,8 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"type\":\"transfer\",\"region\":\"{}\"}}", region)) 
+            body: Some(format!("{{\"type\":\"transfer\",\"region\":{:?}}}", region)) 
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("type", "transfer".to_owned());
-        // hm.insert("region", region.to_owned());
     }
     pub fn convert(self) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/images/7938291/actions"
@@ -33,11 +29,8 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"type\":\"convert\"}}"))
+            body: Some(r#"{"type":"convert"}"#.to_owned())
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("type", "convert".to_owned());
     }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
         // GET: https://api.digitalocean.com/v2/images/$SLUG
@@ -66,11 +59,8 @@ impl<'t> RequestBuilder<'t, response::Image> {
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":\"{}\"}}", name)) 
+            body: Some(format!("{{\"name\":{:?}}}", name)) 
         }
-
-        // let mut hm = HashMap::new();
-        // hm.insert("name", name.to_owned());
     }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: https://api.digitalocean.com/v2/images/$ID
