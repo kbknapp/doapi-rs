@@ -77,7 +77,13 @@ git = "https://github.com/kbknapp/doapi-rs.git"
 
 Add `extern crate dopai;` to your crate root.
 
-Define a list of valid arguments for your program (see the [documentation](https://kbknapp.github.io/doapi-rs/index.html))
+### DigitalOcean Personal Auth Token
+
+In order to use the DigitalOcean v2 API, you must generate a Personal Authentication Token. This token can then be passed to the `DoManager` in order to build requests and retrieve results.
+
+Personal Auth Token's can be Read/Write, or Read Only/Write Only. In order to process destructive API calls (such as various `.delete()`, `.create()`, `.update()` etc.) you *must* have a token with Write priviledges.
+
+To generate a new Personal Auth Token see the [following DigitalOcean details](https://developers.digitalocean.com/documentation/v2/#authentication)
 
 ### More Information
 
