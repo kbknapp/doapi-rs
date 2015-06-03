@@ -3,6 +3,8 @@ use request::RequestBuilder;
 use request::DoRequest;
 
 impl<'t> RequestBuilder<'t, response::Account> {
+    /// Returns a struct for making requests that send back "Action" objects. The `id` is the
+    /// action ID you'd like to retrieve from DigitalOcean
     pub fn action(self, id: &str) -> RequestBuilder<'t, response::Action> {
         // https://api.digitalocean.com/v2/actions/$ID
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/actions/{}", id))

@@ -87,6 +87,8 @@ You can find complete documentation on the [github-pages site](http://kbknapp.gi
 
 Contributions are always welcome! And there is a multitude of ways in which you can help depending on what you like to do, or are good at. Anything from documentation, code cleanup, issue completion, new features, you name it, even filing issues is contributing and greatly appreciated!
 
+**NOTE:** One of the best ways to help right now is to simply use the library and report issues!
+
 1. Fork `doapi`
 2. Clone your fork (`git clone https://github.com/$YOUR_USERNAME/doapi-rs && cd doapi-rs`)
 3. Create new branch (`git checkout -b new-branch`)
