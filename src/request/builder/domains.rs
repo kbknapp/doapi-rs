@@ -6,8 +6,6 @@ use response;
 use request::RequestBuilder;
 use request::DoRequest;
 
-pub struct DomainRecord;
-
 impl<'t> RequestBuilder<'t, response::Domains> {
     pub fn create(self, name: &str, ip: &str) -> RequestBuilder<'t, response::Domain> {
         // POST: "https://api.digitalocean.com/v2/domains"

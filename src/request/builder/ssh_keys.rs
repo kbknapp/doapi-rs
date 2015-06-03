@@ -6,8 +6,6 @@ use response;
 use request::RequestBuilder;
 use request::DoRequest;
 
-pub struct SshKey;
-
 impl<'t> RequestBuilder<'t, response::SshKeys> {
     pub fn create(self, name: &str, pub_key: &str) -> RequestBuilder<'t, response::SshKey> {
         // POST: "https://api.digitalocean.com/v2/account/keys"

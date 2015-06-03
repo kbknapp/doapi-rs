@@ -1,6 +1,4 @@
-pub use self::domains::DomainRecord;
 pub use self::droplets::Droplet;
-pub use self::ssh_keys::SshKey;
 pub use self::dns::{DnsRecord, DnsRecType};
 pub use self::request::RequestBuilder;
 
