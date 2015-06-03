@@ -77,7 +77,7 @@ git = "https://github.com/kbknapp/doapi-rs.git"
 
 Add `extern crate dopai;` to your crate root.
 
-Define a list of valid arguments for your program (see the [documentation](https://kbknapp.github.io/doapi-rs/index.html)
+Define a list of valid arguments for your program (see the [documentation](https://kbknapp.github.io/doapi-rs/index.html))
 
 ### More Information
 
