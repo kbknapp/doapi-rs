@@ -71,7 +71,7 @@ Add `doapi` as a dependecy in your `Cargo.toml` file to use from crates.io:
  Or track the latest on the master branch at github:
 
 ```toml
-[dependencies.clap]
+[dependencies.doapi]
 git = "https://github.com/kbknapp/doapi-rs.git"
 ```
 
