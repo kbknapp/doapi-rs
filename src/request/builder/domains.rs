@@ -7,6 +7,21 @@ use request::RequestBuilder;
 use request::DoRequest;
 
 impl<'t> RequestBuilder<'t, response::Domains> {
+    /// Returns a request that can be used to create a new domain.
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// # use doapi::DoManager;
+    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// // ... domgr set up same as before
+    /// match domgr.domains()
+    ///            .create("super.com", "10.10.10.1")
+    ///            .retrieve() {
+    ///     Ok(domain) => println!("Domain: {}", domain),
+    ///     Err(e)     => println!("Error: {}", e)
+    /// }
+    /// ```
     pub fn create(self, name: &str, ip: &str) -> RequestBuilder<'t, response::Domain> {
         // POST: "https://api.digitalocean.com/v2/domains"
         // body:
@@ -23,6 +38,22 @@ impl<'t> RequestBuilder<'t, response::Domains> {
 }
 
 impl<'t> RequestBuilder<'t, response::Domain> {
+    /// Returns a request that can be used to an existing domain. Returns a header with
+    /// "status: 204 No Content" if successful
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// # use doapi::DoManager;
+    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// // ... domgr set up same as before
+    /// match domgr.domain("super.com")
+    ///            .delete()
+    ///            .retrieve() {
+    ///     Ok(_)  => println!("Success"),
+    ///     Err(_) => println!("Error")
+    /// }
+    /// ```
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/domains/$id"
         RequestBuilder {
@@ -33,12 +64,44 @@ impl<'t> RequestBuilder<'t, response::Domain> {
             body: None
         }
     }
+
+    /// Returns a request that can be used to list all domains, or perform domain tasks
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// # use doapi::DoManager;
+    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// // ... domgr set up same as before
+    /// match domgr.domains()
+    ///            .create("super.com", "10.10.10.1")
+    ///            .retrieve() {
+    ///     Ok(domain) => println!("Domain: {}", domain),
+    ///     Err(e)     => println!("Error: {}", e)
+    /// }
+    /// ```
     pub fn dns_records(mut self) -> RequestBuilder<'t, response::DnsRecords> {
         // GET: "https://api.digitalocean.com/v2/domains/$DOMAIN/records"
         self.url.push('/');
         self.url.push_str("records");
         RequestBuilder::new(self.auth, self.url)
     }
+
+    /// Returns a request that can be used to list a single domain, or perform tasks on a single
+    /// domain
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// # use doapi::DoManager;
+    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// // ... domgr set up same as before
+    /// match domgr.domain("super.com")
+    ///            .retrieve() {
+    ///     Ok(domain) => println!("Domain: {}", domain),
+    ///     Err(e)     => println!("Error: {}", e)
+    /// }
+    /// ```
     pub fn dns_record(mut self, id: &str) -> RequestBuilder<'t, response::DnsRecord> {
         // GET "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
         self.url.push('/');
