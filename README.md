@@ -1,5 +1,7 @@
 # doapi-rs
 
+![Travis-CI](https://travis-ci.org/kbknapp/doapi-rs.svg?branch=master) [![Crates.io](https://img.shields.io/crates/v/doapi.svg)]() [![Crates.io](https://img.shields.io/crates/l/doapi.svg)]() [![Join the chat at https://gitter.im/kbknapp/doapi-rs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kbknapp/doapi-rs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Wrapper library for utilizing [DigitalOcean API v2](https://developers.digitalocean.com/documentation/) in Rust
 
 ## Disclaimer
