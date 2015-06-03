@@ -11,8 +11,8 @@ keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 
 [dependencies]
 hyper = "*"
-serde = {path = "../serde"}
-serde_macros = {path = "../serde/serde_macros"}
+serde = { git = "https://github.com/kbknapp/serde" }
+serde_macros = { git = "https://github.com/kbknapp/serde_macros" }
 regex = "*"
 
 [features]
