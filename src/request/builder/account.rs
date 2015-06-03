@@ -10,7 +10,8 @@ impl<'t> RequestBuilder<'t, response::Account> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.account().action("1234").retrieve() {
     ///     Ok(action) => println!("Action: {}", action),
@@ -28,7 +29,8 @@ impl<'t> RequestBuilder<'t, response::Account> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.account().action("1234").retrieve() {
     ///     Ok(action) => println!("Action: {}", action),

@@ -96,7 +96,17 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # use doapi::request::DnsRecord;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
+    /// # let record = DnsRecord {
+    /// #   rec_type: "A".to_owned(),
+    /// #   name: None,
+    /// #   priority: None,
+    /// #   port: None,
+    /// #   data: None,
+    /// #   weight: None,
+    /// # };
     /// // ... domgr set up same as before
     /// // ... assumes "record" is an instance of doapi::request::DnsRecord
     /// match domgr.domain("super.com")
@@ -136,7 +146,17 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # use doapi::request::DnsRecord;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
+    /// # let record = DnsRecord {
+    /// #   rec_type: "A".to_owned(),
+    /// #   name: None,
+    /// #   priority: None,
+    /// #   port: None,
+    /// #   data: None,
+    /// #   weight: None,
+    /// # };
     /// // ... domgr set up same as before
     /// // ... assumes "record" is an instance of doapi::request::DnsRecord
     /// match domgr.domain("super.com")
@@ -173,7 +193,8 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.domain("super.com")
     ///            .dns_record("1234")

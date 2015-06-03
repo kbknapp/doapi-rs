@@ -13,7 +13,8 @@ impl<'t> RequestBuilder<'t, response::Domains> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.domains()
     ///            .create("super.com", "10.10.10.1")
@@ -45,7 +46,8 @@ impl<'t> RequestBuilder<'t, response::Domain> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.domain("super.com")
     ///            .delete()
@@ -71,7 +73,8 @@ impl<'t> RequestBuilder<'t, response::Domain> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.domains()
     ///            .create("super.com", "10.10.10.1")
@@ -94,7 +97,8 @@ impl<'t> RequestBuilder<'t, response::Domain> {
     ///
     /// ```no_run
     /// # use doapi::DoManager;
-    /// # let domgr = DoManager::with_auth("asfasdfasdf");
+    /// # use doapi::DoRequest;
+    /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
     /// match domgr.domain("super.com")
     ///            .retrieve() {
