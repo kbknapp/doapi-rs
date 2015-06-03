@@ -1,6 +1,6 @@
 [package]
 name = "doapi"
-version = "0.1.0"
+version = "0.1.0-alpha"
 authors = ["Kevin K. <kbknapp@gmail.com>"]
 description = "A wrapper library for the DigitalOcean API v2"
 license = "MIT"
@@ -11,9 +11,15 @@ keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 
 [dependencies]
 hyper = "*"
-serde = { git = "https://github.com/kbknapp/serde" }
-serde_macros = { git = "https://github.com/kbknapp/serde_macros" }
 regex = "*"
+
+[dependencies.serde_macros]
+git = "https://github.com/kbknapp/serde_macros"
+#version = "*"
+
+[dependencies.serde]
+git = "https://github.com/kbknapp/serde"
+#version = "*"
 
 [features]
 default = []
