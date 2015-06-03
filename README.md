@@ -1,2 +1,119 @@
 # doapi-rs
-Wrapper library for utilizing DigitalOcean API v2 in Rust (Pronounced "Doh-pee")
+
+Wrapper library for utilizing [DigitalOcean API v2](https://developers.digitalocean.com/documentation/) in Rust
+
+## Disclaimer
+This library is very alpha - it may do anything up to, and including, eating your laundry.
+
+## Example
+
+The following example takes a snapshot of an existing droplet, which in turn sends back an `Action`.
+
+```rust
+let auth_token = "INSERT AUTH TOKEN HERE";
+let domgr = DoManager::with_auth(&auth_token);
+let snapshot_name = "my new snapshot";
+let droplet_id = "1234567";
+
+print!("Sending request...")
+match domgr.droplet(droplet_id)
+           .snapshot(snapshot_name)
+           .retrieve() {
+Ok(action) => {
+    println!("Success!\n\t");
+    println!("{}\n", action);
+},
+Err(e) => {
+    pritnln!("Failed\n\t.")
+    println!("{}\n", e);
+}
+```
+
+This library can be used to send the request and retrieve the object back from DigitalOcean all at once (as in the above example), or you use this library to build the request and change it to your liking. For example (still using the above as a base), you could see the request being sent to DigitalOcean without sending it via:
+
+```rust
+domgr.droplet(droplet_id)
+     .snapshot(snapshot_name)
+     .to_string();
+```
+
+You can also get the raw JSON back from DigitalOcean
+
+```rust
+print!("Sending request...")
+match domgr.droplet(droplet_id)
+           .snapshot(snapshot_name)
+           .retrieve_json() {
+Ok(json) => {
+    println!("Success!\n\t");
+    println!("{}\n", json);
+},
+Err(e) => {
+    pritnln!("Failed\n\t.")
+    println!("{}\n", e);
+}
+```
+
+You can also get the raw `hyper` requests and responses for your manipulation.
+
+## Usage
+
+At the moment, `doapi` requeires a nightly Rust compiler.
+
+Add `doapi` as a dependecy in your `Cargo.toml` file to use from crates.io:
+
+ ```toml
+ [dependencies]
+ doapi = "*"
+ ```
+ Or track the latest on the master branch at github:
+
+```toml
+[dependencies.clap]
+git = "https://github.com/kbknapp/doapi-rs.git"
+```
+
+Add `extern crate dopai;` to your crate root.
+
+Define a list of valid arguments for your program (see the [documentation](https://kbknapp.github.io/doapi-rs/index.html)
+
+### More Information
+
+You can find complete documentation on the [github-pages site](http://kbknapp.github.io/doapi-rs/index.html) for this project.
+
+## Contributing
+
+Contributions are always welcome! And there is a multitude of ways in which you can help depending on what you like to do, or are good at. Anything from documentation, code cleanup, issue completion, new features, you name it, even filing issues is contributing and greatly appreciated!
+
+1. Fork `doapi`
+2. Clone your fork (`git clone https://github.com/$YOUR_USERNAME/doapi-rs && cd doapi-rs`)
+3. Create new branch (`git checkout -b new-branch`)
+4. Make your changes, and commit (`git commit -am "your message"`)
+ * I use a [conventional](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md) changelog format so I can update my changelog using [clog](https://github.com/thoughtram/clog)
+ * Format your commit subject line using the following format: `TYPE(COMPONENT): MESSAGE` where `TYPE` is one of the following:
+    - `feat` - A new feature
+    - `imp` - An improvement to an existing feature
+    - `perf` - A performance improvement
+    - `docs` - Changes to documentation only
+    - `tests` - Changes to the testing framework or tests only
+    - `fix` - A bug fix
+    - `refactor` - Code functionality doesn't change, but underlying structure may
+    - `style` - Stylistic changes only, no functionality changes
+    - `wip` - A work in progress commit (Should typically be `git rebase`'ed away)
+    - `chore` - Catch all or things that have to do with the build system, etc
+ * The `COMPONENT` is optional, and may be a single file, directory, or logical component. Can be omitted if commit applies globally
+5. `git rebase` into concise commits and remove `--fixup`s (`git rebase -i HEAD~NUM` where `NUM` is number of commits back)
+6. Push your changes back to your fork (`git push origin $your-branch`)
+7. Create a pull request! (You can also create the pull request first, and we'll merge when ready. This a good way to discuss proposed changes.)
+
+## Recent Breaking Changes
+
+Although I do my best to keep breaking changes to a minimum, being that this a sub 1.0 library, there are breaking changes from time to time in order to support better features or implementation. For the full details see the changelog.md
+
+**NONE Yay :)**
+
+### Deprecations
+
+Old method names will be left around for some time.
+
+**NONE Yay :)**
