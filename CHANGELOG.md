@@ -1,5 +1,23 @@
-<a name="v0.1.0"></a>
-## v0.1.0 (2015-06-03)
+<a name="v0.1.0-alpha2"></a>
+## v0.1.0-alpha2 (2015-06-04)
+
+
+#### Documentation
+
+*   adds more docs ([63a787f0](https://github.com/kbknapp/doapi-rs/commit/63a787f04f405cccce2530eca98713a784462317))
+
+#### Improvements
+
+*   adds body to request display() ([f972678c](https://github.com/kbknapp/doapi-rs/commit/f972678c9e9acce011b268e2a5347973f412f91c))
+
+#### Features
+
+*   adds network response objects ([49b225c0](https://github.com/kbknapp/doapi-rs/commit/49b225c0bfdb2f2f4b95a5ea8d7919b4e969c5a7))
+
+
+
+<a name="v0.1.0-alpha"></a>
+## v0.1.0-alpha (2015-06-03)
 
 
 #### Features

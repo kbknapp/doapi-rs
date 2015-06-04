@@ -1,6 +1,6 @@
 [package]
 name = "doapi"
-version = "0.1.0-alpha"
+version = "0.1.0-alpha2"
 authors = ["Kevin K. <kbknapp@gmail.com>"]
 description = "A wrapper library for the DigitalOcean API v2"
 license = "MIT"
