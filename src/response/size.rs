@@ -16,27 +16,27 @@ use response::NamedResponse;
 #[derive(Deserialize, Debug)]
 pub struct Size {
     slug: String,
-    available: bool,
-    transfer: f64,
-    price_monthly: f64,
-    price_hourly: f64,
     memory: f64,
     vcpus: f64,
     disk: f64,
+    transfer: f64,
+    price_monthly: f64,
+    price_hourly: f64,
     regions: Vec<String>,
+    available: bool,
 }
 
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Slug: {}\n\t\
-                  Available: {}\n\t\
-                  Transfer Bandwidth: {}\n\t\
-                  Monthly Price: ${}\n\t\
-                  Hourly Price: ${}\n\t\
-                  Memory: {} MB\n\t\
-                  Virtual CPUs: {:.0}\n\t\
-                  Disk Space: {} GB\n\t\
-                  Sizes: {}\n",
+       write!(f, "Slug: {}\n\
+                  Available: {}\n\
+                  Transfer Bandwidth: {} TB\n\
+                  Monthly Price: ${}\n\
+                  Hourly Price: ${}\n\
+                  Memory: {} MB\n\
+                  Virtual CPUs: {:.0}\n\
+                  Disk Space: {} GB\n\
+                  Sizes: {}",
                 self.slug,
                 self.available,
                 self.transfer,

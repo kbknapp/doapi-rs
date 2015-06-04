@@ -12,7 +12,7 @@ pub use self::links::Links;
 pub use self::meta::Meta;
 pub use self::namedresponse::NamedResponse;
 pub use self::neighbors::Neighbors;
-pub use self::network::Network;
+pub use self::network::{Networks, Network};
 pub use self::page::{Pages, RawPagedResponse, NewIter};
 pub use self::region::{Regions, Region};
 pub use self::size::{Sizes, Size};

@@ -16,9 +16,9 @@ pub struct Domain {
 
 impl fmt::Display for Domain {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Domain:\n\t\
-                        name: {}\n\t\
-                        ttl: {:.0}\n\t\
+       write!(f, "Domain:\n\
+                        name: {}\n\
+                        ttl: {:.0}\n\
                         Zone File: {}\n",
                 self.name,
                 self.ttl,

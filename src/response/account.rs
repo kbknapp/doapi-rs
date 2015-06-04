@@ -20,9 +20,9 @@ pub struct Account {
 
 impl fmt::Display for Account {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Email: {}\n\t\
-                   Droplet Limit: {:.0}\n\t\
-                   UUID: {}\n\t\
+        write!(f, "Email: {}\n\
+                   Droplet Limit: {:.0}\n\
+                   UUID: {}\n\
                    E-Mail Verified: {}",
                 self.email,
                 self.droplet_limit,

@@ -30,14 +30,14 @@ pub struct Action {
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "ID: {}\n\t\
-                  Status: {}\n\t\
-                  Type: {}\n\t\
-                  Started At: {}\n\t\
-                  Completed At: {}\n\t\
-                  Resource ID: {}\n\t\
-                  Resource Type: {}\n\t\
-                  Region Slug: {}\n\t\
+       write!(f, "ID: {}\n\
+                  Status: {}\n\
+                  Type: {}\n\
+                  Started At: {}\n\
+                  Completed At: {}\n\
+                  Resource ID: {}\n\
+                  Resource Type: {}\n\
+                  Region Slug: {}\n\
                      {}",
                 self.id,
                 self.status,

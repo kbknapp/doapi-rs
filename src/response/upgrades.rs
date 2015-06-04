@@ -19,8 +19,8 @@ pub struct DropletUpgrade {
 
 impl fmt::Display for DropletUpgrade {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Droplet ID: {:.0}\n\t\
-                  Date of Migration: {}\n\t\
+       write!(f, "Droplet ID: {:.0}\n\
+                  Date of Migration: {}\n\
                   URL: {}",
                 self.droplet_id,
                 self.date_of_migration,

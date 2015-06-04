@@ -26,13 +26,13 @@ pub struct Snapshot {
 
 impl fmt::Display for Snapshot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "ID: {:.0}\n\t\
-                  Name: {}\n\t\
-                  Type:{}\n\t\
-                  Distribution:{}\n\t\
-                  Slug:{}\n\t\
-                  Public:{}\n\t\
-                  Regions:{}\n\t\
+       write!(f, "ID: {:.0}\n\
+                  Name: {}\n\
+                  Type:{}\n\
+                  Distribution:{}\n\
+                  Slug:{}\n\
+                  Public:{}\n\
+                  Regions:{}\n\
                   Minimum Disk Size: {:.0} MB\n",
                 self.id,
                 self.name,

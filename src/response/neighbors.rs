@@ -30,23 +30,23 @@ pub struct Neighbor {
 
 impl fmt::Display for Neighbor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Droplet:\n\t\
-                        ID: {:.0}\n\t\
-                        Name: {}\n\t\
-                        Memory: {} MB\n\t\
-                        Virtual CPUs: {:.0}\n\t\
-                        Disk: {} GB\n\t\
-                        Locked: {}\n\t\
-                        Created At: {}\n\t\
-                        Status: {}\n\t\
-                        Backup IDs: {}\n\t\
-                        Snapshot IDs: {}\n\t\
-                        Features: {}\n\t\
-                        Droplet: \n\t{}\n\
-                        Image: \n\t{}\n\
-                        Size: \n\t{}\n\
-                        Size Slug: {}\n\t\
-                        Network: \n\t{}\n\
+       write!(f, "Droplet:\n\
+                        ID: {:.0}\n\
+                        Name: {}\n\
+                        Memory: {} MB\n\
+                        Virtual CPUs: {:.0}\n\
+                        Disk: {} GB\n\
+                        Locked: {}\n\
+                        Created At: {}\n\
+                        Status: {}\n\
+                        Backup IDs: {}\n\
+                        Snapshot IDs: {}\n\
+                        Features: {}\n\
+                        Droplet: \n{}\n\
+                        Image: \n{}\n\
+                        Size: \n{}\n\
+                        Size Slug: {}\n\
+                        Network: \n{}\n\
                         Kernel: {}\
                         Next Backup Window: {}",
                 self.id,
@@ -66,12 +66,12 @@ impl fmt::Display for Neighbor {
                 self.size_slug,
                 self.networks,
                 if let Some(ref k) = self.kernel {
-                    format!("\n\t{}\n", k)
+                    format!("\n{}\n", k)
                 } else {
-                    "None\n\t".to_owned()
+                    "None\n".to_owned()
                 },
                 if let Some(ref k) = self.next_backup_window {
-                    format!("\n\t{}\n", k)
+                    format!("\n{}\n", k)
                 } else {
                     "None\n".to_owned()
                 })

@@ -24,10 +24,10 @@ impl NamedResponse for SshKey {
 
 impl fmt::Display for SshKey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "SSH Key:\n\t\
-                        ID: {:.0}\n\t\
-                        Fingerprint: {}\n\t\
-                        Public Key:{}\n\t\
+       write!(f, "SSH Key:\n\
+                        ID: {:.0}\n\
+                        Fingerprint: {}\n\
+                        Public Key:{}\n\
                         Name:{}\n",
                 self.id,
                 self.fingerprint,

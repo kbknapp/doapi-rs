@@ -17,26 +17,26 @@ use response::NamedResponse;
 pub struct Image {
     id: f64,
     name: String,
-    #[serde(rename = "type")]
-    image_type: String,
     distribution: String,
     slug: Option<String>,
     public: bool,
-    created_at: String,
     regions: Vec<String>,
+    created_at: String,
     min_disk_size: f64,
+    #[serde(rename = "type")]
+    image_type: String,
 }
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "ID: {:.0}\n\t\
-                  Name: {}\n\t\
-                  Type: {}\n\t\
-                  Distribution: ${}\n\t\
-                  Slug: ${}\n\t\
-                  Public: {} MB\n\t\
-                  Regions: {}\n\t\
-                  Minimum Disk Size: {} GB\n",
+       write!(f, "ID: {:.0}\n\
+                  Name: {}\n\
+                  Type: {}\n\
+                  Distribution: {}\n\
+                  Slug: {}\n\
+                  Public: {} MB\n\
+                  Regions: {}\n\
+                  Minimum Disk Size: {} GB",
                 self.id,
                 self.name,
                 self.image_type,

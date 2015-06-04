@@ -11,14 +11,19 @@ use response::NamedResponse;
 
 #[derive(Deserialize, Debug)]
 pub struct Kernel {
-    pub id: String,
+    pub id: f64,
     pub name: String,
     pub version: String,
 }
 
 impl fmt::Display for Kernel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", "kernel!")
+       write!(f, "ID: {:.0}\n\
+                  Name: {}\n\
+                  Version:{}",
+                self.id,
+                self.name,
+                self.version)
     }
 }
 
