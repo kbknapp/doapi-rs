@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["DnsRecType",""]],"struct":[["DnsRecord","A struct for creating a DNS Record"],["Droplet",""],["RequestBuilder",""]],"trait":[["BaseRequest",""],["DoRequest",""],["PagedRequest",""]]});

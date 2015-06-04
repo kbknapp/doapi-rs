@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["StructDefBuilder",""],["StructFieldBuilder",""]]});

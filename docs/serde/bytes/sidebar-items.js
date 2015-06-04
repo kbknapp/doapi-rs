@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ByteBuf","`ByteBuf` wraps a `Vec<u8>` in order to hook into serialize and from deserialize a byte array."],["ByteBufVisitor",""],["Bytes","`Bytes` wraps a `&[u8]` in order to serialize into a byte array."]]});
