@@ -17,7 +17,8 @@ use request::ActionsRequest;
 pub type AccountRequest<'t> = RequestBuilder<'t, response::Account>;
 
 impl<'t> AccountRequest<'t> {
-    /// Returns a `RequestBuilder` for making requests about a single `response::Action`. 
+    /// Returns type of `RequestBuilder` which allows you make requests for information related to 
+    /// a single action
     ///
     /// **Parameters:**
     /// `id`: The action ID you'd like to retrieve from DigitalOcean
@@ -39,7 +40,8 @@ impl<'t> AccountRequest<'t> {
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/actions/{}", id))
     }
 
-    /// Returns a `RequestBuilder` for making requests about multiple `response::Action`s. 
+    /// A type of `RequestBuilder` that lets you make requests for multiple actions or the concept 
+    /// of "Actions" as a whole
     ///
     /// # Example
     ///
