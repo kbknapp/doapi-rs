@@ -1,22 +1,9 @@
 use response;
 use request::RequestBuilder;
 use request::DoRequest;
-use request::ActionRequest;
-use request::ActionsRequest;
 
-/// A type of `RequestBuilder` that lets you make requests for account related information
-///
-/// # Example
-///
-/// ```no_run
-/// # use doapi::DoManager;
-/// # use doapi::DoRequest;
-/// let domgr = DoManager::with_token("<token>");
-/// let account_request = domgr.account();
-/// ```
-pub type AccountRequest<'t> = RequestBuilder<'t, response::Account>;
 
-impl<'t> AccountRequest<'t> {
+impl<'t> RequestBuilder<'t, response::Account> {
     /// Returns type of `RequestBuilder` which allows you make requests for information related to 
     /// a single action
     ///
@@ -35,7 +22,7 @@ impl<'t> AccountRequest<'t> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn action(self, id: &str) -> ActionRequest<'t> {
+    pub fn action(self, id: &str) -> RequestBuilder<'t, response::Action> {
         // https://api.digitalocean.com/v2/actions/$ID
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/actions/{}", id))
     }
@@ -55,10 +42,10 @@ impl<'t> AccountRequest<'t> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn actions(self) -> ActionsRequest<'t> {
+    pub fn actions(self) -> RequestBuilder<'t, response::Actions> {
         // https://api.digitalocean.com/v2/actions
         RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/actions")
     }
 }
 
-impl<'t> DoRequest<response::Account> for AccountRequest<'t> {}
+impl<'t> DoRequest<response::Account> for RequestBuilder<'t, response::Account> {}

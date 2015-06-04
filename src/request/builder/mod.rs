@@ -1,7 +1,6 @@
 pub use self::droplets::Droplet;
 pub use self::dns::{DnsRecord, DnsRecType};
 pub use self::request::RequestBuilder;
-pub use self::account::AccountRequest;
 
 mod account;
 mod action;
