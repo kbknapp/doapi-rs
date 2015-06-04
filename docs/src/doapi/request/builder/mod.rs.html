@@ -54,10 +54,20 @@
 <span id="12">12</span>
 <span id="13">13</span>
 <span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
 </pre><pre class='rust '>
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>droplets</span>::<span class='ident'>Droplet</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dns</span>::{<span class='ident'>DnsRecord</span>, <span class='ident'>DnsRecType</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dns</span>::{<span class='ident'>DnsRecord</span>, 
+                    <span class='ident'>DnsRecType</span>, 
+                    <span class='ident'>DnsRecordRequest</span>, 
+                    <span class='ident'>DnsRecordsRequest</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>request</span>::<span class='ident'>RequestBuilder</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>action</span>::{<span class='ident'>ActionRequest</span>, <span class='ident'>ActionsRequest</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>account</span>::<span class='ident'>AccountRequest</span>;
 
 <span class='kw'>mod</span> <span class='ident'>account</span>;
 <span class='kw'>mod</span> <span class='ident'>action</span>;

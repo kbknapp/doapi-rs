@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Neighbors` type in crate `doapi`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, Neighbors">
+    <meta name="description" content="API documentation for the Rust `ActionsRequest` type in crate `doapi`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ActionsRequest">
 
-    <title>doapi::response::Neighbors - Rust</title>
+    <title>doapi::request::ActionsRequest - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>doapi</a>::<wbr><a href='index.html'>response</a></p><script>window.sidebarCurrent = {name: 'Neighbors', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>doapi</a>::<wbr><a href='index.html'>request</a></p><script>window.sidebarCurrent = {name: 'ActionsRequest', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -41,12 +41,20 @@
     </nav>
 
     <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'><a href='../index.html'>doapi</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='type' href=''>Neighbors</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'><a href='../index.html'>doapi</a>::<wbr><a href='index.html'>request</a>::<wbr><a class='type' href=''>ActionsRequest</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-13650' class='srclink' href='../../src/doapi/response/neighbors.rs.html#7' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type Neighbors = <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;Neighbor&gt;;</pre></section>
+        </span><a id='src-447' class='srclink' href='../../src/doapi/request/builder/action.rs.html#29' title='goto source code'>[src]</a></span></h1>
+<pre class='rust typedef'>type ActionsRequest&lt;'t&gt; = <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.Actions.html' title='doapi::response::Actions'>Actions</a>&gt;;</pre><div class='docblock'><p>A type of <code>RequestBuilder</code> that lets you make requests for multiple actions or the concept of
+&quot;Actions&quot; as a whole</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='kw'>let</span> <span class='ident'>domgr</span> <span class='op'>=</span> <span class='ident'>DoManager</span>::<span class='ident'>with_token</span>(<span class='string'>&quot;&lt;token&gt;&quot;</span>);
+<span class='kw'>let</span> <span class='ident'>actions_request</span> <span class='op'>=</span> <span class='ident'>domgr</span>.<span class='ident'>account</span>().<span class='ident'>actions</span>();
+</pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

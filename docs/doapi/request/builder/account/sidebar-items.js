@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"type":[["AccountRequest","A type of `RequestBuilder` that lets you make requests for account related information"]]});
