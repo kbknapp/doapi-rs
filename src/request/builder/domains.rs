@@ -29,7 +29,7 @@ impl<'t> RequestBuilder<'t, response::Domains> {
         //      "ip_address" : "192.168.1.1"
         //      "name" : "supercool.com"
         RequestBuilder {
-            method: Method::Delete,
+            method: Method::Post,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
