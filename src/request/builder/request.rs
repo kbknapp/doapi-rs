@@ -45,7 +45,12 @@ impl<'t, T> fmt::Display for RequestBuilder<'t, T> {
         write!(f, "method: {}\n\
                 content-type: application/json\n\
                 authorization: Bearer {}\n\
-                url: {}", self.method, self.auth, if !self.url.is_empty() { self.url.clone() } else { "None".to_owned() })
+                url: {}\n\
+                body: {}\n", 
+            self.method, 
+            self.auth, 
+            if !self.url.is_empty() { self.url.clone() } else { "None".to_owned() }, 
+            if let Some(ref bdy) = self.body { format!("\n\t{}", bdy) } else { "None".to_owned() } )
     }
 }
 
