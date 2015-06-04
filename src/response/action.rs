@@ -38,7 +38,7 @@ impl fmt::Display for Action {
                   Resource ID: {}\n\
                   Resource Type: {}\n\
                   Region Slug: {}\n\
-                     {}",
+                  Region:\n\t{}",
                 self.id,
                 self.status,
                 self.action_type,
