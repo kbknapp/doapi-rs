@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-4554' class='srclink' href='../../src/doapi/request/builder/request.rs.html#12-18' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-4513' class='srclink' href='../../src/doapi/request/builder/request.rs.html#12-18' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RequestBuilder&lt;'t, T&gt; {
     pub auth: &amp;'t <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,
     pub method: <a class='enum' href='../../hyper/method/enum.Method.html' title='hyper::method::Method'>Method</a>,
@@ -58,8 +58,85 @@
                                   <td id='structfield.method'><code>method</code></td><td></td></tr><tr class='stab '>
                                   <td id='structfield.url'><code>url</code></td><td></td></tr><tr class='stab '>
                                   <td id='structfield.resp_t'><code>resp_t</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.body'><code>body</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.Domains.html' title='doapi::response::Domains'>Domains</a>&gt;</code></h3><div class='impl-items'><h4 id='method.create' class='method'><code>fn <a href='#method.create' class='fnname'>create</a>(self, name: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, ip: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt;</code></h4>
-<div class='docblock'><p>Returns a request that can be used to create a new domain.</p>
+                                  <td id='structfield.body'><code>body</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Account.html' title='doapi::response::Account'>Account</a>&gt;</code></h3><div class='impl-items'><h4 id='method.action' class='method'><code>fn <a href='#method.action' class='fnname'>action</a>(self, id: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Action.html' title='doapi::response::Action'>Action</a>&gt;</code></h4>
+<div class='docblock'><p>Returns type of <code>RequestBuilder</code> which allows you make requests for information related to
+a single action</p>
+
+<p><strong>Parameters:</strong>
+<code>id</code>: The action ID you&#39;d like to retrieve from DigitalOcean</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='comment'>// ... domgr set up same as before</span>
+<span class='kw'>match</span> <span class='ident'>domgr</span>.<span class='ident'>account</span>().<span class='ident'>action</span>(<span class='string'>&quot;1234&quot;</span>).<span class='ident'>retrieve</span>() {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>action</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Action: {}&quot;</span>, <span class='ident'>action</span>),
+    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)     <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Error: {}&quot;</span>, <span class='ident'>e</span>)
+}
+</pre>
+</div><h4 id='method.actions' class='method'><code>fn <a href='#method.actions' class='fnname'>actions</a>(self) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.Actions.html' title='doapi::response::Actions'>Actions</a>&gt;</code></h4>
+<div class='docblock'><p>A type of <code>RequestBuilder</code> that lets you make requests for multiple actions or the concept
+of &quot;Actions&quot; as a whole</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='comment'>// ... domgr set up same as before</span>
+<span class='kw'>match</span> <span class='ident'>domgr</span>.<span class='ident'>account</span>().<span class='ident'>actions</span>().<span class='ident'>retrieve</span>() {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>action_vec</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Action: {:?}&quot;</span>, <span class='ident'>action_vec</span>),
+    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)     <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Error: {}&quot;</span>, <span class='ident'>e</span>)
+}
+</pre>
+</div></div><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.DnsRecords.html' title='doapi::response::DnsRecords'>DnsRecords</a>&gt;</code></h3><div class='impl-items'><h4 id='method.create' class='method'><code>fn <a href='#method.create' class='fnname'>create</a>(self, record: &amp;<a class='struct' href='../../doapi/request/struct.DnsRecord.html' title='doapi::request::DnsRecord'>DnsRecord</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.DnsRecord.html' title='doapi::response::DnsRecord'>DnsRecord</a>&gt;</code></h4>
+<div class='docblock'><p>Returns a <code>RequestBuilder</code> for creating a DNS record.</p>
+
+<p><strong>Parameters:</strong>
+<code>record</code>: The instance of <code>DnsRecord</code> you&#39;d like to create </p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='comment'>// ... domgr set up same as before</span>
+<span class='comment'>// ... assumes &quot;record&quot; is an instance of doapi::request::DnsRecord</span>
+<span class='kw'>match</span> <span class='ident'>domgr</span>.<span class='ident'>domain</span>(<span class='string'>&quot;super.com&quot;</span>)
+           .<span class='ident'>dns_records</span>()
+           .<span class='ident'>create</span>(<span class='kw-2'>&amp;</span><span class='ident'>record</span>)
+           .<span class='ident'>retrieve</span>() {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>dns_rec</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Record: {}&quot;</span>, <span class='ident'>dns_rec</span>),
+    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)     <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Error: {}&quot;</span>, <span class='ident'>e</span>)
+}
+</pre>
+</div></div><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.DnsRecord.html' title='doapi::response::DnsRecord'>DnsRecord</a>&gt;</code></h3><div class='impl-items'><h4 id='method.update' class='method'><code>fn <a href='#method.update' class='fnname'>update</a>(self, record: &amp;<a class='struct' href='../../doapi/request/struct.DnsRecord.html' title='doapi::request::DnsRecord'>DnsRecord</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.DnsRecord.html' title='doapi::response::DnsRecord'>DnsRecord</a>&gt;</code></h4>
+<div class='docblock'><p>Returns a <code>RequestBuilder</code> for updating an existing DNS record.</p>
+
+<p><strong>Parameters:</strong>
+<code>record</code>: The new instance of <code>DnsRecord</code> you&#39;d like to update to</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='comment'>// ... domgr set up same as before</span>
+<span class='comment'>// ... assumes &quot;record&quot; is an instance of doapi::request::DnsRecord</span>
+<span class='kw'>match</span> <span class='ident'>domgr</span>.<span class='ident'>domain</span>(<span class='string'>&quot;super.com&quot;</span>)
+           .<span class='ident'>dns_record</span>(<span class='string'>&quot;1234&quot;</span>)
+           .<span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='ident'>record</span>)
+           .<span class='ident'>retrieve</span>() {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>dns_rec</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Record: {}&quot;</span>, <span class='ident'>dns_rec</span>),
+    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)     <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Error: {}&quot;</span>, <span class='ident'>e</span>)
+}
+</pre>
+</div><h4 id='method.delete' class='method'><code>fn <a href='#method.delete' class='fnname'>delete</a>(self) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>&gt;</code></h4>
+<div class='docblock'><p>Returns a <code>RequestBuilder</code> for deleting an existing DNS record.</p>
+
+<h1 id="example" class='section-header'><a
+                           href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
+<span class='comment'>// ... domgr set up same as before</span>
+<span class='kw'>match</span> <span class='ident'>domgr</span>.<span class='ident'>domain</span>(<span class='string'>&quot;super.com&quot;</span>)
+           .<span class='ident'>dns_record</span>(<span class='string'>&quot;1234&quot;</span>)
+           .<span class='ident'>delete</span>()
+           .<span class='ident'>retrieve</span>() {
+    <span class='prelude-val'>Ok</span>(_)  <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Success&quot;</span>),
+    <span class='prelude-val'>Err</span>(_) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Error&quot;</span>)
+}
+</pre>
+</div></div><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.Domains.html' title='doapi::response::Domains'>Domains</a>&gt;</code></h3><div class='impl-items'><h4 id='method.create' class='method'><code>fn <a href='#method.create' class='fnname'>create</a>(self, name: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, ip: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt;</code></h4>
+<div class='docblock'><p>Returns a <code>RequestBuilder</code> that can be used to create a new domain.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
@@ -72,8 +149,7 @@
 }
 </pre>
 </div></div><h3 class='impl'><code>impl&lt;'t&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt;</code></h3><div class='impl-items'><h4 id='method.delete' class='method'><code>fn <a href='#method.delete' class='fnname'>delete</a>(self) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>&gt;</code></h4>
-<div class='docblock'><p>Returns a request that can be used to an existing domain. Returns a header with
-&quot;status: 204 No Content&quot; if successful</p>
+<div class='docblock'><p>Returns a <code>RequestBuilder</code> that can be used delete an existing domain.</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
@@ -86,7 +162,8 @@
 }
 </pre>
 </div><h4 id='method.dns_records' class='method'><code>fn <a href='#method.dns_records' class='fnname'>dns_records</a>(self) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='type' href='../../doapi/response/type.DnsRecords.html' title='doapi::response::DnsRecords'>DnsRecords</a>&gt;</code></h4>
-<div class='docblock'><p>Returns a request that can be used to list all domains, or perform domain tasks</p>
+<div class='docblock'><p>Returns a type of <code>RequestBuilder</code> which allows you make requests related to multiple DNS
+records or the concept of &quot;DNS Records&quot; as a whole</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
@@ -99,8 +176,8 @@
 }
 </pre>
 </div><h4 id='method.dns_record' class='method'><code>fn <a href='#method.dns_record' class='fnname'>dns_record</a>(self, id: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.DnsRecord.html' title='doapi::response::DnsRecord'>DnsRecord</a>&gt;</code></h4>
-<div class='docblock'><p>Returns a request that can be used to list a single domain, or perform tasks on a single
-domain</p>
+<div class='docblock'><p>Returns type of <code>RequestBuilder</code> which allows you make requests related to a single DNS
+record</p>
 
 <h1 id="example" class='section-header'><a
                            href="#example">Example</a></h1><pre id='rust-example-rendered' class='rust '>
@@ -153,7 +230,19 @@ domain</p>
 <h4 id='method.destroy' class='method'><code>fn <a href='#method.destroy' class='fnname'>destroy</a>(self) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>&gt;</code></h4>
 </div><h3 class='impl'><code>impl&lt;'t, T&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, T&gt;</code></h3><div class='impl-items'><h4 id='method.with_auth' class='method'><code>fn <a href='#method.with_auth' class='fnname'>with_auth</a>(auth: &amp;'t <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, T&gt;</code></h4>
 <h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;S&gt;(auth: &amp;'t <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, url: S) -&gt; <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, T&gt; <span class='where'>where S: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</span></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'t&gt; <a class='trait' href='../../doapi/request/trait.DoRequest.html' title='doapi::request::DoRequest'>DoRequest</a>&lt;<a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt; for <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt;</code></h3><div class='impl-items'><h4 id='method.request' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.request' class='fnname'>request</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/request/struct.Request.html' title='hyper::client::request::Request'>Request</a>&lt;<a class='enum' href='../../hyper/net/enum.Fresh.html' title='hyper::net::Fresh'>Fresh</a>&gt;&gt;</code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'t&gt; <a class='trait' href='../../doapi/request/trait.DoRequest.html' title='doapi::request::DoRequest'>DoRequest</a>&lt;<a class='struct' href='../../doapi/response/struct.Account.html' title='doapi::response::Account'>Account</a>&gt; for <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Account.html' title='doapi::response::Account'>Account</a>&gt;</code></h3><div class='impl-items'><h4 id='method.request' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.request' class='fnname'>request</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/request/struct.Request.html' title='hyper::client::request::Request'>Request</a>&lt;<a class='enum' href='../../hyper/net/enum.Fresh.html' title='hyper::net::Fresh'>Fresh</a>&gt;&gt;</code></h4>
+<h4 id='method.retrieve_json' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_json' class='fnname'>retrieve_json</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve_raw_response' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_raw_response' class='fnname'>retrieve_raw_response</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></h4>
+<h4 id='method.retrieve_header' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_header' class='fnname'>retrieve_header</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve_obj' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_obj' class='fnname'>retrieve_obj</a>(&amp;self, obj: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve' class='fnname'>retrieve</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'t&gt; <a class='trait' href='../../doapi/request/trait.DoRequest.html' title='doapi::request::DoRequest'>DoRequest</a>&lt;<a class='struct' href='../../doapi/response/struct.Action.html' title='doapi::response::Action'>Action</a>&gt; for <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Action.html' title='doapi::response::Action'>Action</a>&gt;</code></h3><div class='impl-items'><h4 id='method.request' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.request' class='fnname'>request</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/request/struct.Request.html' title='hyper::client::request::Request'>Request</a>&lt;<a class='enum' href='../../hyper/net/enum.Fresh.html' title='hyper::net::Fresh'>Fresh</a>&gt;&gt;</code></h4>
+<h4 id='method.retrieve_json' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_json' class='fnname'>retrieve_json</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve_raw_response' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_raw_response' class='fnname'>retrieve_raw_response</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></h4>
+<h4 id='method.retrieve_header' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_header' class='fnname'>retrieve_header</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve_obj' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_obj' class='fnname'>retrieve_obj</a>(&amp;self, obj: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+<h4 id='method.retrieve' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve' class='fnname'>retrieve</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;'t&gt; <a class='trait' href='../../doapi/request/trait.DoRequest.html' title='doapi::request::DoRequest'>DoRequest</a>&lt;<a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt; for <a class='struct' href='../../doapi/request/struct.RequestBuilder.html' title='doapi::request::RequestBuilder'>RequestBuilder</a>&lt;'t, <a class='struct' href='../../doapi/response/struct.Domain.html' title='doapi::response::Domain'>Domain</a>&gt;</code></h3><div class='impl-items'><h4 id='method.request' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.request' class='fnname'>request</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/request/struct.Request.html' title='hyper::client::request::Request'>Request</a>&lt;<a class='enum' href='../../hyper/net/enum.Fresh.html' title='hyper::net::Fresh'>Fresh</a>&gt;&gt;</code></h4>
 <h4 id='method.retrieve_json' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_json' class='fnname'>retrieve_json</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>
 <h4 id='method.retrieve_raw_response' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_raw_response' class='fnname'>retrieve_raw_response</a>(&amp;self) -&gt; <a class='type' href='../../hyper/error/type.Result.html' title='hyper::error::Result'>Result</a>&lt;<a class='struct' href='../../hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></h4>
 <h4 id='method.retrieve_header' class='method'><code>fn <a href='../../doapi/request/trait.DoRequest.html#method.retrieve_header' class='fnname'>retrieve_header</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../doapi/response/struct.HeaderOnly.html' title='doapi::response::HeaderOnly'>HeaderOnly</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></h4>

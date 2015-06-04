@@ -1,1 +1,1 @@
-initSidebarItems({"type":[["ActionRequest","A type of `RequestBuilder` which allows you make requests for information related to a single action"],["ActionsRequest","A type of `RequestBuilder` that lets you make requests for multiple actions or the concept of \"Actions\" as a whole"]]});
+initSidebarItems({});

@@ -167,7 +167,7 @@
 <span class='kw'>use</span> <span class='ident'>request</span>::<span class='ident'>DoRequest</span>;
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span><span class='op'>&gt;</span> <span class='ident'>RequestBuilder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span>, <span class='ident'>response</span>::<span class='ident'>Domains</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Returns a request that can be used to create a new domain.</span>
+    <span class='doccomment'>/// Returns a `RequestBuilder` that can be used to create a new domain.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>///</span>
@@ -199,8 +199,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span><span class='op'>&gt;</span> <span class='ident'>RequestBuilder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span>, <span class='ident'>response</span>::<span class='ident'>Domain</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Returns a request that can be used to an existing domain. Returns a header with</span>
-    <span class='doccomment'>/// &quot;status: 204 No Content&quot; if successful</span>
+    <span class='doccomment'>/// Returns a `RequestBuilder` that can be used delete an existing domain. </span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>///</span>
@@ -227,7 +226,8 @@
         }
     }
 
-    <span class='doccomment'>/// Returns a request that can be used to list all domains, or perform domain tasks</span>
+    <span class='doccomment'>/// Returns a type of `RequestBuilder` which allows you make requests related to multiple DNS </span>
+    <span class='doccomment'>/// records or the concept of &quot;DNS Records&quot; as a whole</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>///</span>
@@ -250,8 +250,8 @@
         <span class='ident'>RequestBuilder</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>auth</span>, <span class='self'>self</span>.<span class='ident'>url</span>)
     }
 
-    <span class='doccomment'>/// Returns a request that can be used to list a single domain, or perform tasks on a single</span>
-    <span class='doccomment'>/// domain</span>
+    <span class='doccomment'>/// Returns type of `RequestBuilder` which allows you make requests related to a single DNS </span>
+    <span class='doccomment'>/// record</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// # Example</span>
     <span class='doccomment'>///</span>
