@@ -219,3 +219,5 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         }
     }
 }
+
+impl<'t> DoRequest<response::DnsRecord> for RequestBuilder<'t, response::DnsRecord> {}

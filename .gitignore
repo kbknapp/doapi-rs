@@ -13,3 +13,4 @@ Cargo.lock
 
 # Temp files
 .*~
+tmp*
