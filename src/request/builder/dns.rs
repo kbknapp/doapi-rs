@@ -88,9 +88,24 @@ impl fmt::Display for DnsRecord {
     }
 }
 
-impl<'t> RequestBuilder<'t, response::DnsRecords> {
-    /// Returns a request that can be used to create a new DNS record. Returns a 
-    /// `doapi::response::DnsRecord` from DigitalOcean of the newly created record
+/// A type of `RequestBuilder` which allows you make requests related to a single DNS record
+///
+/// # Example
+///
+/// ```no_run
+/// # use doapi::DoManager;
+/// # use doapi::DoRequest;
+/// let domgr = DoManager::with_token("<token>");
+/// let dnsrecord_request = domgr.domain("super.com").dns_record("<record id>");
+/// ```
+pub type DnsRecordRequest<'t> = RequestBuilder<'t, response::DnsRecord>;
+impl<'t> DoRequest<response::DnsRecord> for DnsRecordRequest<'t> {}
+
+impl<'t> DnsRecordsRequest<'t> {
+    /// Returns a `RequestBuilder` for creating a DNS record. 
+    ///
+    /// **Parameters:**
+    /// `record`: The instance of `DnsRecord` you'd like to create 
     ///
     /// # Example
     ///
@@ -117,15 +132,15 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn create(self, rec: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn create(self, record: &DnsRecord) -> DnsRecordRequest<'t> {
         // POST: "https://api.digitalocean.com/v2/domains/$DOMAIN/records"
         // body:
-        //      "type" : "MX"           // All records
-        //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
-        //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
-        //      "priority" : 20       // MX, SRV
-        //      "port" : 80           // SRV
-        //      "weight" : 200        // SRV
+        //      "type" : "MX"            All records
+        //      "name" : "alias"         A, AAAA, CNAME, TXT, SRV
+        //      "data" : "varies"        A, AAAA, CNAME, MX, TXT, SRV, NS
+        //      "priority" : 20          MX, SRV
+        //      "port" : 80              SRV
+        //      "weight" : 200           SRV
 
         // FIXME: Don't unwrap()
         RequestBuilder {
@@ -133,14 +148,29 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(json::to_string(rec).ok().unwrap())
+            body: Some(json::to_string(record).ok().unwrap())
         }
     }
 }
 
-impl<'t> RequestBuilder<'t, response::DnsRecord> {
-    /// Returns a request that can be used to update an existing DNS record. Returns a 
-    /// `doapi::response::DnsRecord` from DigitalOcean of the updated created record
+/// A type of `RequestBuilder` which allows you make requests related to multiple DNS records or
+/// the concept of "DNS Records" as a whole
+///
+/// # Example
+///
+/// ```no_run
+/// # use doapi::DoManager;
+/// # use doapi::DoRequest;
+/// let domgr = DoManager::with_token("<token>");
+/// let dnsrecords_request = domgr.domain("super.com").dns_records();
+/// ```
+pub type DnsRecordsRequest<'t> = RequestBuilder<'t, response::DnsRecords>;
+
+impl<'t> DnsRecordsRequest<'t> {
+    /// Returns a `RequestBuilder` for updating an existing DNS record. 
+    ///
+    /// **Parameters:**
+    /// `record`: The new instance of `DnsRecord` you'd like to update to
     ///
     /// # Example
     ///
@@ -167,15 +197,15 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn update(self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn update(self, record: &DnsRecord) -> DnsRecordRequest<'t> {
         // PUT: "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
         // body:
-        //      "type" : "MX"           // All records
-        //      "name" : "alias"        // A, AAAA, CNAME, TXT, SRV
-        //      "data" : "varies"       // A, AAAA, CNAME, MX, TXT, SRV, NS
-        //      "priority" : 20       // MX, SRV
-        //      "port" : 80           // SRV
-        //      "weight" : 200        // SRV
+        //      "type" : "MX"           All records
+        //      "name" : "alias"        A, AAAA, CNAME, TXT, SRV
+        //      "data" : "varies"       A, AAAA, CNAME, MX, TXT, SRV, NS
+        //      "priority" : 20         MX, SRV
+        //      "port" : 80             SRV
+        //      "weight" : 200          SRV
         // FIXME: Don't unwrap()
         RequestBuilder {
             method: Method::Put,
@@ -186,8 +216,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         }
     }
 
-    /// Returns a request that can be used to delete an existing DNS record. Returns a header with
-    /// "status: 204 No Content" if successful
+    /// Returns a `RequestBuilder` for deleting an existing DNS record. 
     ///
     /// # Example
     ///
@@ -215,5 +244,3 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         }
     }
 }
-
-impl<'t> DoRequest<response::DnsRecord> for RequestBuilder<'t, response::DnsRecord> {}

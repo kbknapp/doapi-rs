@@ -1,6 +1,11 @@
 pub use self::builder::{
+    AccountRequest,
+    ActionRequest,
+    ActionsRequest,
     DnsRecord,
     DnsRecType,
+    DnsRecordRequest,
+    DnsRecordsRequest,
     Droplet,
     RequestBuilder,
 };

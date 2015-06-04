@@ -1,10 +1,26 @@
 use response;
 use request::RequestBuilder;
 use request::DoRequest;
+use request::ActionRequest;
+use request::ActionsRequest;
 
-impl<'t> RequestBuilder<'t, response::Account> {
-    /// Returns a struct for making requests that send back "Action" objects. The `id` is the
-    /// action ID you'd like to retrieve from DigitalOcean
+/// A type of `RequestBuilder` that lets you make requests for account related information
+///
+/// # Example
+///
+/// ```no_run
+/// # use doapi::DoManager;
+/// # use doapi::DoRequest;
+/// let domgr = DoManager::with_token("<token>");
+/// let account_request = domgr.account();
+/// ```
+pub type AccountRequest<'t> = RequestBuilder<'t, response::Account>;
+
+impl<'t> AccountRequest<'t> {
+    /// Returns a `RequestBuilder` for making requests about a single `response::Action`. 
+    ///
+    /// **Parameters:**
+    /// `id`: The action ID you'd like to retrieve from DigitalOcean
     ///
     /// # Example
     ///
@@ -18,12 +34,12 @@ impl<'t> RequestBuilder<'t, response::Account> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn action(self, id: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn action(self, id: &str) -> ActionRequest<'t> {
         // https://api.digitalocean.com/v2/actions/$ID
         RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/actions/{}", id))
     }
 
-    /// Returns a `Vec<Action>` for making requests that send back multiple "Action" objects. 
+    /// Returns a `RequestBuilder` for making requests about multiple `response::Action`s. 
     ///
     /// # Example
     ///
@@ -32,15 +48,15 @@ impl<'t> RequestBuilder<'t, response::Account> {
     /// # use doapi::DoRequest;
     /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// // ... domgr set up same as before
-    /// match domgr.account().action("1234").retrieve() {
-    ///     Ok(action) => println!("Action: {}", action),
+    /// match domgr.account().actions().retrieve() {
+    ///     Ok(action_vec) => println!("Action: {:?}", action_vec),
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn actions(self) -> RequestBuilder<'t, response::Actions> {
+    pub fn actions(self) -> ActionsRequest<'t> {
         // https://api.digitalocean.com/v2/actions
         RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/actions")
     }
 }
 
-impl<'t> DoRequest<response::Account> for RequestBuilder<'t, response::Account> {}
+impl<'t> DoRequest<response::Account> for AccountRequest<'t> {}
