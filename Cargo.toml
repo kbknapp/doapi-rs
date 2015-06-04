@@ -4,6 +4,7 @@ version = "0.1.0-alpha2"
 authors = ["Kevin K. <kbknapp@gmail.com>"]
 description = "A wrapper library for the DigitalOcean API v2"
 license = "MIT"
+exclude = ["docs/*"]
 repository = "https://github.com/kbknapp/doapi-rs.git"
 documentation = "http://kbknapp.github.io/doapi-rs"
 readme = "README.md"
