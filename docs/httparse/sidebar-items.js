@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["EMPTY_HEADER",""]],"enum":[["Error",""],["Status",""]],"struct":[["Header",""],["Request",""],["Response",""]]});

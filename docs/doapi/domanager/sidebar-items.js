@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["DoManager","The main structure through which all calls are made. This holds a slice of the AUTH TOKEN"]]});

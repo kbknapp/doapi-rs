@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["VariantBuilder",""],["VariantStructBuilder",""],["VariantTupleBuilder",""]]});

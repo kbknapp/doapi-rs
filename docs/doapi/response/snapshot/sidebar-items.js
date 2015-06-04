@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Snapshot",""]],"type":[["Snapshots",""]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["DropletUpgrade",""]],"type":[["DropletUpgrades",""]]});
