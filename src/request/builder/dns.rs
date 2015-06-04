@@ -88,7 +88,8 @@ impl fmt::Display for DnsRecord {
     }
 }
 
-/// A type of `RequestBuilder` which allows you make requests related to a single DNS record
+/// A type of `RequestBuilder` which allows you make requests related to multiple DNS records or
+/// the concept of "DNS Records" as a whole
 ///
 /// # Example
 ///
@@ -96,10 +97,9 @@ impl fmt::Display for DnsRecord {
 /// # use doapi::DoManager;
 /// # use doapi::DoRequest;
 /// let domgr = DoManager::with_token("<token>");
-/// let dnsrecord_request = domgr.domain("super.com").dns_record("<record id>");
+/// let dnsrecords_request = domgr.domain("super.com").dns_records();
 /// ```
-pub type DnsRecordRequest<'t> = RequestBuilder<'t, response::DnsRecord>;
-impl<'t> DoRequest<response::DnsRecord> for DnsRecordRequest<'t> {}
+pub type DnsRecordsRequest<'t> = RequestBuilder<'t, response::DnsRecords>;
 
 impl<'t> DnsRecordsRequest<'t> {
     /// Returns a `RequestBuilder` for creating a DNS record. 
@@ -153,8 +153,7 @@ impl<'t> DnsRecordsRequest<'t> {
     }
 }
 
-/// A type of `RequestBuilder` which allows you make requests related to multiple DNS records or
-/// the concept of "DNS Records" as a whole
+/// A type of `RequestBuilder` which allows you make requests related to a single DNS record
 ///
 /// # Example
 ///
@@ -162,11 +161,12 @@ impl<'t> DnsRecordsRequest<'t> {
 /// # use doapi::DoManager;
 /// # use doapi::DoRequest;
 /// let domgr = DoManager::with_token("<token>");
-/// let dnsrecords_request = domgr.domain("super.com").dns_records();
+/// let dnsrecord_request = domgr.domain("super.com").dns_record("<record id>");
 /// ```
-pub type DnsRecordsRequest<'t> = RequestBuilder<'t, response::DnsRecords>;
+pub type DnsRecordRequest<'t> = RequestBuilder<'t, response::DnsRecord>;
+impl<'t> DoRequest<response::DnsRecord> for DnsRecordRequest<'t> {}
 
-impl<'t> DnsRecordsRequest<'t> {
+impl<'t> DnsRecordRequest<'t> {
     /// Returns a `RequestBuilder` for updating an existing DNS record. 
     ///
     /// **Parameters:**
