@@ -99,6 +99,9 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><pre class='rust '>
 <span class='comment'>// slug             string      A human-readable string that is used to uniquely identify each size.</span>
 <span class='comment'>// available        boolean     This is a boolean value that represents whether new Droplets can be created with this size.</span>
@@ -114,6 +117,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>NamedResponse</span>;
+<span class='kw'>use</span> <span class='ident'>response</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Size</span> {
@@ -127,6 +131,8 @@
     <span class='ident'>regions</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='ident'>available</span>: <span class='ident'>bool</span>,
 }
+
+<span class='kw'>impl</span> <span class='ident'>response</span>::<span class='ident'>NotArray</span> <span class='kw'>for</span> <span class='ident'>Size</span> {}
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Size</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {

@@ -7,6 +7,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct SshKey {
@@ -16,6 +17,8 @@ pub struct SshKey {
     name: String,
 }
 
+impl response::NotArray for SshKey {}
+
 impl NamedResponse for SshKey {
     fn name<'a>() -> Cow<'a, str> {
         "ssh_key".into()
@@ -24,11 +27,10 @@ impl NamedResponse for SshKey {
 
 impl fmt::Display for SshKey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "SSH Key:\n\
-                        ID: {:.0}\n\
-                        Fingerprint: {}\n\
-                        Public Key:{}\n\
-                        Name:{}\n",
+       write!(f, "ID: {:.0}\n\
+                  Fingerprint: {}\n\
+                  Public Key: {}\n\
+                  Name: {}",
                 self.id,
                 self.fingerprint,
                 self.public_key,

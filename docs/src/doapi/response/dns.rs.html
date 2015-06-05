@@ -78,6 +78,9 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
 </pre><pre class='rust '>
 <span class='comment'>// id           number              A unique identifier for each domain record.</span>
 <span class='comment'>// type         string              The type of the DNS record (ex: A, CNAME, TXT, ...).</span>
@@ -91,6 +94,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>NamedResponse</span>;
+<span class='kw'>use</span> <span class='ident'>response</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>DnsRecord</span> {
@@ -103,6 +107,8 @@
     <span class='kw'>pub</span> <span class='ident'>port</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;</span>,
     <span class='kw'>pub</span> <span class='ident'>weight</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;</span>,
 }
+
+<span class='kw'>impl</span> <span class='ident'>response</span>::<span class='ident'>NotArray</span> <span class='kw'>for</span> <span class='ident'>DnsRecord</span> {}
 
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>DnsRecords</span> <span class='op'>=</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>DnsRecord</span><span class='op'>&gt;</span>;
 

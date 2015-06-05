@@ -12,6 +12,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Size {
@@ -25,6 +26,8 @@ pub struct Size {
     regions: Vec<String>,
     available: bool,
 }
+
+impl response::NotArray for Size {}
 
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

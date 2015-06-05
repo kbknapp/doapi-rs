@@ -95,6 +95,9 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
 </pre><pre class='rust '>
 <span class='comment'>// id               number      A unique number used to identify and reference a specific image.</span>
 <span class='comment'>// name             string      The display name of the image. This is shown in the web UI and is generally a descriptive title for the image in question.</span>
@@ -109,6 +112,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>NamedResponse</span>;
+<span class='kw'>use</span> <span class='ident'>response</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Backup</span> {
@@ -122,6 +126,8 @@
     <span class='kw'>pub</span> <span class='ident'>regions</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='kw'>pub</span> <span class='ident'>min_disk_size</span>: <span class='ident'>f64</span>
 }
+
+<span class='kw'>impl</span> <span class='ident'>response</span>::<span class='ident'>NotArray</span> <span class='kw'>for</span> <span class='ident'>Backup</span> {}
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Backup</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {

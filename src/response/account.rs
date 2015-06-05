@@ -7,6 +7,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response::NotArray;
 
 #[derive(Deserialize, Debug)]
 pub struct Account {
@@ -17,6 +18,8 @@ pub struct Account {
     pub uuid: String,
     pub email_verified: bool
 }
+
+impl NotArray for Account {}
 
 impl fmt::Display for Account {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

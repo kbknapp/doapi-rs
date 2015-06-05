@@ -355,8 +355,8 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
         }
     }
     pub fn action(mut self, id: &str) -> RequestBuilder<'t, response::Action> {
-        // GET: "https://api.digitalocean.com/v2/droplets/$ID/kernels"
-        self.url.push('/');
+        // GET: "https://api.digitalocean.com/v2/droplets/$ID/actions/$ACTION_ID"
+        self.url.push_str("/actions/");
         self.url.push_str(id);
         RequestBuilder::new(self.auth, self.url)
     }
@@ -440,7 +440,7 @@ impl<'t> RequestBuilder<'t, response::Droplets> {
         // GET: "https://api.digitalocean.com/v2/reports/droplet_neighbors"
         RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/reports/droplet_neighbors")
     }
-    pub fn upgrades(self) -> RequestBuilder<'t, response::DropletUpgrades> {
+    pub fn upgrades(self) -> RequestBuilder<'t, response::ResponseStringArray> {
         // GET: "https://api.digitalocean.com/v2/droplet_upgrades"
         RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/droplet_upgrades")
     }

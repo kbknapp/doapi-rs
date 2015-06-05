@@ -6,6 +6,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Domain {
@@ -25,6 +26,8 @@ impl fmt::Display for Domain {
                 self.zone_file)
     }
 }
+
+impl response::NotArray for Domain {}
 
 pub type Domains = Vec<Domain>;
 

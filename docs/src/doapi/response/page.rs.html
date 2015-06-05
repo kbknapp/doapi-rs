@@ -68,15 +68,6 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>response</span>::{<span class='ident'>Meta</span>, <span class='ident'>Links</span>};
 
@@ -87,15 +78,6 @@
     <span class='kw'>pub</span> <span class='ident'>next</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='kw'>pub</span> <span class='ident'>last</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>
 }
-
-<span class='comment'>// #[derive(Deserialize)]</span>
-<span class='comment'>// pub struct PagedResponse&lt;T&gt;(pub Vec&lt;T&gt;);</span>
-
-<span class='comment'>// impl&lt;T&gt; PagedResponse&lt;T&gt; {</span>
-<span class='comment'>//     pub fn iter(&amp;self) -&gt; Iter&lt;T&gt; {</span>
-<span class='comment'>//         self.0.iter()</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RawPagedResponse</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {

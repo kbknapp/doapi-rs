@@ -10,6 +10,7 @@ use std::borrow::Cow;
 use std::fmt;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize)]
 pub struct DnsRecord {
@@ -22,6 +23,8 @@ pub struct DnsRecord {
     pub port: Option<f64>,
     pub weight: Option<f64>,
 }
+
+impl response::NotArray for DnsRecord {}
 
 pub type DnsRecords = Vec<DnsRecord>;
 

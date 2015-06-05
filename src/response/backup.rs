@@ -11,6 +11,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Backup {
@@ -24,6 +25,8 @@ pub struct Backup {
     pub regions: Vec<String>,
     pub min_disk_size: f64
 }
+
+impl response::NotArray for Backup {}
 
 impl fmt::Display for Backup {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

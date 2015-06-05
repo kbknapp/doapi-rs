@@ -147,6 +147,9 @@
 <span id="105">105</span>
 <span id="106">106</span>
 <span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
 </pre><pre class='rust '>
 <span class='comment'>// content-type: application/octet-stream</span>
 <span class='comment'>// status: 204 No Content</span>
@@ -161,6 +164,7 @@
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>header</span>;
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>NamedResponse</span>;
+<span class='kw'>use</span> <span class='ident'>response</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>HeaderOnly</span> {
@@ -174,6 +178,8 @@
     <span class='attribute'>#[<span class='ident'>serde</span>(<span class='ident'>rename</span><span class='op'>=</span><span class='string'>&quot;ratelimit-reset&quot;</span>)]</span>
     <span class='kw'>pub</span> <span class='ident'>ratelimit_reset</span>: <span class='ident'>f64</span>
 }
+
+<span class='kw'>impl</span> <span class='ident'>response</span>::<span class='ident'>NotArray</span> <span class='kw'>for</span> <span class='ident'>HeaderOnly</span> {}
 
 <span class='kw'>impl</span> <span class='ident'>HeaderOnly</span> {
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_response</span>(<span class='ident'>r</span>: <span class='ident'>Response</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>HeaderOnly</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {

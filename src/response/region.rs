@@ -8,6 +8,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Region {
@@ -17,6 +18,8 @@ pub struct Region {
     features: Vec<String>,
     available: bool
 }
+
+impl response::NotArray for Region {}
 
 impl fmt::Display for Region {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

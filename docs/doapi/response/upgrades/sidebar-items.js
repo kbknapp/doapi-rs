@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DropletUpgrade",""]],"type":[["DropletUpgrades",""]]});
+initSidebarItems({"struct":[["DropletUpgrade",""]],"type":[["DropletUpgrades",""],["ResponseStringArray",""]]});

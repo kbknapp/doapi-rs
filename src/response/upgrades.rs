@@ -9,6 +9,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct DropletUpgrade {
@@ -16,6 +17,8 @@ pub struct DropletUpgrade {
     date_of_migration: String,
     url: String,
 }
+
+impl response::NotArray for DropletUpgrade {}
 
 impl fmt::Display for DropletUpgrade {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -37,3 +40,5 @@ impl NamedResponse for DropletUpgrade {
 }
 
 pub type DropletUpgrades = Vec<DropletUpgrade>;
+
+pub type ResponseStringArray = Vec<String>;

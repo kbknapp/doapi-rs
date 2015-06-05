@@ -1,5 +1,7 @@
 use std::fmt;
 
+use response; 
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct Network {
     pub ip_address: String,
@@ -14,6 +16,8 @@ pub struct Networks {
     pub v4: Vec<Option<Network>>,
     pub v6: Vec<Option<Network>>
 }
+
+impl response::NotArray for Network {}
 
 impl fmt::Display for Network {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

@@ -847,8 +847,8 @@
         }
     }
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>action</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>id</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>RequestBuilder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span>, <span class='ident'>response</span>::<span class='ident'>Action</span><span class='op'>&gt;</span> {
-        <span class='comment'>// GET: &quot;https://api.digitalocean.com/v2/droplets/$ID/kernels&quot;</span>
-        <span class='self'>self</span>.<span class='ident'>url</span>.<span class='ident'>push</span>(<span class='string'>&#39;/&#39;</span>);
+        <span class='comment'>// GET: &quot;https://api.digitalocean.com/v2/droplets/$ID/actions/$ACTION_ID&quot;</span>
+        <span class='self'>self</span>.<span class='ident'>url</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;/actions/&quot;</span>);
         <span class='self'>self</span>.<span class='ident'>url</span>.<span class='ident'>push_str</span>(<span class='ident'>id</span>);
         <span class='ident'>RequestBuilder</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>auth</span>, <span class='self'>self</span>.<span class='ident'>url</span>)
     }
@@ -932,7 +932,7 @@
         <span class='comment'>// GET: &quot;https://api.digitalocean.com/v2/reports/droplet_neighbors&quot;</span>
         <span class='ident'>RequestBuilder</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>auth</span>, <span class='string'>&quot;https://api.digitalocean.com/v2/reports/droplet_neighbors&quot;</span>)
     }
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>upgrades</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RequestBuilder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span>, <span class='ident'>response</span>::<span class='ident'>DropletUpgrades</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>upgrades</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RequestBuilder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;t</span>, <span class='ident'>response</span>::<span class='ident'>ResponseStringArray</span><span class='op'>&gt;</span> {
         <span class='comment'>// GET: &quot;https://api.digitalocean.com/v2/droplet_upgrades&quot;</span>
         <span class='ident'>RequestBuilder</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>auth</span>, <span class='string'>&quot;https://api.digitalocean.com/v2/droplet_upgrades&quot;</span>)
     }

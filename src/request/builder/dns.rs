@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{self, Write};
 use std::marker::PhantomData;
 
 use hyper::method::Method;
@@ -36,7 +36,7 @@ pub struct DnsRecord {
     /// **NOTE:** You can use the `DnsRecType`'s implementation of `std::fmt::Display` to get a 
     /// `String`
     #[serde(rename = "type")]
-    pub rec_type: String,
+    pub rec_type: Option<String>,
     /// The name of the record (Required for: A, AAAA, CNAME, TXT, and SRV)
     pub name: Option<String>,
     /// The priority of the record (Required for: MX and SRV)
@@ -58,7 +58,11 @@ impl fmt::Display for DnsRecord {
              Priority: {}\n\
              Port: {}\n\
              Weight: {}\n",
-             self.rec_type,
+             if let Some(t) = self.rec_type.clone() {
+                t
+            } else {
+                "None".to_owned()
+            },
              if let Some(n) = self.name.clone() {
                 n
              } else {
@@ -102,7 +106,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
     /// # use doapi::request::DnsRecord;
     /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// # let record = DnsRecord {
-    /// #   rec_type: "A".to_owned(),
+    /// #   rec_type: None,
     /// #   name: None,
     /// #   priority: None,
     /// #   port: None,
@@ -155,7 +159,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     /// # use doapi::request::DnsRecord;
     /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// # let record = DnsRecord {
-    /// #   rec_type: "A".to_owned(),
+    /// #   rec_type: None,
     /// #   name: None,
     /// #   priority: None,
     /// #   port: None,
@@ -182,12 +186,46 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         //      "port" : 80             SRV
         //      "weight" : 200          SRV
         // FIXME: Don't unwrap()
+        let mut s = String::new();
+        write!(s,
+            "{{{}{}{}{}{}{}}}",
+             if let Some(t) = record.rec_type.clone() {
+                format!("\"type\":{:?},",t)
+            } else {
+                "".to_owned()
+            },
+             if let Some(n) = record.name.clone() {
+                format!("\"name\":{:?},",n)
+             } else {
+                "".to_owned()
+             },
+             if let Some(d) = record.data.clone() {
+                format!("\"data\":{:?},",d)
+             } else {
+                "".to_owned()
+             },
+             if let Some(p) = record.priority {
+                format!("\"priority\":{},",p)
+             } else {
+                "".to_owned()
+             },
+             if let Some(p) = record.port {
+                format!("\"port\":{},",p)
+             } else {
+                "".to_owned()
+             },
+             if let Some(w) = record.weight {
+                format!("\"weight\":{}",w)
+             } else {
+                "".to_owned()
+             }
+        ).unwrap();
         RequestBuilder {
             method: Method::Put,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(json::to_string(record).ok().unwrap())
+            body: Some(s)
         }
     }
 

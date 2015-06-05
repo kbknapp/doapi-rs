@@ -75,6 +75,9 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><pre class='rust '>
 <span class='comment'>// name    string  The name of the domain itself. This should follow the standard domain format of domain.TLD. For instance, example.com is a valid domain name.</span>
 <span class='comment'>// ttl     number  This value is the time to live for the records on this domain, in seconds. This defines the time frame that clients can cache queried information before a refresh should be requested.</span>
@@ -84,6 +87,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>NamedResponse</span>;
+<span class='kw'>use</span> <span class='ident'>response</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Deserialize</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Domain</span> {
@@ -103,6 +107,8 @@
                 <span class='self'>self</span>.<span class='ident'>zone_file</span>)
     }
 }
+
+<span class='kw'>impl</span> <span class='ident'>response</span>::<span class='ident'>NotArray</span> <span class='kw'>for</span> <span class='ident'>Domain</span> {}
 
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Domains</span> <span class='op'>=</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Domain</span><span class='op'>&gt;</span>;
 

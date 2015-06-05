@@ -12,6 +12,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Image {
@@ -26,6 +27,8 @@ pub struct Image {
     #[serde(rename = "type")]
     image_type: String,
 }
+
+impl response::NotArray for Image {}
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
