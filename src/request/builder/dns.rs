@@ -106,7 +106,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
     /// # use doapi::request::DnsRecord;
     /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// # let record = DnsRecord {
-    /// #   rec_type: "A".to_owned(),
+    /// #   rec_type: None,
     /// #   name: None,
     /// #   priority: None,
     /// #   port: None,
@@ -159,7 +159,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     /// # use doapi::request::DnsRecord;
     /// # let domgr = DoManager::with_token("asfasdfasdf");
     /// # let record = DnsRecord {
-    /// #   rec_type: "A".to_owned(),
+    /// #   rec_type: None,
     /// #   name: None,
     /// #   priority: None,
     /// #   port: None,
