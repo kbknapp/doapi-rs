@@ -11,6 +11,7 @@ impl response::NamedResponse for String {
         "".into()
     }
 }
+
 impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t, response::ResponseStringArray> {
     #[allow(unused_variables)]
     fn retrieve_obj(&self, obj: String) -> Result<response::ResponseStringArray, String> {
@@ -38,3 +39,32 @@ impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t, respons
         }
     }
 }
+
+impl<'t> DoRequest<response::Neighbors> for RequestBuilder<'t, response::Neighbors> {}
+// impl<'t> DoRequest<response::Neighbors> for RequestBuilder<'t, response::Neighbors> {
+//     #[allow(unused_variables)]
+//     fn retrieve_obj(&self, obj: String) -> Result<response::Neighbors, String> {
+//         debug!("Inside retrieve_obj() of ResponseStringArray");
+//         debug!("Retrieveing JSON");
+//         match self.retrieve_json() {
+//             Ok(ref s) => {
+//                 debug!("Success");
+//                 debug!("Retrieving Value");
+//                 match json::from_str::<response::Neighbors>(s) {
+//                     Ok(ob) => {
+//                         debug!("Success");
+//                         Ok(ob)
+//                     },
+//                     Err(e) => {
+//                         debug!("Failed");
+//                         Err(e.to_string())
+//                     }
+//                 }
+//             },
+//             Err(e) => {
+//                 debug!("Failed");
+//                 Err(e.to_string())
+//             }
+//         }
+//     }
+// }
