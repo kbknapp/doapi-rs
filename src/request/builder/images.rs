@@ -7,11 +7,12 @@ use request::RequestBuilder;
 use request::DoRequest;
 
 impl<'t> RequestBuilder<'t, response::Image> {
-    pub fn transfer(self, region: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn transfer(mut self, region: &str) -> RequestBuilder<'t, response::Action> {
         // POST: "https://api.digitalocean.com/v2/images/$ID/actions"
         // body:
         //      "type" : "transfer"
         //      "region" : "nyc2"
+        self.url.push_str("/actions");
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
@@ -20,10 +21,11 @@ impl<'t> RequestBuilder<'t, response::Image> {
             body: Some(format!("{{\"type\":\"transfer\",\"region\":{:?}}}", region)) 
         }
     }
-    pub fn convert(self) -> RequestBuilder<'t, response::Action> {
-        // POST: "https://api.digitalocean.com/v2/images/7938291/actions"
+    pub fn convert(mut self) -> RequestBuilder<'t, response::Action> {
+        // POST: "https://api.digitalocean.com/v2/images/$ID/actions"
         // body:
         //      "type" : "convert"
+        self.url.push_str("/actions");
         RequestBuilder {
             method: Method::Post,
             auth: self.auth,
@@ -33,7 +35,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
         }
     }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
-        // GET: https://api.digitalocean.com/v2/images/$SLUG
+        // GET: "https://api.digitalocean.com/v2/images/$ID/actions"
         self.url.push_str("/actions");
         RequestBuilder {
             url: self.url,
