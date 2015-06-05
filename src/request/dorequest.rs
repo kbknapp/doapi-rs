@@ -99,6 +99,7 @@ pub trait DoRequest<T> : BaseRequest
     }
 
     fn retrieve_obj(&self, obj: String) -> Result<T, String> {
+        debug!("inside retrieve_obj() for regular type");
         match self.retrieve_json() {
             Ok(ref s) => {
                 match json::from_str::<Value>(s) {
@@ -126,6 +127,7 @@ pub trait DoRequest<T> : BaseRequest
     }
 
     fn retrieve(&self) -> Result<T, String> {
+        debug!("Inside retrieve() for regular type");
         self.retrieve_obj(<T as response::NamedResponse>::name().into_owned())
     }
 }

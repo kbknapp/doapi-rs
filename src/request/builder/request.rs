@@ -111,12 +111,13 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
 
 impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                                 where I: Deserialize + NamedResponse + NotArray {
+    #[cfg_attr(not(feature = "debug"), allow(unused_variables))]
     fn retrieve(&self) -> Result<Vec<I>, String> {
         debug!("Inside retrieve() for  paged request");
         debug!("Getting json...");
         match self.retrieve_json() {
             Ok(ref s) => {
-                debug!("Sucessfully retrieved json");
+                debug!("Sucess");
                  // FIXME \/ \/
                 let mut name = <I as NamedResponse>::name().into_owned();
                 name.push('s');
@@ -127,7 +128,7 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                 match json::from_str::<response::RawPagedResponse<I>>(res) {
                 // FIXME ^^
                     Ok(mut val) => {
-                        debug!("Sucessfully retrieved object");
+                        debug!("Sucess");
                         let mut regs = vec![];
                         regs.append(&mut val.collection);
                         let mut url = if val.links.pages.is_some() && val.links.pages.clone().unwrap().next.is_some() {
@@ -149,7 +150,7 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                     },
                     Err(e) => {
                         debug!("Error getting object: {}", e.to_string());
-                        Err(e.to_string())
+                        return self.retrieve_obj(name)
                     }
                 }
             },
