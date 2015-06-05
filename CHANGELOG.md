@@ -1,3 +1,33 @@
+<a name="v0.1.0-alpha3"></a>
+## v0.1.0-alpha3 (2015-06-05)
+
+
+#### Improvements
+
+*   fixes ssh_keys api ([06c7b765](https://github.com/kbknapp/doapi-rs/commit/06c7b7656cc51ebf6944af7906846f96c707aaf6))
+*   implements droplets neighbors command ([6f1d64c1](https://github.com/kbknapp/doapi-rs/commit/6f1d64c181bdb4252e579b141315133448b7568e))
+*   fixes indentation of action responses ([a5f26cec](https://github.com/kbknapp/doapi-rs/commit/a5f26cec4bc0b97271a66c45abcec11c3b108a92))
+
+#### Documentation
+
+*   wip, improving docs ([c569bb3d](https://github.com/kbknapp/doapi-rs/commit/c569bb3d604c2cfee492b7a757ffb7387a4c2a03))
+
+#### Bug Fixes
+
+*   fixes failing doc tests ([75dac446](https://github.com/kbknapp/doapi-rs/commit/75dac446cec7632fa00a67a5e17eea96a38dcc49))
+*   various fixes for droplet neighbor API ([8c9ad227](https://github.com/kbknapp/doapi-rs/commit/8c9ad2277cb700ad9578dd45a31aa44e8c9ec7d5))
+*   fixes a droplet action API ([b5ac3bae](https://github.com/kbknapp/doapi-rs/commit/b5ac3baeda515177db4c3791639bd2bb5f0b07b1))
+*   fixes image API ([4e032f2a](https://github.com/kbknapp/doapi-rs/commit/4e032f2adf1ccb2798421cbb7c7b52a3a3af2b5e))
+*   corrects dns record update command ([db3e723c](https://github.com/kbknapp/doapi-rs/commit/db3e723c44fb5d4e5a9cf333e03f8ed296fd4c81))
+*   fixes create domain API call ([8ab57fca](https://github.com/kbknapp/doapi-rs/commit/8ab57fca958e699869d9d82bba923301e9826f6e))
+*   fixes ssh_key displaying ([f09869e8](https://github.com/kbknapp/doapi-rs/commit/f09869e87296e8d0639013a84f490472aa56eae7))
+
+#### Features
+
+*   allows retrieving anonymous arrays from digitalocean ([5aeee794](https://github.com/kbknapp/doapi-rs/commit/5aeee794749492c686ffac5e268c0073a204341b))
+
+
+
 <a name="v0.1.0-alpha2"></a>
 ## v0.1.0-alpha2 (2015-06-04)
 
