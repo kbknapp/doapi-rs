@@ -13,6 +13,7 @@ use std::borrow::Cow;
 
 use response::region::Region;
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Action {
@@ -27,6 +28,8 @@ pub struct Action {
     region: Region,
     region_slug: Option<String>
 }
+
+impl response::NotArray for Action {}
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

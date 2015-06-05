@@ -11,6 +11,7 @@ use hyper::client::response::Response;
 use hyper::header;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize)]
 pub struct HeaderOnly {
@@ -24,6 +25,8 @@ pub struct HeaderOnly {
     #[serde(rename="ratelimit-reset")]
     pub ratelimit_reset: f64
 }
+
+impl response::NotArray for HeaderOnly {}
 
 impl HeaderOnly {
     pub fn from_response(r: Response) -> Result<HeaderOnly, String> {

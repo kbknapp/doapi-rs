@@ -18,7 +18,7 @@ pub use self::region::{Regions, Region};
 pub use self::size::{Sizes, Size};
 pub use self::snapshot::{Snapshot, Snapshots};
 pub use self::ssh_key::{SshKeys, SshKey};
-pub use self::upgrades::{DropletUpgrade, DropletUpgrades};
+pub use self::upgrades::{DropletUpgrade, DropletUpgrades, ResponseStringArray};
 
 mod account;
 mod header;
@@ -42,3 +42,5 @@ mod snapshot;
 mod region;
 mod size;
 mod upgrades;
+
+pub trait NotArray {}

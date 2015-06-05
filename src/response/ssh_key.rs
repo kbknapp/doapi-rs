@@ -7,6 +7,7 @@ use std::fmt;
 use std::borrow::Cow;
 
 use response::NamedResponse;
+use response;
 
 #[derive(Deserialize, Debug)]
 pub struct SshKey {
@@ -15,6 +16,8 @@ pub struct SshKey {
     public_key: String,
     name: String,
 }
+
+impl response::NotArray for SshKey {}
 
 impl NamedResponse for SshKey {
     fn name<'a>() -> Cow<'a, str> {

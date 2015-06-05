@@ -2,7 +2,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::{Kernel, Region, Backup, Network, Image, Size, NamedResponse};
+use response::{self, Kernel, Region, Backup, Network, Image, Size, NamedResponse};
 
 pub type Neighbors = Vec<Neighbor>;
 
@@ -27,6 +27,8 @@ pub struct Neighbor {
     kernel: Option<Kernel>,
     next_backup_window: Option<Backup>
 }
+
+impl response::NotArray for Neighbor {}
 
 impl fmt::Display for Neighbor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

@@ -20,7 +20,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::{Kernel, Region, Backup, Networks, Image, Size, NamedResponse};
+use response::{self, Kernel, Region, Backup, Networks, Image, Size, NamedResponse};
 
 #[derive(Deserialize, Debug)]
 pub struct Droplet {
@@ -43,6 +43,8 @@ pub struct Droplet {
     size_slug: String,
     networks: Networks,
 }
+
+impl response::NotArray for Droplet {}
 
 impl fmt::Display for Droplet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
