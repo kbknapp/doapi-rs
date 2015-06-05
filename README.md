@@ -4,9 +4,12 @@
 Wrapper library for utilizing [DigitalOcean API v2](https://developers.digitalocean.com/documentation/) in Rust
 
 ## Disclaimer
-This library is very alpha - it may do anything up to, and including, eating your laundry.
+
+This library is in alpha - it may do anything up to, and including, eating your laundry.
 
 ## Example
+
+Full details can be found in the [doapi documentation](http://kbknapp.github.io/doapi-rs/index.html) or the [DigitalOcean v2 API documentation](https://developers.digitalocean.com/documentation/).
 
 The following example takes a snapshot of an existing droplet, which in turn sends back an `Action`.
 
