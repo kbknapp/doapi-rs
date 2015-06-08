@@ -12,14 +12,8 @@ keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 [dependencies]
 hyper = "*"
 regex = "*"
-
-[dependencies.serde_macros]
-git = "https://github.com/kbknapp/serde_macros"
-#version = "*"
-
-[dependencies.serde]
-git = "https://github.com/kbknapp/serde"
-#version = "*"
+serde_macros = "*"
+serde = "*"
 
 [features]
 default = []
