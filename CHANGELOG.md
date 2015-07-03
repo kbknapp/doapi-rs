@@ -1,3 +1,13 @@
+<a name="v0.1.0"></a>
+## v0.1.0 (2015-07-03)
+
+
+#### Bug Fixes
+
+*   fixes to compile on latest nightly ([3dfb5a92](https://github.com/kbknapp/doapi-rs/commit/3dfb5a92e69f454de86d50d6dd96d44f563e62c3))
+
+
+
 <a name="v0.1.0-alpha3"></a>
 ## v0.1.0-alpha3 (2015-06-05)
 
