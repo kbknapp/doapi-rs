@@ -1,6 +1,6 @@
 [package]
 name = "doapi"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Kevin K. <kbknapp@gmail.com>"]
 description = "A wrapper library for the DigitalOcean API v2"
 license = "MIT"
@@ -10,10 +10,11 @@ readme = "README.md"
 keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 
 [dependencies]
-hyper = "*"
-regex = "*"
-serde_macros = "*"
-serde = "*"
+hyper = "~0.6.11"
+regex = "~0.1.41"
+serde_macros = "~0.5.3"
+serde = "~0.5.3"
+serde_json = "~0.6.0"
 
 [features]
 default = []

@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use serde::json;
+use serde_json;
 
 use request::DoRequest;
 use request::RequestBuilder;
@@ -21,7 +21,7 @@ impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t, respons
             Ok(ref s) => {
                 debug!("Success");
                 debug!("Retrieving Value");
-                match json::from_str::<response::ResponseStringArray>(s) {
+                match serde_json::from_str::<response::ResponseStringArray>(s) {
                     Ok(ob) => {
                         debug!("Success");
                         Ok(ob)

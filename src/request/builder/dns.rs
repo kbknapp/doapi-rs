@@ -2,7 +2,7 @@ use std::fmt::{self, Write};
 use std::marker::PhantomData;
 
 use hyper::method::Method;
-use serde::json;
+use serde_json;
 
 use response;
 use request::RequestBuilder;
@@ -139,7 +139,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(json::to_string(record).ok().unwrap())
+            body: Some(serde_json::to_string(record).ok().unwrap())
         }
     }
 }

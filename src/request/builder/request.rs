@@ -2,7 +2,8 @@ use std::marker::PhantomData;
 use std::iter::Iterator;
 use std::fmt;
 
-use serde::{json, Deserialize};
+use serde::{Deserialize};
+use serde_json;
 use hyper::method::Method;
 
 use response::{self, RawPagedResponse, NamedResponse, NotArray};
@@ -90,7 +91,7 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                 name.push('s');
                 let re = regex!(&format!("\"{}\"", name));
                 let json_str = &re.replace(&s[..], "\"collection\"");
-                match json::from_str::<response::RawPagedResponse<I>>(json_str) {
+                match serde_json::from_str::<response::RawPagedResponse<I>>(json_str) {
                 // FIXME ^^
                     Ok(val) => {
                         return Ok(val)
@@ -125,7 +126,7 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                 let re = regex!(&format!("\"{}\"", name));
                 let res = &re.replace(&s[..], "\"collection\"");
                 debug!("Getting object from json string");
-                match json::from_str::<response::RawPagedResponse<I>>(res) {
+                match serde_json::from_str::<response::RawPagedResponse<I>>(res) {
                 // FIXME ^^
                     Ok(mut val) => {
                         debug!("Sucess");

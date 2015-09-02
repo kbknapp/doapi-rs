@@ -6,7 +6,7 @@ use hyper::method::Method;
 use hyper::net::Fresh;
 use hyper::header::{ContentType, Authorization};
 
-use serde::json::{self, Value};
+use serde_json::{self, Value};
 use serde::de::Deserialize;
 
 use response::{self, DoError, NamedResponse};
@@ -102,17 +102,17 @@ pub trait DoRequest<T> : BaseRequest
         debug!("inside retrieve_obj() for regular type");
         match self.retrieve_json() {
             Ok(ref s) => {
-                match json::from_str::<Value>(s) {
+                match serde_json::from_str::<Value>(s) {
                     Ok(ob) => {
                         match ob.find(&obj) {
                             Some(t) => {
-                                match json::from_value(t.clone()) {
+                                match serde_json::from_value(t.clone()) {
                                     Ok(t) => Ok(t),
                                     Err(e) => Err(e.to_string())
                                 }
                             },
                             None => {
-                                match json::from_value::<DoError>(ob.clone()) {
+                                match serde_json::from_value::<DoError>(ob.clone()) {
                                     Ok(err) => Err(err.to_string()),
                                     Err(e)  => Err(e.to_string())
                                 }
