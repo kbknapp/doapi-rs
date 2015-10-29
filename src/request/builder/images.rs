@@ -18,7 +18,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"type\":\"transfer\",\"region\":{:?}}}", region)) 
+            body: Some(format!("{{\"type\":\"transfer\",\"region\":{:?}}}", region)),
         }
     }
     pub fn convert(mut self) -> RequestBuilder<'t, response::Action> {
@@ -31,7 +31,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(r#"{"type":"convert"}"#.to_owned())
+            body: Some(r#"{"type":"convert"}"#.to_owned()),
         }
     }
     pub fn actions(mut self) -> RequestBuilder<'t, response::Actions> {
@@ -42,7 +42,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             method: self.method,
             resp_t: PhantomData,
-            body: None
+            body: None,
         }
     }
     pub fn action(mut self, id: &str) -> RequestBuilder<'t, response::Action> {
@@ -61,7 +61,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":{:?}}}", name)) 
+            body: Some(format!("{{\"name\":{:?}}}", name)),
         }
     }
     pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
@@ -71,7 +71,7 @@ impl<'t> RequestBuilder<'t, response::Image> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: None
+            body: None,
         }
     }
 }

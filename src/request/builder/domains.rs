@@ -33,7 +33,7 @@ impl<'t> RequestBuilder<'t, response::Domains> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":{:?},\"ip_address\":{:?}}}", name, ip)) 
+            body: Some(format!("{{\"name\":{:?},\"ip_address\":{:?}}}", name, ip)),
         }
     }
 }
@@ -62,7 +62,7 @@ impl<'t> RequestBuilder<'t, response::Domain> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: None
+            body: None,
         }
     }
 

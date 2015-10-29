@@ -4,7 +4,7 @@ use hyper::client;
 use hyper::{self, Error, Url};
 use hyper::method::Method;
 use hyper::net::Fresh;
-use hyper::header::{ContentType, Authorization};
+use hyper::header::{Authorization, ContentType};
 
 use serde_json::{self, Value};
 use serde::de::Deserialize;
@@ -27,7 +27,7 @@ pub trait DoRequest<T> : BaseRequest
         };
         let mut fresh_req = match client::Request::new(self.method(), url) {
             Ok(req) => req,
-            Err(e)  => return Err(e)
+            Err(e) => return Err(e),
         };
         let mut auth_s = String::new();
         auth_s.push_str("Bearer ");
@@ -44,7 +44,7 @@ pub trait DoRequest<T> : BaseRequest
         };
         let mut fresh_req = match client::Request::new(Method::Get, url) {
             Ok(req) => req,
-            Err(e)  => return Err(e)
+            Err(e) => return Err(e),
         };
         let mut auth_s = String::new();
         auth_s.push_str("Bearer ");
@@ -52,7 +52,7 @@ pub trait DoRequest<T> : BaseRequest
         fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
         fresh_req.headers_mut().set(Authorization(auth_s));
         let mut streaming_req = try!(fresh_req.start());
-        if let Some(ref b) = self.body() { 
+        if let Some(ref b) = self.body() {
             streaming_req.write(b.as_bytes()).unwrap();
         }
         let mut response = try!(streaming_req.send());
@@ -68,7 +68,7 @@ pub trait DoRequest<T> : BaseRequest
         };
         let mut fresh_req = match client::Request::new(Method::Get, url) {
             Ok(req) => req,
-            Err(e)  => return Err(e)
+            Err(e) => return Err(e),
         };
         let mut auth_s = String::new();
         auth_s.push_str("Bearer ");
@@ -76,7 +76,7 @@ pub trait DoRequest<T> : BaseRequest
         fresh_req.headers_mut().set(ContentType("application/json".parse().unwrap()));
         fresh_req.headers_mut().set(Authorization(auth_s));
         let mut streaming_req = try!(fresh_req.start());
-        if let Some(ref b) = self.body() { 
+        if let Some(ref b) = self.body() {
             streaming_req.write(b.as_bytes()).unwrap();
         }
         let response = try!(streaming_req.send());
@@ -90,7 +90,7 @@ pub trait DoRequest<T> : BaseRequest
             Ok(resp) => {
                 let header = try!(response::HeaderOnly::from_response(resp));
                 Ok(header)
-            },
+            }
             Err(e) => {
                 debug!("Error getting json: {}", e.to_string());
                 Err(e.to_string())
@@ -108,21 +108,21 @@ pub trait DoRequest<T> : BaseRequest
                             Some(t) => {
                                 match serde_json::from_value(t.clone()) {
                                     Ok(t) => Ok(t),
-                                    Err(e) => Err(e.to_string())
+                                    Err(e) => Err(e.to_string()),
                                 }
-                            },
+                            }
                             None => {
                                 match serde_json::from_value::<DoError>(ob.clone()) {
                                     Ok(err) => Err(err.to_string()),
-                                    Err(e)  => Err(e.to_string())
+                                    Err(e) => Err(e.to_string()),
                                 }
                             }
                         }
-                    },
-                    Err(e) => Err(e.to_string())
+                    }
+                    Err(e) => Err(e.to_string()),
                 }
-            },
-            Err(e) => Err(e.to_string())
+            }
+            Err(e) => Err(e.to_string()),
         }
     }
 

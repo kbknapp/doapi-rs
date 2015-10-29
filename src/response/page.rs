@@ -1,18 +1,18 @@
-use response::{Meta, Links};
+use response::{Links, Meta};
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Pages {
     pub first: Option<String>,
     pub prev: Option<String>,
     pub next: Option<String>,
-    pub last: Option<String>
+    pub last: Option<String>,
 }
 
 #[derive(Deserialize)]
 pub struct RawPagedResponse<T> {
     pub collection: Vec<T>,
     pub links: Links,
-    pub meta: Meta
+    pub meta: Meta,
 }
 
 pub trait NewIter {

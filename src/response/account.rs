@@ -1,7 +1,9 @@
 // droplet_limit    number      The total number of droplets the user may have
-// email            string      The email the user has registered for Digital Ocean with
+// email            string      The email the user has registered for Digital
+// Ocean with
 // uuid             string      The universal identifier for this user
-// email_verified   boolean     If true, the user has verified their account via email. False otherwise.                
+// email_verified   boolean     If true, the user has verified their account
+// via email. False otherwise.
 
 use std::fmt;
 use std::borrow::Cow;
@@ -16,21 +18,22 @@ pub struct Account {
     pub droplet_limit: f64,
     pub email: String,
     pub uuid: String,
-    pub email_verified: bool
+    pub email_verified: bool,
 }
 
 impl NotArray for Account {}
 
 impl fmt::Display for Account {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Email: {}\n\
+        write!(f,
+               "Email: {}\n\
                    Droplet Limit: {:.0}\n\
                    UUID: {}\n\
                    E-Mail Verified: {}",
-                self.email,
-                self.droplet_limit,
-                self.uuid,
-                self.email_verified)
+               self.email,
+               self.droplet_limit,
+               self.uuid,
+               self.email_verified)
     }
 }
 

@@ -1,8 +1,12 @@
 // droplet_id           number      The affected droplet's ID
-// date_of_migration    string      A time value given in ISO8601 combined date and time format 
-//                                  that represents when the migration will occur for the droplet.
-// url                  string      A URL pointing to the Droplet's API endpoint. This is the 
-//                                  endpoint to be used if you want to retrieve information about 
+// date_of_migration    string      A time value given in ISO8601 combined date
+// and time format
+// that represents when the migration will
+// occur for the droplet.
+// url                  string      A URL pointing to the Droplet's API
+// endpoint. This is the
+// endpoint to be used if you want to retrieve
+// information about
 //                                  the droplet.
 
 use std::fmt;
@@ -22,13 +26,13 @@ impl response::NotArray for DropletUpgrade {}
 
 impl fmt::Display for DropletUpgrade {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Droplet ID: {:.0}\n\
+        write!(f,
+               "Droplet ID: {:.0}\n\
                   Date of Migration: {}\n\
                   URL: {}",
-                self.droplet_id,
-                self.date_of_migration,
-                self.url
-        )
+               self.droplet_id,
+               self.date_of_migration,
+               self.url)
 
     }
 }

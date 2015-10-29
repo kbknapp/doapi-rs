@@ -24,7 +24,8 @@ impl<'t> RequestBuilder<'t, response::Account> {
     /// ```
     pub fn action(self, id: &str) -> RequestBuilder<'t, response::Action> {
         // https://api.digitalocean.com/v2/actions/$ID
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/actions/{}", id))
+        RequestBuilder::new(self.auth,
+                            format!("https://api.digitalocean.com/v2/actions/{}", id))
     }
 
     /// A type of `RequestBuilder` that lets you make requests for multiple actions or the concept 

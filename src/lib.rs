@@ -1,5 +1,21 @@
-#![feature(custom_derive, custom_attribute, append, plugin)]
+#![crate_type= "lib"]
+#![feature(custom_derive,
+           custom_attribute,
+           append,
+           plugin)]
 #![plugin(serde_macros)]
+#![cfg_attr(feature = "lints", plugin(clippy))]
+#![cfg_attr(feature = "lints", allow(explicit_iter_loop))]
+#![cfg_attr(feature = "lints", allow(should_implement_trait))]
+#![cfg_attr(feature = "lints", deny(warnings))]
+#![deny(missing_docs,
+        missing_debug_implementations,
+        missing_copy_implementations,
+        trivial_casts, trivial_numeric_casts,
+        unsafe_code,
+        unstable_features,
+        unused_import_braces,
+        unused_qualifications)]
 
 extern crate serde;
 extern crate serde_json;

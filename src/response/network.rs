@@ -1,6 +1,6 @@
 use std::fmt;
 
-use response; 
+use response;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Network {
@@ -14,27 +14,28 @@ pub struct Network {
 #[derive(Deserialize, Debug)]
 pub struct Networks {
     pub v4: Vec<Option<Network>>,
-    pub v6: Vec<Option<Network>>
+    pub v6: Vec<Option<Network>>,
 }
 
 impl response::NotArray for Network {}
 
 impl fmt::Display for Network {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "IP Address: {}\n\
+        write!(f,
+               "IP Address: {}\n\
                   Netmask: {}\n\
                   Gateway:{}\n\
                   Type: {}",
-                self.ip_address,
-                self.netmask,
-                self.gateway,
-                self.network_type)
+               self.ip_address,
+               self.netmask,
+               self.gateway,
+               self.network_type)
     }
 }
 
 impl fmt::Display for Networks {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "IPv4 Networks: {}\n\
+        write!(f, "IPv4 Networks: {}\n\
                   IPv6 Networks: {}",
             {
                 let v4 = self.v4

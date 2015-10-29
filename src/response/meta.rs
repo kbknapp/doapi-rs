@@ -1,4 +1,4 @@
 #[derive(Deserialize, Debug)]
 pub struct Meta {
-    pub total: f64
+    pub total: f64,
 }

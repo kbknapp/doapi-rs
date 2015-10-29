@@ -23,11 +23,17 @@ doapi_enum! {
 }
 
 // type     string  The record type (A, MX, CNAME, etc).    All Records
-// name     string  The host name, alias, or service being defined by the record.   A, AAAA, CNAME, TXT, SRV
-// data     string  Variable data depending on record type. See the [Domain Records]() section for more detail on each record type. A, AAAA, CNAME, MX, TXT, SRV, NS
-// priority    nullable number The priority of the host (for SRV and MX records. null otherwise).  MX, SRV
-// port     nullable number The port that the service is accessible on (for SRV records only. null otherwise).  SRV
-// weight   nullable number The weight of records with the same priority (for SRV records only. null otherwise).    SRV
+// name     string  The host name, alias, or service being defined by the
+// record.   A, AAAA, CNAME, TXT, SRV
+// data     string  Variable data depending on record type. See the [Domain
+// Records]() section for more detail on each record type. A, AAAA, CNAME, MX,
+// TXT, SRV, NS
+// priority    nullable number The priority of the host (for SRV and MX
+// records. null otherwise).  MX, SRV
+// port     nullable number The port that the service is accessible on (for SRV
+// records only. null otherwise).  SRV
+// weight   nullable number The weight of records with the same priority (for
+// SRV records only. null otherwise).    SRV
 /// A struct for creating a DNS Record
 #[derive(Serialize)]
 pub struct DnsRecord {
@@ -52,43 +58,42 @@ pub struct DnsRecord {
 impl fmt::Display for DnsRecord {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f,
-            "Record Type: {}\n\
+               "Record Type: {}\n\
              Name: {}\n\
              Data: {}\n\
              Priority: {}\n\
              Port: {}\n\
              Weight: {}\n",
-             if let Some(t) = self.rec_type.clone() {
-                t
-            } else {
-                "None".to_owned()
-            },
-             if let Some(n) = self.name.clone() {
-                n
-             } else {
-                "None".to_owned()
-             },
-             if let Some(d) = self.data.clone() {
-                d
-             } else {
-                "None".to_owned()
-             },
-             if let Some(p) = self.priority {
-                p.to_string()
-             } else {
-                "None".to_owned()
-             },
-             if let Some(p) = self.port {
-                p.to_string()
-             } else {
-                "None".to_owned()
-             },
-             if let Some(w) = self.weight {
-                w.to_string()
-             } else {
-                "None".to_owned()
-             }
-        )
+               if let Some(t) = self.rec_type.clone() {
+                   t
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(n) = self.name.clone() {
+                   n
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(d) = self.data.clone() {
+                   d
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(p) = self.priority {
+                   p.to_string()
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(p) = self.port {
+                   p.to_string()
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(w) = self.weight {
+                   w.to_string()
+               } else {
+                   "None".to_owned()
+               })
     }
 }
 
@@ -139,7 +144,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(serde_json::to_string(record).ok().unwrap())
+            body: Some(serde_json::to_string(record).ok().unwrap()),
         }
     }
 }
@@ -188,44 +193,44 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         // FIXME: Don't unwrap()
         let mut s = String::new();
         write!(s,
-            "{{{}{}{}{}{}{}}}",
-             if let Some(t) = record.rec_type.clone() {
-                format!("\"type\":{:?},",t)
-            } else {
-                "".to_owned()
-            },
-             if let Some(n) = record.name.clone() {
-                format!("\"name\":{:?},",n)
-             } else {
-                "".to_owned()
-             },
-             if let Some(d) = record.data.clone() {
-                format!("\"data\":{:?},",d)
-             } else {
-                "".to_owned()
-             },
-             if let Some(p) = record.priority {
-                format!("\"priority\":{},",p)
-             } else {
-                "".to_owned()
-             },
-             if let Some(p) = record.port {
-                format!("\"port\":{},",p)
-             } else {
-                "".to_owned()
-             },
-             if let Some(w) = record.weight {
-                format!("\"weight\":{}",w)
-             } else {
-                "".to_owned()
-             }
-        ).unwrap();
+               "{{{}{}{}{}{}{}}}",
+               if let Some(t) = record.rec_type.clone() {
+                   format!("\"type\":{:?},", t)
+               } else {
+                   "".to_owned()
+               },
+               if let Some(n) = record.name.clone() {
+                   format!("\"name\":{:?},", n)
+               } else {
+                   "".to_owned()
+               },
+               if let Some(d) = record.data.clone() {
+                   format!("\"data\":{:?},", d)
+               } else {
+                   "".to_owned()
+               },
+               if let Some(p) = record.priority {
+                   format!("\"priority\":{},", p)
+               } else {
+                   "".to_owned()
+               },
+               if let Some(p) = record.port {
+                   format!("\"port\":{},", p)
+               } else {
+                   "".to_owned()
+               },
+               if let Some(w) = record.weight {
+                   format!("\"weight\":{}", w)
+               } else {
+                   "".to_owned()
+               })
+            .unwrap();
         RequestBuilder {
             method: Method::Put,
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(s)
+            body: Some(s),
         }
     }
 
@@ -253,7 +258,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: None
+            body: None,
         }
     }
 }
