@@ -10,14 +10,16 @@ readme = "README.md"
 keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 
 [dependencies]
-hyper = "~0.6.11"
-regex = "~0.1.41"
-serde_macros = "~0.5.3"
-serde = "~0.5.3"
-serde_json = "~0.6.0"
+hyper = "0.6"
+regex = "0.1"
+serde_macros = "0.6"
+serde = "0.6"
+serde_json = "0.6"
+clippy = {version = "0.0.22", optional=true}
 
 [features]
-default = []
-
+default = ["nightly"]
+lints = ["nightly", "clippy"]
+nightly = []
 debug = []
-unstable = []
+unstable = ["nightly", "lints"]
