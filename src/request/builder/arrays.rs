@@ -25,13 +25,13 @@ impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t, respons
                     Ok(ob) => {
                         debug!("Success");
                         Ok(ob)
-                    },
+                    }
                     Err(e) => {
                         debug!("Failed");
                         Err(e.to_string())
                     }
                 }
-            },
+            }
             Err(e) => {
                 debug!("Failed");
                 Err(e.to_string())

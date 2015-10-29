@@ -1,7 +1,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::{Kernel, Region, Backup, Networks, Image, Size, NamedResponse};
+use response::{Backup, Image, Kernel, NamedResponse, Networks, Region, Size};
 
 // Have to duplicate Droplet because of lack of negative trait bounds
 #[derive(Deserialize, Debug)]
@@ -28,7 +28,8 @@ pub struct DropletNeighbor {
 
 impl fmt::Display for DropletNeighbor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "ID: {:.0}\n\
+        write!(f,
+               "ID: {:.0}\n\
                   Name: {}\n\
                   Memory: {} MB\n\
                   Virtual CPUs: {:.0}\n\
@@ -46,45 +47,52 @@ impl fmt::Display for DropletNeighbor {
                   Network: \n\t{}\n\
                   Kernel: \n\t{}\n\
                   Next Backup Window: {}\n",
-                self.id,
-                self.name,
-                self.memory,
-                self.vcpus,
-                self.disk,
-                self.locked,
-                self.created_at,
-                self.status,
-                self.backup_ids.iter()
-                               .filter_map(|n| if n.is_some() {
-                                  Some(n.clone().unwrap().to_string())
-                               }else{
-                                  None
-                               })
-                               .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-                self.snapshot_ids.iter()
-                                 .filter_map(|n| if n.is_some() {
-                                    Some(n.clone().unwrap().to_string())
-                                 }else{
-                                    None
-                                 })
-                                 .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-                self.features.iter()
-                             .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-                &self.region.to_string()[..].replace("\n","\n\t"),
-                &self.image.to_string()[..].replace("\n","\n\t"),
-                &self.size.to_string()[..].replace("\n","\n\t"),
-                self.size_slug,
-                &self.networks.to_string()[..].replace("\n","\n\t"),
-                if let Some(ref k) = self.kernel {
-                    format!("{}", &k.to_string()[..].replace("\n","\n\t"))
-                } else {
-                    "None".to_owned()
-                },
-                if let Some(ref k) = self.next_backup_window {
-                    format!("{}", &k.to_string()[..].replace("\n","\n\t"))
-                } else {
-                    "None".to_owned()
-                })
+               self.id,
+               self.name,
+               self.memory,
+               self.vcpus,
+               self.disk,
+               self.locked,
+               self.created_at,
+               self.status,
+               self.backup_ids
+                   .iter()
+                   .filter_map(|n| {
+                       if n.is_some() {
+                           Some(n.clone().unwrap().to_string())
+                       } else {
+                           None
+                       }
+                   })
+                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+               self.snapshot_ids
+                   .iter()
+                   .filter_map(|n| {
+                       if n.is_some() {
+                           Some(n.clone().unwrap().to_string())
+                       } else {
+                           None
+                       }
+                   })
+                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+               self.features
+                   .iter()
+                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+               &self.region.to_string()[..].replace("\n", "\n\t"),
+               &self.image.to_string()[..].replace("\n", "\n\t"),
+               &self.size.to_string()[..].replace("\n", "\n\t"),
+               self.size_slug,
+               &self.networks.to_string()[..].replace("\n", "\n\t"),
+               if let Some(ref k) = self.kernel {
+                   format!("{}", &k.to_string()[..].replace("\n", "\n\t"))
+               } else {
+                   "None".to_owned()
+               },
+               if let Some(ref k) = self.next_backup_window {
+                   format!("{}", &k.to_string()[..].replace("\n", "\n\t"))
+               } else {
+                   "None".to_owned()
+               })
 
     }
 }

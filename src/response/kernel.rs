@@ -21,12 +21,13 @@ impl response::NotArray for Kernel {}
 
 impl fmt::Display for Kernel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "ID: {:.0}\n\
+        write!(f,
+               "ID: {:.0}\n\
                   Name: {}\n\
                   Version:{}",
-                self.id,
-                self.name,
-                self.version)
+               self.id,
+               self.name,
+               self.version)
     }
 }
 

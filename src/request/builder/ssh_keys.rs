@@ -17,7 +17,7 @@ impl<'t> RequestBuilder<'t, response::SshKeys> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":{:?},\"public_key\":{:?}}}", name, pub_key)) 
+            body: Some(format!("{{\"name\":{:?},\"public_key\":{:?}}}", name, pub_key)),
         }
     }
 }
@@ -34,7 +34,7 @@ impl<'t> RequestBuilder<'t, response::SshKey> {
             url: self.url,
             auth: self.auth,
             resp_t: PhantomData,
-            body: Some(format!("{{\"name\":{:?}}}", name)) 
+            body: Some(format!("{{\"name\":{:?}}}", name)),
         }
     }
     pub fn destroy(self) -> RequestBuilder<'t, response::HeaderOnly> {
@@ -46,7 +46,7 @@ impl<'t> RequestBuilder<'t, response::SshKey> {
             auth: self.auth,
             url: self.url,
             resp_t: PhantomData,
-            body: None
+            body: None,
         }
     }
 }

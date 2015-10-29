@@ -9,9 +9,7 @@ pub struct DoManager<'t> {
 impl<'t> DoManager<'t> {
     /// Creates a new instance of `DoManager` with a string slice of your AUTH TOKEN
     pub fn with_token(token: &'t str) -> DoManager<'t> {
-        DoManager {
-            auth: token
-        }
+        DoManager { auth: token }
     }
 
     /// Returns a request that can be used to view account information.     
@@ -86,7 +84,8 @@ impl<'t> DoManager<'t> {
     /// }
     /// ```
     pub fn image(&self, id: &str) -> RequestBuilder<'t, response::Image> {
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/images/{}", id))
+        RequestBuilder::new(self.auth,
+                            format!("https://api.digitalocean.com/v2/images/{}", id))
     }
 
     /// Returns a request that can be used to view all available images, or actions on multiple     
@@ -144,7 +143,8 @@ impl<'t> DoManager<'t> {
     /// }
     /// ```
     pub fn ssh_key(&self, id: &str) -> RequestBuilder<'t, response::SshKey> {
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/account/keys/{}", id))
+        RequestBuilder::new(self.auth,
+                            format!("https://api.digitalocean.com/v2/account/keys/{}", id))
     }
 
 
@@ -166,7 +166,8 @@ impl<'t> DoManager<'t> {
     /// }
     /// ```
     pub fn droplet(&self, id: &str) -> RequestBuilder<'t, response::Droplet> {
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/droplets/{}", id))
+        RequestBuilder::new(self.auth,
+                            format!("https://api.digitalocean.com/v2/droplets/{}", id))
     }
 
     /// Returns a request that can be used to view all available droplets, or actions that apply to
@@ -222,6 +223,7 @@ impl<'t> DoManager<'t> {
     /// }
     /// ```
     pub fn domain(&self, name: &str) -> RequestBuilder<'t, response::Domain> {
-        RequestBuilder::new(self.auth, format!("https://api.digitalocean.com/v2/domains/{}", name))
+        RequestBuilder::new(self.auth,
+                            format!("https://api.digitalocean.com/v2/domains/{}", name))
     }
 }

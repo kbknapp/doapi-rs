@@ -1,5 +1,6 @@
 // id           number              A unique identifier for each domain record.
-// type         string              The type of the DNS record (ex: A, CNAME, TXT, ...).
+// type         string              The type of the DNS record (ex: A, CNAME,
+// TXT, ...).
 // name         string              The name to use for the DNS record.
 // data         string              The value to use for the DNS record.
 // priority     nullable number     The priority for SRV and MX records.
