@@ -97,7 +97,6 @@ impl<'t> RequestBuilder<'t, response::Images> {
         self.url.push_str("?type=available");
         self
     }
-
 }
 
 impl<'t> DoRequest<response::Image> for RequestBuilder<'t, response::Image> {}

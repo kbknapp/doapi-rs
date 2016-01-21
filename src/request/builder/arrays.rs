@@ -12,7 +12,9 @@ impl response::NamedResponse for String {
     }
 }
 
-impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t, response::ResponseStringArray> {
+impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t,
+                                                                     response::ResponseStringArray>
+    {
     #[allow(unused_variables)]
     fn retrieve_obj(&self, obj: String) -> Result<response::ResponseStringArray, String> {
         debug!("Inside retrieve_obj() of ResponseStringArray");

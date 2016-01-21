@@ -22,7 +22,7 @@ pub trait NewIter {
     }
 }
 
-impl<R> NewIter for R
-              where R: Iterator {
+impl<R> NewIter for R where R: Iterator
+{
     type Item = <Self as Iterator>::Item;
 }
