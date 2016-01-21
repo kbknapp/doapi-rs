@@ -1,7 +1,6 @@
 #![crate_type= "lib"]
 #![feature(custom_derive,
            custom_attribute,
-           append,
            plugin)]
 #![plugin(serde_macros)]
 #![cfg_attr(feature = "lints", plugin(clippy))]
