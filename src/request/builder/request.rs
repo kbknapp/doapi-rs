@@ -84,7 +84,8 @@ impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
 // impl<'t, T: !Iterator> DoRequest<T> for RequestBuilder<'t, T> { }
 
 impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
-                                              where I: Deserialize + NamedResponse + NotArray {
+    where I: Deserialize + NamedResponse + NotArray
+{
     type Item = I;
     fn retrieve_single_page(&self, url: String) -> Result<RawPagedResponse<I>, String> {
         debug!("Inside retrieve_single_page() with url: {}", &url[..]);
@@ -121,7 +122,8 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
 }
 
 impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
-                                where I: Deserialize + NamedResponse + NotArray {
+    where I: Deserialize + NamedResponse + NotArray
+{
     #[cfg_attr(not(feature = "debug"), allow(unused_variables))]
     fn retrieve(&self) -> Result<Vec<I>, String> {
         debug!("Inside retrieve() for  paged request");
