@@ -19,17 +19,18 @@ let domgr = DoManager::with_auth(&auth_token);
 let snapshot_name = "my new snapshot";
 let droplet_id = "1234567";
 
-print!("Sending request...")
+print!("Sending request...");
 match domgr.droplet(droplet_id)
            .snapshot(snapshot_name)
            .retrieve() {
-Ok(action) => {
-    println!("Success!\n\t");
-    println!("{}\n", action);
-},
-Err(e) => {
-    pritnln!("Failed\n\t.")
-    println!("{}\n", e);
+    Ok(action) => {
+        println!("Success!\n\t");
+        println!("{}\n", action);
+    }
+    Err(e) => {
+        println!("Failed\n\t.");
+        println!("{}\n", e);
+    }
 }
 ```
 
@@ -77,7 +78,7 @@ Add `doapi` as a dependecy in your `Cargo.toml` file to use from crates.io:
 git = "https://github.com/kbknapp/doapi-rs.git"
 ```
 
-Add `extern crate dopai;` to your crate root.
+Add `extern crate doapi;` to your crate root.
 
 ### DigitalOcean Personal Auth Token
 
