@@ -12,9 +12,9 @@ keywords = ["do", "lib", "digitalocean", "digital", "ocean"]
 [dependencies]
 hyper = "~0.7"
 regex = "~0.1"
-serde_macros = "0.6"
-serde = "0.6"
-serde_json = "0.6"
+serde_macros = "0.7"
+serde = "0.7"
+serde_json = "0.7"
 clippy = {version = "~0.0.22", optional=true}
 
 [features]
