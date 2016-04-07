@@ -42,7 +42,7 @@ pub trait DoRequest<T> : BaseRequest
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
-        let mut fresh_req = match client::Request::new(Method::Get, url) {
+        let mut fresh_req = match client::Request::new(self.method(), url) {
             Ok(req) => req,
             Err(e) => return Err(e),
         };
@@ -66,7 +66,7 @@ pub trait DoRequest<T> : BaseRequest
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
-        let mut fresh_req = match client::Request::new(Method::Get, url) {
+        let mut fresh_req = match client::Request::new(self.method(), url) {
             Ok(req) => req,
             Err(e) => return Err(e),
         };
