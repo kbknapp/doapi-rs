@@ -31,8 +31,8 @@ impl response::NotArray for HeaderOnly {}
 impl HeaderOnly {
     pub fn from_response(r: Response) -> Result<HeaderOnly, String> {
         let c_type = match r.headers.get::<header::ContentType>() {
-            Some(c) => c,
-            None => return Err("No content-type provided".to_owned()),
+            Some(c) => c.to_string(),
+            None => String::new(),
         };
         let raw_status = r.status_raw();
         let status = format!("{} {}", raw_status.0, raw_status.1);
@@ -64,7 +64,7 @@ impl HeaderOnly {
             Err(e) => return Err(e.to_string()),
         };
         Ok(HeaderOnly {
-            content_type: c_type.to_string(),
+            content_type: c_type,
             status: status,
             ratelimit_limit: rl_limit,
             ratelimit_remaining: rl_remain,
