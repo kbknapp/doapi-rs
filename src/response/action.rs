@@ -7,7 +7,7 @@
 // an image transfer action.
 // started_at     string            A time value given in ISO8601 combined date
 // and time format that represents when the action was initiated.
-// completed_at   string            A time value given in ISO8601 combined date
+// completed_at   nullable string   A time value given in ISO8601 combined date
 // and time format that represents when the action was completed.
 // resource_id    number            A unique identifier for the resource that
 // the action is associated with.
@@ -32,7 +32,7 @@ pub struct Action {
     #[serde(rename="type")]
     action_type: String,
     started_at: String,
-    completed_at: String,
+    completed_at: Option<String>,
     resource_id: f64,
     resource_type: String,
     region: Region,
@@ -57,7 +57,11 @@ impl fmt::Display for Action {
                self.status,
                self.action_type,
                self.started_at,
-               self.completed_at,
+               if self.completed_at.is_some() {
+                   self.completed_at.clone().unwrap()
+               } else {
+                   "None".to_owned()
+               },
                self.resource_id,
                self.resource_type,
                if self.region_slug.is_some() {
