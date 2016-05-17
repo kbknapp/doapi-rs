@@ -2,6 +2,7 @@ use response;
 use request::RequestBuilder;
 
 /// The main structure through which all calls are made. This holds a slice of the AUTH TOKEN
+#[derive(Clone)]
 pub struct DoManager<'t> {
     auth: &'t str,
 }
