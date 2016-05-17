@@ -1,5 +1,4 @@
 use std::marker::PhantomData;
-use std::iter::Iterator;
 use std::fmt;
 
 use serde::Deserialize;
@@ -52,14 +51,14 @@ impl<'t, T> fmt::Display for RequestBuilder<'t, T> {
                self.method,
                self.auth,
                if !self.url.is_empty() {
-                   self.url.clone()
+                   &self.url
                } else {
-                   "None".to_owned()
+                   "None"
                },
                if let Some(ref bdy) = self.body {
-                   format!("{}", bdy)
+                   bdy
                } else {
-                   "None".to_owned()
+                   "None"
                })
     }
 }
@@ -105,17 +104,17 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                 match serde_json::from_str::<response::RawPagedResponse<I>>(json_str) {
                     // FIXME ^^
                     Ok(val) => {
-                        return Ok(val);
+                        Ok(val)
                     }
                     Err(e) => {
                         debug!("Error getting objects: {}", e.to_string());
-                        return Err(e.to_string());
+                        Err(e.to_string())
                     }
                 }
             }
             Err(e) => {
                 debug!("Error getting json: {}", e.to_string());
-                return Err(e.to_string());
+                Err(e.to_string())
             }
         }
     }
@@ -165,7 +164,7 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
                     }
                     Err(e) => {
                         debug!("Error getting object: {}", e.to_string());
-                        return self.retrieve_obj(name);
+                        self.retrieve_obj(name)
                     }
                 }
             }

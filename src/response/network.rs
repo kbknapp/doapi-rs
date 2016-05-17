@@ -46,10 +46,10 @@ impl fmt::Display for Networks {
                                 None
                              })
                              .fold(String::new(),|acc, n| {
-                                acc + &format!("{}", &n[..].replace("\n", "\n\t"))[..]
+                                acc + &n.replace("\n", "\n\t")
                              });
                 if !v4.is_empty() {
-                    format!("\n\t{}", &v4[..])
+                    format!("\n\t{}", v4)
                 } else {
                     "None".to_owned()
                 }
@@ -63,10 +63,10 @@ impl fmt::Display for Networks {
                                 None
                              })
                              .fold(String::new(),|acc, n| {
-                                acc + &format!("{}", &n[..].replace("\n", "\n\t"))[..]
+                                acc + &n.replace("\n", "\n\t")
                              });
                 if !v6.is_empty() {
-                    format!("{}", &v6[..])
+                    format!("\n\t{}", v6)
                 } else {
                     "None".to_owned()
                 }
