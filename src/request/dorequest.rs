@@ -21,7 +21,7 @@ pub trait BaseRequest {
 pub trait DoRequest<T> : BaseRequest
               where T: Deserialize + NamedResponse {
     fn request(&self) -> hyper::Result<client::Request<Fresh>> {
-        let url = match Url::parse(&self.url()) {
+        let url = match Url::parse(self.url()) {
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
@@ -38,7 +38,7 @@ pub trait DoRequest<T> : BaseRequest
     }
 
     fn retrieve_json(&self) -> hyper::Result<String> {
-        let url = match Url::parse(&self.url()) {
+        let url = match Url::parse(self.url()) {
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
@@ -62,7 +62,7 @@ pub trait DoRequest<T> : BaseRequest
     }
 
     fn retrieve_raw_response(&self) -> hyper::Result<client::response::Response> {
-        let url = match Url::parse(&self.url()) {
+        let url = match Url::parse(self.url()) {
             Ok(url) => url,
             Err(e) => return Err(Error::Uri(e)),
         };
