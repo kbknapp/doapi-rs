@@ -52,6 +52,7 @@ use std::borrow::Cow;
 
 use response::{self, Backup, Image, Kernel, NamedResponse, Networks, Region, Size};
 
+// Remember to update DropletNeighbor
 #[derive(Deserialize, Debug)]
 pub struct Droplet {
     pub id: f64,
@@ -64,9 +65,9 @@ pub struct Droplet {
     pub kernel: Option<Kernel>,
     pub created_at: String,
     pub features: Vec<String>,
-    pub backup_ids: Vec<Option<String>>,
+    pub backup_ids: Vec<Option<f64>>,
     pub next_backup_window: Option<Backup>,
-    pub snapshot_ids: Vec<Option<String>>,
+    pub snapshot_ids: Vec<Option<f64>>,
     pub image: Image,
     pub region: Region,
     pub size: Size,
