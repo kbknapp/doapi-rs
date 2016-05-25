@@ -55,7 +55,7 @@ use response::{self, Backup, Image, Kernel, NamedResponse, Networks, Region, Siz
 // Remember to update DropletNeighbor
 #[derive(Deserialize, Debug)]
 pub struct Droplet {
-    pub id: f64,
+    pub id: u64,
     pub name: String,
     pub memory: f64,
     pub vcpus: f64,
