@@ -17,11 +17,11 @@ use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Region {
-    name: String,
-    slug: String,
-    sizes: Vec<String>,
-    features: Vec<String>,
-    available: bool,
+    pub name: String,
+    pub slug: String,
+    pub sizes: Vec<String>,
+    pub features: Vec<String>,
+    pub available: bool,
 }
 
 impl response::NotArray for Region {}

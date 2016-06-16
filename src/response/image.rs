@@ -30,16 +30,16 @@ use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Image {
-    id: f64,
-    name: String,
-    distribution: String,
-    slug: Option<String>,
-    public: bool,
-    regions: Vec<String>,
-    created_at: String,
-    min_disk_size: f64,
+    pub id: f64,
+    pub name: String,
+    pub distribution: String,
+    pub slug: Option<String>,
+    pub public: bool,
+    pub regions: Vec<String>,
+    pub created_at: String,
+    pub min_disk_size: f64,
     #[serde(rename = "type")]
-    image_type: String,
+    pub image_type: String,
 }
 
 impl response::NotArray for Image {}
