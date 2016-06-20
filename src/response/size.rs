@@ -27,15 +27,15 @@ use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Size {
-    slug: String,
-    memory: f64,
-    vcpus: f64,
-    disk: f64,
-    transfer: f64,
-    price_monthly: f64,
-    price_hourly: f64,
-    regions: Vec<String>,
-    available: bool,
+    pub slug: String,
+    pub memory: f64,
+    pub vcpus: f64,
+    pub disk: f64,
+    pub transfer: f64,
+    pub price_monthly: f64,
+    pub price_hourly: f64,
+    pub regions: Vec<String>,
+    pub available: bool,
 }
 
 impl response::NotArray for Size {}

@@ -18,9 +18,9 @@ use response;
 
 #[derive(Deserialize, Debug)]
 pub struct Domain {
-    name: String,
-    ttl: f64,
-    zone_file: String,
+    pub name: String,
+    pub ttl: f64,
+    pub zone_file: String,
 }
 
 impl fmt::Display for Domain {

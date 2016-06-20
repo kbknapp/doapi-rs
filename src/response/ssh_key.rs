@@ -20,10 +20,10 @@ use response;
 
 #[derive(Deserialize, Debug)]
 pub struct SshKey {
-    id: f64,
-    fingerprint: String,
-    public_key: String,
-    name: String,
+    pub id: f64,
+    pub fingerprint: String,
+    pub public_key: String,
+    pub name: String,
 }
 
 impl response::NotArray for SshKey {}
