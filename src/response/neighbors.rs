@@ -100,9 +100,7 @@ impl fmt::Display for DropletNeighbor {
 pub type Neighbor = Vec<DropletNeighbor>;
 
 impl NamedResponse for Neighbor {
-    fn name<'a>() -> Cow<'a, str> {
-        "neighbor".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "neighbor".into() }
 }
 
 pub type Neighbors = Vec<Neighbor>;

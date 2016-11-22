@@ -9,11 +9,9 @@ pub struct DoManager<'t> {
 
 impl<'t> DoManager<'t> {
     /// Creates a new instance of `DoManager` with a string slice of your AUTH TOKEN
-    pub fn with_token(token: &'t str) -> DoManager<'t> {
-        DoManager { auth: token }
-    }
+    pub fn with_token(token: &'t str) -> DoManager<'t> { DoManager { auth: token } }
 
-    /// Returns a request that can be used to view account information.     
+    /// Returns a request that can be used to view account information.
     ///
     /// # Example
     ///
@@ -89,7 +87,7 @@ impl<'t> DoManager<'t> {
                             format!("https://api.digitalocean.com/v2/images/{}", id))
     }
 
-    /// Returns a request that can be used to view all available images, or actions on multiple     
+    /// Returns a request that can be used to view all available images, or actions on multiple
     ///
     /// # Example
     ///
@@ -208,7 +206,7 @@ impl<'t> DoManager<'t> {
         RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/domains")
     }
 
-    /// Returns a request that can be used to view a single domain, or actions that apply to only 
+    /// Returns a request that can be used to view a single domain, or actions that apply to only
     /// one
     ///
     /// # Example

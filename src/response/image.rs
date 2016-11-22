@@ -71,9 +71,7 @@ impl fmt::Display for Image {
 }
 
 impl NamedResponse for Image {
-    fn name<'a>() -> Cow<'a, str> {
-        "image".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "image".into() }
 }
 
 pub type Images = Vec<Image>;

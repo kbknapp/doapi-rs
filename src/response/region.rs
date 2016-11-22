@@ -43,9 +43,7 @@ impl fmt::Display for Region {
 }
 
 impl NamedResponse for Region {
-    fn name<'a>() -> Cow<'a, str> {
-        "region".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "region".into() }
 }
 
 pub type Regions = Vec<Region>;

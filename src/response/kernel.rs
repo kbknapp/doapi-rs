@@ -32,9 +32,7 @@ impl fmt::Display for Kernel {
 }
 
 impl NamedResponse for Kernel {
-    fn name<'a>() -> Cow<'a, str> {
-        "kernel".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "kernel".into() }
 }
 
 pub type Kernels = Vec<Kernel>;

@@ -409,9 +409,7 @@ impl<'t> RequestBuilder<'t, response::Droplet> {
             body: None,
         }
     }
-    pub fn show(&self) -> RequestBuilder<'t, response::Droplet> {
-        unimplemented!()
-    }
+    pub fn show(&self) -> RequestBuilder<'t, response::Droplet> { unimplemented!() }
     pub fn neighbors(mut self) -> RequestBuilder<'t, response::Droplets> {
         // GET: "https://api.digitalocean.com/v2/droplets/$ID/neighbors"
         self.url.push_str("/neighbors");

@@ -66,7 +66,5 @@ impl fmt::Display for Snapshot {
 pub type Snapshots = Vec<Snapshot>;
 
 impl NamedResponse for Snapshot {
-    fn name<'a>() -> Cow<'a, str> {
-        "snapshot".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "snapshot".into() }
 }

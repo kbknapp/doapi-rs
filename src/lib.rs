@@ -29,5 +29,4 @@ pub use request::RequestBuilder;
 pub use request::DoRequest;
 
 #[cfg(test)]
-mod tests {
-}
+mod tests {}

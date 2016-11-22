@@ -4,7 +4,8 @@ pub trait NamedResponse {
     fn name<'a>() -> Cow<'a, str>;
 }
 
-impl<T> NamedResponse for Vec<T> where T: NamedResponse
+impl<T> NamedResponse for Vec<T>
+    where T: NamedResponse
 {
     fn name<'a>() -> Cow<'a, str> {
         let mut n = String::with_capacity(15);

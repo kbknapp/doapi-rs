@@ -38,9 +38,7 @@ impl fmt::Display for Account {
 }
 
 impl NamedResponse for Account {
-    fn name<'a>() -> Cow<'a, str> {
-        "account".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "account".into() }
 }
 
 // TODO: Implement response headers:

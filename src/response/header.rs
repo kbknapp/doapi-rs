@@ -74,9 +74,7 @@ impl HeaderOnly {
 }
 
 impl NamedResponse for HeaderOnly {
-    fn name<'a>() -> Cow<'a, str> {
-        "header".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "header".into() }
 }
 
 impl fmt::Display for HeaderOnly {

@@ -41,7 +41,5 @@ impl response::NotArray for Domain {}
 pub type Domains = Vec<Domain>;
 
 impl NamedResponse for Domain {
-    fn name<'a>() -> Cow<'a, str> {
-        "domain".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "domain".into() }
 }

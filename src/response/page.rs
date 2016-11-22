@@ -17,12 +17,11 @@ pub struct RawPagedResponse<T> {
 
 pub trait NewIter {
     type Item;
-    fn new() -> Vec<Self::Item> {
-        vec![]
-    }
+    fn new() -> Vec<Self::Item> { vec![] }
 }
 
-impl<R> NewIter for R where R: Iterator
+impl<R> NewIter for R
+    where R: Iterator
 {
     type Item = <Self as Iterator>::Item;
 }

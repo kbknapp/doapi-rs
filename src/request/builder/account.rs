@@ -4,7 +4,7 @@ use request::DoRequest;
 
 
 impl<'t> RequestBuilder<'t, response::Account> {
-    /// Returns type of `RequestBuilder` which allows you make requests for information related to 
+    /// Returns type of `RequestBuilder` which allows you make requests for information related to
     /// a single action
     ///
     /// **Parameters:**
@@ -28,7 +28,7 @@ impl<'t> RequestBuilder<'t, response::Account> {
                             format!("https://api.digitalocean.com/v2/actions/{}", id))
     }
 
-    /// A type of `RequestBuilder` that lets you make requests for multiple actions or the concept 
+    /// A type of `RequestBuilder` that lets you make requests for multiple actions or the concept
     /// of "Actions" as a whole
     ///
     /// # Example

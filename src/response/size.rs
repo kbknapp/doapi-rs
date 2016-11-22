@@ -66,9 +66,7 @@ impl fmt::Display for Size {
 }
 
 impl NamedResponse for Size {
-    fn name<'a>() -> Cow<'a, str> {
-        "size".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "size".into() }
 }
 
 pub type Sizes = Vec<Size>;

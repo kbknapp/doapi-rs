@@ -39,7 +39,7 @@ doapi_enum! {
 pub struct DnsRecord {
     /// The type of record (A, AAAA, MX, NS, etc.)
     ///
-    /// **NOTE:** You can use the `DnsRecType`'s implementation of `std::fmt::Display` to get a 
+    /// **NOTE:** You can use the `DnsRecType`'s implementation of `std::fmt::Display` to get a
     /// `String`
     #[serde(rename = "type")]
     pub rec_type: Option<String>,
@@ -98,10 +98,10 @@ impl fmt::Display for DnsRecord {
 }
 
 impl<'t> RequestBuilder<'t, response::DnsRecords> {
-    /// Returns a `RequestBuilder` for creating a DNS record. 
+    /// Returns a `RequestBuilder` for creating a DNS record.
     ///
     /// **Parameters:**
-    /// `record`: The instance of `DnsRecord` you'd like to create 
+    /// `record`: The instance of `DnsRecord` you'd like to create
     ///
     /// # Example
     ///
@@ -151,7 +151,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
 
 
 impl<'t> RequestBuilder<'t, response::DnsRecord> {
-    /// Returns a `RequestBuilder` for updating an existing DNS record. 
+    /// Returns a `RequestBuilder` for updating an existing DNS record.
     ///
     /// **Parameters:**
     /// `record`: The new instance of `DnsRecord` you'd like to update to
@@ -234,7 +234,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         }
     }
 
-    /// Returns a `RequestBuilder` for deleting an existing DNS record. 
+    /// Returns a `RequestBuilder` for deleting an existing DNS record.
     ///
     /// # Example
     ///

@@ -64,18 +64,10 @@ impl<'t, T> fmt::Display for RequestBuilder<'t, T> {
 }
 
 impl<'t, T> BaseRequest for RequestBuilder<'t, T> {
-    fn auth(&self) -> &str {
-        self.auth
-    }
-    fn url(&self) -> &str {
-        &self.url[..]
-    }
-    fn method(&self) -> Method {
-        self.method.clone()
-    }
-    fn body(&self) -> Option<String> {
-        self.body.clone()
-    }
+    fn auth(&self) -> &str { self.auth }
+    fn url(&self) -> &str { &self.url[..] }
+    fn method(&self) -> Method { self.method.clone() }
+    fn body(&self) -> Option<String> { self.body.clone() }
 }
 
 // Can't use because of impl for DoRequest<Vec<T>>, waiting on negative trait
@@ -103,9 +95,7 @@ impl<'t, I> PagedRequest for RequestBuilder<'t, Vec<I>>
                 let json_str = &re.replace(&s[..], "\"collection\"");
                 match serde_json::from_str::<response::RawPagedResponse<I>>(json_str) {
                     // FIXME ^^
-                    Ok(val) => {
-                        Ok(val)
-                    }
+                    Ok(val) => Ok(val),
                     Err(e) => {
                         debug!("Error getting objects: {}", e.to_string());
                         Err(e.to_string())
@@ -177,7 +167,5 @@ impl<'t, I> DoRequest<Vec<I>> for RequestBuilder<'t, Vec<I>>
 }
 
 impl<'t> DoRequest<response::HeaderOnly> for RequestBuilder<'t, response::HeaderOnly> {
-    fn retrieve(&self) -> Result<response::HeaderOnly, String> {
-        self.retrieve_header()
-    }
+    fn retrieve(&self) -> Result<response::HeaderOnly, String> { self.retrieve_header() }
 }

@@ -149,9 +149,7 @@ impl fmt::Display for Droplet {
 }
 
 impl NamedResponse for Droplet {
-    fn name<'a>() -> Cow<'a, str> {
-        "droplet".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "droplet".into() }
 }
 
 pub type Droplets = Vec<Droplet>;

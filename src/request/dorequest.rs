@@ -18,8 +18,9 @@ pub trait BaseRequest {
     fn body(&self) -> Option<String>;
 }
 
-pub trait DoRequest<T> : BaseRequest
-              where T: Deserialize + NamedResponse {
+pub trait DoRequest<T>: BaseRequest
+    where T: Deserialize + NamedResponse
+{
     fn request(&self) -> hyper::Result<client::Request<Fresh>> {
         let url = match Url::parse(self.url()) {
             Ok(url) => url,

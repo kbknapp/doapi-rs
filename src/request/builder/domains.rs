@@ -39,7 +39,7 @@ impl<'t> RequestBuilder<'t, response::Domains> {
 }
 
 impl<'t> RequestBuilder<'t, response::Domain> {
-    /// Returns a `RequestBuilder` that can be used delete an existing domain. 
+    /// Returns a `RequestBuilder` that can be used delete an existing domain.
     ///
     /// # Example
     ///
@@ -66,7 +66,7 @@ impl<'t> RequestBuilder<'t, response::Domain> {
         }
     }
 
-    /// Returns a type of `RequestBuilder` which allows you make requests related to multiple DNS 
+    /// Returns a type of `RequestBuilder` which allows you make requests related to multiple DNS
     /// records or the concept of "DNS Records" as a whole
     ///
     /// # Example
@@ -90,7 +90,7 @@ impl<'t> RequestBuilder<'t, response::Domain> {
         RequestBuilder::new(self.auth, self.url)
     }
 
-    /// Returns type of `RequestBuilder` which allows you make requests related to a single DNS 
+    /// Returns type of `RequestBuilder` which allows you make requests related to a single DNS
     /// record
     ///
     /// # Example

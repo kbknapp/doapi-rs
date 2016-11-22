@@ -76,7 +76,5 @@ impl fmt::Display for Action {
 pub type Actions = Vec<Action>;
 
 impl NamedResponse for Action {
-    fn name<'a>() -> Cow<'a, str> {
-        "action".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "action".into() }
 }

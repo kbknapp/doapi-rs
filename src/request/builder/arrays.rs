@@ -7,9 +7,7 @@ use request::RequestBuilder;
 use response;
 
 impl response::NamedResponse for String {
-    fn name<'a>() -> Cow<'a, str> {
-        "".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "".into() }
 }
 
 impl<'t> DoRequest<response::ResponseStringArray> for RequestBuilder<'t,

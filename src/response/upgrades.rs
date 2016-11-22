@@ -38,9 +38,7 @@ impl fmt::Display for DropletUpgrade {
 }
 
 impl NamedResponse for DropletUpgrade {
-    fn name<'a>() -> Cow<'a, str> {
-        "upgrade".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "upgrade".into() }
 }
 
 pub type DropletUpgrades = Vec<DropletUpgrade>;

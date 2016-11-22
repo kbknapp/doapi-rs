@@ -29,9 +29,7 @@ pub struct SshKey {
 impl response::NotArray for SshKey {}
 
 impl NamedResponse for SshKey {
-    fn name<'a>() -> Cow<'a, str> {
-        "ssh_key".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "ssh_key".into() }
 }
 
 impl fmt::Display for SshKey {

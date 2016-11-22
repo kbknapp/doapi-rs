@@ -67,7 +67,5 @@ impl fmt::Display for Backup {
 pub type Backups = Vec<Backup>;
 
 impl NamedResponse for Backup {
-    fn name<'a>() -> Cow<'a, str> {
-        "backup".into()
-    }
+    fn name<'a>() -> Cow<'a, str> { "backup".into() }
 }
