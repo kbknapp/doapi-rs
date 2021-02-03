@@ -9,8 +9,8 @@
 // information about
 //                                  the droplet.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -25,19 +25,20 @@ impl response::NotArray for DropletUpgrade {}
 
 impl fmt::Display for DropletUpgrade {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Droplet ID: {:.0}\n\
+        write!(
+            f,
+            "Droplet ID: {:.0}\n\
                   Date of Migration: {}\n\
                   URL: {}",
-               self.droplet_id,
-               self.date_of_migration,
-               self.url)
-
+            self.droplet_id, self.date_of_migration, self.url
+        )
     }
 }
 
 impl NamedResponse for DropletUpgrade {
-    fn name<'a>() -> Cow<'a, str> { "upgrade".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "upgrade".into()
+    }
 }
 
 pub type DropletUpgrades = Vec<DropletUpgrade>;

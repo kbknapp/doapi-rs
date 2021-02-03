@@ -5,8 +5,8 @@
 // email_verified   boolean     If true, the user has verified their account
 // via email. False otherwise.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{NamedResponse, NotArray};
 
@@ -24,20 +24,21 @@ impl NotArray for Account {}
 
 impl fmt::Display for Account {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Email: {}\n\
+        write!(
+            f,
+            "Email: {}\n\
                    Droplet Limit: {:.0}\n\
                    UUID: {}\n\
                    E-Mail Verified: {}",
-               self.email,
-               self.droplet_limit,
-               self.uuid,
-               self.email_verified)
+            self.email, self.droplet_limit, self.uuid, self.email_verified
+        )
     }
 }
 
 impl NamedResponse for Account {
-    fn name<'a>() -> Cow<'a, str> { "account".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "account".into()
+    }
 }
 
 // TODO: Implement response headers:

@@ -18,16 +18,16 @@
 // region_slug    nullable string   A slug representing the region where the
 // action occurred.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
-use crate::response::{self, NamedResponse, region::Region};
+use crate::response::{self, region::Region, NamedResponse};
 
 #[derive(Deserialize, Debug)]
 pub struct Action {
     id: f64,
     status: String,
-    #[serde(rename="type")]
+    #[serde(rename = "type")]
     action_type: String,
     started_at: String,
     completed_at: Option<String>,
@@ -41,8 +41,9 @@ impl response::NotArray for Action {}
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {}\n\
+        write!(
+            f,
+            "ID: {}\n\
                   Status: {}\n\
                   Type: {}\n\
                   Started At: {}\n\
@@ -51,28 +52,31 @@ impl fmt::Display for Action {
                   Resource Type: {}\n\
                   Region Slug: {}\n\
                   Region:\n\t{}",
-               self.id,
-               self.status,
-               self.action_type,
-               self.started_at,
-               if self.completed_at.is_some() {
-                   self.completed_at.clone().unwrap()
-               } else {
-                   "None".to_owned()
-               },
-               self.resource_id,
-               self.resource_type,
-               if self.region_slug.is_some() {
-                   self.region_slug.clone().unwrap()
-               } else {
-                   "None".to_owned()
-               },
-               self.region.to_string().replace("\n", "\n\t"))
+            self.id,
+            self.status,
+            self.action_type,
+            self.started_at,
+            if self.completed_at.is_some() {
+                self.completed_at.clone().unwrap()
+            } else {
+                "None".to_owned()
+            },
+            self.resource_id,
+            self.resource_type,
+            if self.region_slug.is_some() {
+                self.region_slug.clone().unwrap()
+            } else {
+                "None".to_owned()
+            },
+            self.region.to_string().replace("\n", "\n\t")
+        )
     }
 }
 
 pub type Actions = Vec<Action>;
 
 impl NamedResponse for Action {
-    fn name<'a>() -> Cow<'a, str> { "action".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "action".into()
+    }
 }

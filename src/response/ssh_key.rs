@@ -12,8 +12,8 @@
 // given SSH key. This is used to easily identify the SSH keys when they are
 // displayed.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -28,20 +28,21 @@ pub struct SshKey {
 impl response::NotArray for SshKey {}
 
 impl NamedResponse for SshKey {
-    fn name<'a>() -> Cow<'a, str> { "ssh_key".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "ssh_key".into()
+    }
 }
 
 impl fmt::Display for SshKey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Fingerprint: {}\n\
                   Public Key: {}\n\
                   Name: {}",
-               self.id,
-               self.fingerprint,
-               self.public_key,
-               self.name)
+            self.id, self.fingerprint, self.public_key, self.name
+        )
     }
 }
 

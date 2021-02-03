@@ -9,8 +9,8 @@
 // features     array       This attribute is set to an array which contains
 // features available in this region
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -27,22 +27,30 @@ impl response::NotArray for Region {}
 
 impl fmt::Display for Region {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Name: {}\n\
+        write!(
+            f,
+            "Name: {}\n\
                   Slug: {}\n\
                   Sizes:{}\n\
                   Features:{}\n\
                   Available: {}",
-               self.name,
-               self.slug,
-               self.sizes.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.features.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.available)
+            self.name,
+            self.slug,
+            self.sizes
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.features
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.available
+        )
     }
 }
 
 impl NamedResponse for Region {
-    fn name<'a>() -> Cow<'a, str> { "region".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "region".into()
+    }
 }
 
 pub type Regions = Vec<Region>;

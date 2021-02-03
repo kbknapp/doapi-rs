@@ -47,8 +47,8 @@
 // contains keys for the start and end times of the window during which the
 // backup will start.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, Backup, Image, Kernel, NamedResponse, Networks, Region, Size};
 
@@ -79,8 +79,9 @@ impl response::NotArray for Droplet {}
 
 impl fmt::Display for Droplet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Name: {}\n\
                   Memory: {} MB\n\
                   Virtual CPUs: {:.0}\n\
@@ -98,58 +99,60 @@ impl fmt::Display for Droplet {
                   Network: \n\t{}\n\
                   Kernel: \n\t{}\n\
                   Next Backup Window: {}\n",
-               self.id,
-               self.name,
-               self.memory,
-               self.vcpus,
-               self.disk,
-               self.locked,
-               self.created_at,
-               self.status,
-               self.backup_ids
-                   .iter()
-                   .filter_map(|n| {
-                       if n.is_some() {
-                           Some(n.clone().unwrap().to_string())
-                       } else {
-                           None
-                       }
-                   })
-                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.snapshot_ids
-                   .iter()
-                   .filter_map(|n| {
-                       if n.is_some() {
-                           Some(n.clone().unwrap().to_string())
-                       } else {
-                           None
-                       }
-                   })
-                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.features
-                   .iter()
-                   .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               &self.region.to_string()[..].replace("\n", "\n\t"),
-               &self.image.to_string()[..].replace("\n", "\n\t"),
-               &self.size.to_string()[..].replace("\n", "\n\t"),
-               self.size_slug,
-               &self.networks.to_string()[..].replace("\n", "\n\t"),
-               if let Some(ref k) = self.kernel {
-                   k.to_string()[..].replace("\n", "\n\t")
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(ref k) = self.next_backup_window {
-                   k.to_string()[..].replace("\n", "\n\t")
-               } else {
-                   "None".to_owned()
-               })
-
+            self.id,
+            self.name,
+            self.memory,
+            self.vcpus,
+            self.disk,
+            self.locked,
+            self.created_at,
+            self.status,
+            self.backup_ids
+                .iter()
+                .filter_map(|n| {
+                    if n.is_some() {
+                        Some(n.clone().unwrap().to_string())
+                    } else {
+                        None
+                    }
+                })
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.snapshot_ids
+                .iter()
+                .filter_map(|n| {
+                    if n.is_some() {
+                        Some(n.clone().unwrap().to_string())
+                    } else {
+                        None
+                    }
+                })
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.features
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            &self.region.to_string()[..].replace("\n", "\n\t"),
+            &self.image.to_string()[..].replace("\n", "\n\t"),
+            &self.size.to_string()[..].replace("\n", "\n\t"),
+            self.size_slug,
+            &self.networks.to_string()[..].replace("\n", "\n\t"),
+            if let Some(ref k) = self.kernel {
+                k.to_string()[..].replace("\n", "\n\t")
+            } else {
+                "None".to_owned()
+            },
+            if let Some(ref k) = self.next_backup_window {
+                k.to_string()[..].replace("\n", "\n\t")
+            } else {
+                "None".to_owned()
+            }
+        )
     }
 }
 
 impl NamedResponse for Droplet {
-    fn name<'a>() -> Cow<'a, str> { "droplet".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "droplet".into()
+    }
 }
 
 pub type Droplets = Vec<Droplet>;

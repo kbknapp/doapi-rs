@@ -15,7 +15,7 @@ use crate::response::{self, NamedResponse};
 #[derive(Deserialize)]
 pub struct DnsRecord {
     pub id: f64,
-    #[serde(rename="type")]
+    #[serde(rename = "type")]
     pub rec_type: String,
     pub name: String,
     pub data: String,
@@ -29,9 +29,13 @@ impl response::NotArray for DnsRecord {}
 pub type DnsRecords = Vec<DnsRecord>;
 
 impl NamedResponse for DnsRecord {
-    fn name<'a>() -> Cow<'a, str> { "domain_record".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "domain_record".into()
+    }
 }
 
 impl fmt::Display for DnsRecord {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "dns_record") }
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "dns_record")
+    }
 }

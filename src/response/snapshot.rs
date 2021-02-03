@@ -16,8 +16,8 @@
 // available in. The regions are represented by their identifying slug values.
 // min_disk_size    number      The minimum 'disk' required for a size to use
 // this image.
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -38,8 +38,9 @@ impl response::NotArray for Snapshot {}
 
 impl fmt::Display for Snapshot {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Name: {}\n\
                   Type:{}\n\
                   Distribution:{}\n\
@@ -47,23 +48,28 @@ impl fmt::Display for Snapshot {
                   Public:{}\n\
                   Regions:{}\n\
                   Minimum Disk Size: {:.0} MB\n",
-               self.id,
-               self.name,
-               self.s_type,
-               self.distribution,
-               if let Some(ref s) = self.slug {
-                   s.clone()
-               } else {
-                   "None".to_owned()
-               },
-               self.public,
-               self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.min_disk_size)
+            self.id,
+            self.name,
+            self.s_type,
+            self.distribution,
+            if let Some(ref s) = self.slug {
+                s.clone()
+            } else {
+                "None".to_owned()
+            },
+            self.public,
+            self.regions
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.min_disk_size
+        )
     }
 }
 
 pub type Snapshots = Vec<Snapshot>;
 
 impl NamedResponse for Snapshot {
-    fn name<'a>() -> Cow<'a, str> { "snapshot".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "snapshot".into()
+    }
 }

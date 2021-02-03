@@ -5,6 +5,7 @@
 // ratelimit-reset: 1415984218
 
 use std::borrow::Cow;
+use std::convert::TryFrom;
 use std::fmt;
 
 use crate::response::{self, NamedResponse};
@@ -25,8 +26,10 @@ pub struct HeaderOnly {
 
 impl response::NotArray for HeaderOnly {}
 
-impl HeaderOnly {
-    pub fn from_response(response: Response) -> Result<HeaderOnly, String> {
+impl TryFrom<Response> for HeaderOnly {
+    type Error = String;
+
+    fn try_from(response: Response) -> Result<HeaderOnly, String> {
         let content_type = match response.headers().get(header::CONTENT_TYPE) {
             Some(content_type) => match content_type.to_str() {
                 Ok(content_type) => String::from(content_type),
@@ -71,7 +74,6 @@ impl HeaderOnly {
         //     Ok(n) => n,
         //     Err(e) => return Err(e.to_string()),
         // };
-        
         Ok(HeaderOnly {
             content_type,
             status,
@@ -116,5 +118,32 @@ impl fmt::Debug for HeaderOnly {
             self.ratelimit_remaining,
             self.ratelimit_reset
         )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use httpmock::Method::GET;
+    use httpmock::MockServer;
+
+    #[test]
+    fn test_header_only_from_response() {
+        let server = MockServer::start();
+
+        let mock = server.mock(|when, then| {
+            when.method(GET).path("/");
+
+            then.status(200).header("Content-Type", "application/json");
+        });
+
+        let response = reqwest::blocking::get(&server.url("/")).unwrap();
+        let header_only = HeaderOnly::try_from(response).unwrap();
+        mock.assert();
+        
+        assert_eq!(header_only.content_type, "application/json");
+        assert_eq!(header_only.status, StatusCode::OK);
+
     }
 }

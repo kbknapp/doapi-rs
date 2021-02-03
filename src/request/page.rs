@@ -1,4 +1,4 @@
-use response::RawPagedResponse;
+use crate::response::RawPagedResponse;
 
 pub trait PagedRequest {
     type Item;

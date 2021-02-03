@@ -19,8 +19,8 @@
 // regions          array       An array containing the region slugs where this
 // size is available for Droplet creates.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -41,8 +41,9 @@ impl response::NotArray for Size {}
 
 impl fmt::Display for Size {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Slug: {}\n\
+        write!(
+            f,
+            "Slug: {}\n\
                   Available: {}\n\
                   Transfer Bandwidth: {} TB\n\
                   Monthly Price: ${}\n\
@@ -51,21 +52,25 @@ impl fmt::Display for Size {
                   Virtual CPUs: {:.0}\n\
                   Disk Space: {} GB\n\
                   Sizes: {}",
-               self.slug,
-               self.available,
-               self.transfer,
-               self.price_monthly,
-               self.price_hourly,
-               self.memory,
-               self.vcpus,
-               self.disk,
-               self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]))
-
+            self.slug,
+            self.available,
+            self.transfer,
+            self.price_monthly,
+            self.price_hourly,
+            self.memory,
+            self.vcpus,
+            self.disk,
+            self.regions
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..])
+        )
     }
 }
 
 impl NamedResponse for Size {
-    fn name<'a>() -> Cow<'a, str> { "size".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "size".into()
+    }
 }
 
 pub type Sizes = Vec<Size>;

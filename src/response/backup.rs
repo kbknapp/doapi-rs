@@ -17,8 +17,8 @@
 // min_disk_size    number      The minimum 'disk' required for a size to use
 // this image.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -39,8 +39,9 @@ impl response::NotArray for Backup {}
 
 impl fmt::Display for Backup {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Name: {}\n\
                   Type:{}\n\
                   Distribution:{}\n\
@@ -48,23 +49,28 @@ impl fmt::Display for Backup {
                   Public:{}\n\
                   Regions:{}\n\
                   Minimum Disk Size: {:.0} MB\n",
-               self.id,
-               self.name,
-               self.b_type,
-               self.distribution,
-               if let Some(ref s) = self.slug {
-                   s.clone()
-               } else {
-                   "None".to_owned()
-               },
-               self.public,
-               self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.min_disk_size)
+            self.id,
+            self.name,
+            self.b_type,
+            self.distribution,
+            if let Some(ref s) = self.slug {
+                s.clone()
+            } else {
+                "None".to_owned()
+            },
+            self.public,
+            self.regions
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.min_disk_size
+        )
     }
 }
 
 pub type Backups = Vec<Backup>;
 
 impl NamedResponse for Backup {
-    fn name<'a>() -> Cow<'a, str> { "backup".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "backup".into()
+    }
 }

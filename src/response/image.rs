@@ -22,8 +22,8 @@
 // min_disk_size    number              The minimum 'disk' required for a size
 // to use this image.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -45,8 +45,9 @@ impl response::NotArray for Image {}
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Name: {}\n\
                   Type: {}\n\
                   Distribution: {}\n\
@@ -54,23 +55,28 @@ impl fmt::Display for Image {
                   Public: {} MB\n\
                   Regions: {}\n\
                   Minimum Disk Size: {} GB",
-               self.id,
-               self.name,
-               self.image_type,
-               self.distribution,
-               if let Some(ref s) = self.slug {
-                   s.clone()
-               } else {
-                   "None".to_owned()
-               },
-               self.public,
-               self.regions.iter().fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
-               self.min_disk_size)
+            self.id,
+            self.name,
+            self.image_type,
+            self.distribution,
+            if let Some(ref s) = self.slug {
+                s.clone()
+            } else {
+                "None".to_owned()
+            },
+            self.public,
+            self.regions
+                .iter()
+                .fold(String::new(), |acc, s| acc + &format!(" {},", s)[..]),
+            self.min_disk_size
+        )
     }
 }
 
 impl NamedResponse for Image {
-    fn name<'a>() -> Cow<'a, str> { "image".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "image".into()
+    }
 }
 
 pub type Images = Vec<Image>;

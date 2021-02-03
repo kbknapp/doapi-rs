@@ -1,7 +1,7 @@
-pub use self::builder::{DnsRecType, DnsRecord, Droplet, RequestBuilder};
+//pub use builder::{DnsRecType, DnsRecord, Droplet, RequestBuilder};
 
-pub use self::dorequest::{BaseRequest, DoRequest};
-pub use self::page::PagedRequest;
+//pub use dorequest::{BaseRequest, DoRequest};
+//pub use PagedRequest;
 
 mod builder;
 mod page;

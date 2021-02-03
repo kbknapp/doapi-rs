@@ -4,8 +4,8 @@
 //       "version": "3.13.0-37-generic"
 //     },
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -20,18 +20,20 @@ impl response::NotArray for Kernel {}
 
 impl fmt::Display for Kernel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "ID: {:.0}\n\
+        write!(
+            f,
+            "ID: {:.0}\n\
                   Name: {}\n\
                   Version:{}",
-               self.id,
-               self.name,
-               self.version)
+            self.id, self.name, self.version
+        )
     }
 }
 
 impl NamedResponse for Kernel {
-    fn name<'a>() -> Cow<'a, str> { "kernel".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "kernel".into()
+    }
 }
 
 pub type Kernels = Vec<Kernel>;

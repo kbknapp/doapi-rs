@@ -1,5 +1,5 @@
 use url::Url;
-//use response;
+use crate::response;
 //use request::RequestBuilder;
 
 /// The main structure through which all calls are made. This holds a slice of the AUTH TOKEN
@@ -7,6 +7,7 @@ use url::Url;
 pub struct DoManager<'t> {
     auth: &'t str,
     endpoint_url: Url,
+    client: reqwest::blocking::Client,
 }
 
 impl<'t> DoManager<'t> {
@@ -15,6 +16,7 @@ impl<'t> DoManager<'t> {
         DoManager {
             auth: token,
             endpoint_url: Url::parse("https://api.digitalocean.com/v2/").unwrap(),
+            client: reqwest::blocking::Client::new(),
         }
     }
 
@@ -252,10 +254,13 @@ mod tests {
         let mut domgr = DoManager::with_token(&token);
 
         assert_eq!(*domgr.endpoint_url(), url);
-
+        assert_eq!(domgr.auth, token);
+        
         let test_url = Url::parse("http://localhost").unwrap();
         domgr.set_endpoint_url(test_url.clone());
 
         assert_eq!(*domgr.endpoint_url(), test_url);
+        
+
     }
 }

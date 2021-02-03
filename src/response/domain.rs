@@ -10,8 +10,8 @@
 // can also be used to get information about the SOA record, which is created
 // automatically and is not accessible as an individual record resource.
 
-use std::fmt;
 use std::borrow::Cow;
+use std::fmt;
 
 use crate::response::{self, NamedResponse};
 
@@ -24,14 +24,14 @@ pub struct Domain {
 
 impl fmt::Display for Domain {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Domain:\n\
+        write!(
+            f,
+            "Domain:\n\
                         name: {}\n\
                         ttl: {:.0}\n\
                         Zone File: {}\n",
-               self.name,
-               self.ttl,
-               self.zone_file)
+            self.name, self.ttl, self.zone_file
+        )
     }
 }
 
@@ -40,5 +40,7 @@ impl response::NotArray for Domain {}
 pub type Domains = Vec<Domain>;
 
 impl NamedResponse for Domain {
-    fn name<'a>() -> Cow<'a, str> { "domain".into() }
+    fn name<'a>() -> Cow<'a, str> {
+        "domain".into()
+    }
 }
