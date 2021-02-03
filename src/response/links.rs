@@ -1,4 +1,4 @@
-use response::page::Pages;
+use crate::response::page::Pages;
 
 #[derive(Deserialize)]
 pub struct Links {

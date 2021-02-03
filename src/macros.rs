@@ -5,8 +5,8 @@ macro_rules! debug {
 }
 #[cfg(not(feature = "debug"))]
 macro_rules! debug {
-    ($fmt:expr) => ();
-    ($fmt:expr, $($arg:tt)*) => ();
+    ($fmt:expr) => {};
+    ($fmt:expr, $($arg:tt)*) => {};
 }
 
 // Taken from https://github.com/kbknapp/clap-rs

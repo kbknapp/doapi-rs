@@ -1,6 +1,6 @@
 use std::fmt;
 
-use response;
+use crate::response;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Network {

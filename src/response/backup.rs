@@ -20,8 +20,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::NamedResponse;
-use response;
+use crate::response::{self, NamedResponse};
 
 #[derive(Deserialize, Debug)]
 pub struct Backup {

@@ -1,4 +1,4 @@
-use response::{Links, Meta};
+use crate::response::{Links, Meta};
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Pages {

@@ -8,8 +8,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::NamedResponse;
-use response::NotArray;
+use crate::response::{NamedResponse, NotArray};
 
 #[derive(Deserialize, Debug)]
 pub struct Account {

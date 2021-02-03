@@ -10,8 +10,7 @@
 use std::borrow::Cow;
 use std::fmt;
 
-use response::NamedResponse;
-use response;
+use crate::response::{self, NamedResponse};
 
 #[derive(Deserialize)]
 pub struct DnsRecord {
@@ -34,5 +33,5 @@ impl NamedResponse for DnsRecord {
 }
 
 impl fmt::Display for DnsRecord {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "{}", "dns_record") }
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "dns_record") }
 }

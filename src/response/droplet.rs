@@ -50,7 +50,7 @@
 use std::fmt;
 use std::borrow::Cow;
 
-use response::{self, Backup, Image, Kernel, NamedResponse, Networks, Region, Size};
+use crate::response::{self, Backup, Image, Kernel, NamedResponse, Networks, Region, Size};
 
 // Remember to update DropletNeighbor
 #[derive(Deserialize, Debug)]
@@ -135,12 +135,12 @@ impl fmt::Display for Droplet {
                self.size_slug,
                &self.networks.to_string()[..].replace("\n", "\n\t"),
                if let Some(ref k) = self.kernel {
-                   format!("{}", &k.to_string()[..].replace("\n", "\n\t"))
+                   k.to_string()[..].replace("\n", "\n\t")
                } else {
                    "None".to_owned()
                },
                if let Some(ref k) = self.next_backup_window {
-                   format!("{}", &k.to_string()[..].replace("\n", "\n\t"))
+                   k.to_string()[..].replace("\n", "\n\t")
                } else {
                    "None".to_owned()
                })
