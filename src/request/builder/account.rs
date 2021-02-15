@@ -1,9 +1,7 @@
-use response;
-use request::RequestBuilder;
-use request::DoRequest;
+use crate::request::{DoRequest, RequestBuilder};
+use crate::response;
 
-
-impl<'t> RequestBuilder<'t, response::Account> {
+impl<'a, 't> RequestBuilder<'a, 't, response::Account> {
     /// Returns type of `RequestBuilder` which allows you make requests for information related to
     /// a single action
     ///
@@ -22,10 +20,9 @@ impl<'t> RequestBuilder<'t, response::Account> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn action(self, id: &str) -> RequestBuilder<'t, response::Action> {
+    pub fn action(self, id: &str) -> RequestBuilder<'a, 't, response::Action> {
         // https://api.digitalocean.com/v2/actions/$ID
-        RequestBuilder::new(self.auth,
-                            format!("https://api.digitalocean.com/v2/actions/{}", id))
+        RequestBuilder::new(self.domgr, &format!("actions/{}", id))
     }
 
     /// A type of `RequestBuilder` that lets you make requests for multiple actions or the concept
@@ -43,10 +40,9 @@ impl<'t> RequestBuilder<'t, response::Account> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn actions(self) -> RequestBuilder<'t, response::Actions> {
-        // https://api.digitalocean.com/v2/actions
-        RequestBuilder::new(self.auth, "https://api.digitalocean.com/v2/actions")
+    pub fn actions(self) -> RequestBuilder<'a, 't, response::Actions> {
+        RequestBuilder::new(self.domgr, "actions")
     }
 }
 
-impl<'t> DoRequest<response::Account> for RequestBuilder<'t, response::Account> {}
+impl<'a, 't> DoRequest<response::Account> for RequestBuilder<'a, 't, response::Account> {}

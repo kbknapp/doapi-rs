@@ -9,13 +9,13 @@ use std::convert::TryFrom;
 use std::fmt;
 
 use crate::response::{self, NamedResponse};
-use reqwest::{blocking::Response, header, StatusCode};
+use reqwest::{blocking::Response, header};
 
-//#[derive(Deserialize)]
+#[derive(Deserialize)]
 pub struct HeaderOnly {
     //#[serde(rename = "content-type")]
     pub content_type: String,
-    pub status: StatusCode,
+    pub status: u16,
     //#[serde(rename = "ratelimit-limit")]
     pub ratelimit_limit: f64,
     //#[serde(rename = "ratelimit-remaining")]
@@ -37,8 +37,6 @@ impl TryFrom<Response> for HeaderOnly {
             },
             None => String::new(),
         };
-
-        let status = response.status();
 
         // let raw_status = response.status_raw();
         // let status = format!("{} {}", raw_status.0, raw_status.1);
@@ -76,7 +74,7 @@ impl TryFrom<Response> for HeaderOnly {
         // };
         Ok(HeaderOnly {
             content_type,
-            status,
+            status: response.status().as_u16(),
             ratelimit_limit: 0.0,
             ratelimit_remaining: 0.0,
             ratelimit_reset: 0.0,
@@ -127,6 +125,7 @@ mod tests {
 
     use httpmock::Method::GET;
     use httpmock::MockServer;
+    use reqwest::StatusCode;
 
     #[test]
     fn test_header_only_from_response() {
@@ -141,9 +140,11 @@ mod tests {
         let response = reqwest::blocking::get(&server.url("/")).unwrap();
         let header_only = HeaderOnly::try_from(response).unwrap();
         mock.assert();
-        
-        assert_eq!(header_only.content_type, "application/json");
-        assert_eq!(header_only.status, StatusCode::OK);
 
+        assert_eq!(header_only.content_type, "application/json");
+        assert_eq!(
+            StatusCode::from_u16(header_only.status).unwrap(),
+            StatusCode::OK
+        );
     }
 }

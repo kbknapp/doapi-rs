@@ -1,8 +1,8 @@
-//pub use builder::{DnsRecType, DnsRecord, Droplet, RequestBuilder};
+pub use builder::{DnsRecord, RequestBuilder};
 
-//pub use dorequest::{BaseRequest, DoRequest};
-//pub use PagedRequest;
+pub use dorequest::{BaseRequest, DoRequest};
+pub use page::PagedRequest;
 
 mod builder;
-mod page;
 mod dorequest;
+mod page;

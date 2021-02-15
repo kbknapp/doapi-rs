@@ -1,12 +1,9 @@
 use std::fmt::{self, Write};
-use std::marker::PhantomData;
 
-use hyper::method::Method;
-use serde_json;
+use reqwest::Method;
 
-use response;
-use request::RequestBuilder;
-use request::DoRequest;
+use crate::request::{DoRequest, RequestBuilder};
+use crate::response;
 
 /// Lists the types of supported DNS records
 doapi_enum! {
@@ -55,49 +52,51 @@ pub struct DnsRecord {
     pub weight: Option<u64>,
 }
 
-impl fmt::Display for DnsRecord {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f,
-               "Record Type: {}\n\
-             Name: {}\n\
-             Data: {}\n\
-             Priority: {}\n\
-             Port: {}\n\
-             Weight: {}\n",
-               if let Some(t) = self.rec_type.clone() {
-                   t
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(n) = self.name.clone() {
-                   n
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(d) = self.data.clone() {
-                   d
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(p) = self.priority {
-                   p.to_string()
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(p) = self.port {
-                   p.to_string()
-               } else {
-                   "None".to_owned()
-               },
-               if let Some(w) = self.weight {
-                   w.to_string()
-               } else {
-                   "None".to_owned()
-               })
-    }
-}
+// impl fmt::Display for DnsRecord {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//         write!(
+//             f,
+//             "Record Type: {}\n\
+//              Name: {}\n\
+//              Data: {}\n\
+//              Priority: {}\n\
+//              Port: {}\n\
+//              Weight: {}\n",
+//             if let Some(t) = self.rec_type.clone() {
+//                 t
+//             } else {
+//                 "None".to_owned()
+//             },
+//             if let Some(n) = self.name.clone() {
+//                 n
+//             } else {
+//                 "None".to_owned()
+//             },
+//             if let Some(d) = self.data.clone() {
+//                 d
+//             } else {
+//                 "None".to_owned()
+//             },
+//             if let Some(p) = self.priority {
+//                 p.to_string()
+//             } else {
+//                 "None".to_owned()
+//             },
+//             if let Some(p) = self.port {
+//                 p.to_string()
+//             } else {
+//                 "None".to_owned()
+//             },
+//             if let Some(w) = self.weight {
+//                 w.to_string()
+//             } else {
+//                 "None".to_owned()
+//             }
+//         )
+//     }
+// }
 
-impl<'t> RequestBuilder<'t, response::DnsRecords> {
+impl<'a, 't> RequestBuilder<'a, 't, response::DnsRecords> {
     /// Returns a `RequestBuilder` for creating a DNS record.
     ///
     /// **Parameters:**
@@ -128,7 +127,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn create(self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn create(&'a self, record: &DnsRecord) -> RequestBuilder<'a, 't, response::DnsRecord> {
         // POST: "https://api.digitalocean.com/v2/domains/$DOMAIN/records"
         // body:
         //      "type" : "MX"            All records
@@ -139,18 +138,13 @@ impl<'t> RequestBuilder<'t, response::DnsRecords> {
         //      "weight" : 200           SRV
 
         // FIXME: Don't unwrap()
-        RequestBuilder {
-            method: Method::Post,
-            auth: self.auth,
-            url: self.url,
-            resp_t: PhantomData,
-            body: Some(serde_json::to_string(record).ok().unwrap()),
-        }
+        self.domgr
+            .request_builder(Method::POST, self.url.clone())
+            .body(serde_json::to_string(record).ok().unwrap())
     }
 }
 
-
-impl<'t> RequestBuilder<'t, response::DnsRecord> {
+impl<'a, 't> RequestBuilder<'a, 't, response::DnsRecord> {
     /// Returns a `RequestBuilder` for updating an existing DNS record.
     ///
     /// **Parameters:**
@@ -181,7 +175,7 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     ///     Err(e)     => println!("Error: {}", e)
     /// }
     /// ```
-    pub fn update(self, record: &DnsRecord) -> RequestBuilder<'t, response::DnsRecord> {
+    pub fn update(&'a self, record: &DnsRecord) -> RequestBuilder<'a, 't, response::DnsRecord> {
         // PUT: "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
         // body:
         //      "type" : "MX"           All records
@@ -192,46 +186,44 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
         //      "weight" : 200          SRV
         // FIXME: Don't unwrap()
         let mut s = String::new();
-        write!(s,
-               "{{{}{}{}{}{}{}}}",
-               if let Some(t) = record.rec_type.clone() {
-                   format!("\"type\":{:?},", t)
-               } else {
-                   "".to_owned()
-               },
-               if let Some(n) = record.name.clone() {
-                   format!("\"name\":{:?},", n)
-               } else {
-                   "".to_owned()
-               },
-               if let Some(d) = record.data.clone() {
-                   format!("\"data\":{:?},", d)
-               } else {
-                   "".to_owned()
-               },
-               if let Some(p) = record.priority {
-                   format!("\"priority\":{},", p)
-               } else {
-                   "".to_owned()
-               },
-               if let Some(p) = record.port {
-                   format!("\"port\":{},", p)
-               } else {
-                   "".to_owned()
-               },
-               if let Some(w) = record.weight {
-                   format!("\"weight\":{}", w)
-               } else {
-                   "".to_owned()
-               })
-            .unwrap();
-        RequestBuilder {
-            method: Method::Put,
-            auth: self.auth,
-            url: self.url,
-            resp_t: PhantomData,
-            body: Some(s),
-        }
+        write!(
+            s,
+            "{{{}{}{}{}{}{}}}",
+            if let Some(t) = record.rec_type.clone() {
+                format!("\"type\":{:?},", t)
+            } else {
+                "".to_owned()
+            },
+            if let Some(n) = record.name.clone() {
+                format!("\"name\":{:?},", n)
+            } else {
+                "".to_owned()
+            },
+            if let Some(d) = record.data.clone() {
+                format!("\"data\":{:?},", d)
+            } else {
+                "".to_owned()
+            },
+            if let Some(p) = record.priority {
+                format!("\"priority\":{},", p)
+            } else {
+                "".to_owned()
+            },
+            if let Some(p) = record.port {
+                format!("\"port\":{},", p)
+            } else {
+                "".to_owned()
+            },
+            if let Some(w) = record.weight {
+                format!("\"weight\":{}", w)
+            } else {
+                "".to_owned()
+            }
+        )
+        .unwrap();
+        self.domgr
+            .request_builder(Method::PUT, self.url.clone())
+            .body(s)
     }
 
     /// Returns a `RequestBuilder` for deleting an existing DNS record.
@@ -251,16 +243,10 @@ impl<'t> RequestBuilder<'t, response::DnsRecord> {
     ///     Err(_) => println!("Error")
     /// }
     /// ```
-    pub fn delete(self) -> RequestBuilder<'t, response::HeaderOnly> {
+    pub fn delete(&'a self) -> RequestBuilder<'a, 't, response::HeaderOnly> {
         // DELETE: "https://api.digitalocean.com/v2/domains/$id"
-        RequestBuilder {
-            method: Method::Delete,
-            auth: self.auth,
-            url: self.url,
-            resp_t: PhantomData,
-            body: None,
-        }
+        self.domgr.request_builder(Method::DELETE, self.url.clone())
     }
 }
 
-impl<'t> DoRequest<response::DnsRecord> for RequestBuilder<'t, response::DnsRecord> {}
+impl<'a, 't> DoRequest<response::DnsRecord> for RequestBuilder<'a, 't, response::DnsRecord> {}

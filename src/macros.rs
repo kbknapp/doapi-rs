@@ -1,14 +1,3 @@
-#[cfg(feature = "debug")]
-macro_rules! debug {
-    ($fmt:expr) => (println!(concat!("**DEBUG** ", $fmt)));
-    ($fmt:expr, $($arg:tt)*) => (println!(concat!("**DEBUG** ",$fmt), $($arg)*));
-}
-#[cfg(not(feature = "debug"))]
-macro_rules! debug {
-    ($fmt:expr) => {};
-    ($fmt:expr, $($arg:tt)*) => {};
-}
-
 // Taken from https://github.com/kbknapp/clap-rs
 macro_rules! doapi_enum {
     (enum $e:ident { $($v:ident),+ } ) => {
@@ -183,7 +172,3 @@ macro_rules! doapi_enum {
         }
     };
 }
-
-macro_rules! regex(
-    ($s:expr) => (::regex::Regex::new($s).unwrap());
-);
