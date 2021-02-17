@@ -58,7 +58,6 @@ mod kubernetes;
 mod load_balancers;
 mod one_clicks;
 mod projects;
-mod regions;
 mod registry;
 mod sizes;
 mod snapshots;
