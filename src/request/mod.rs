@@ -1,4 +1,4 @@
-pub use builder::{DnsRecord, RequestBuilder};
+pub use builder::RequestBuilder;
 
 pub use dorequest::{BaseRequest, DoRequest};
 pub use page::PagedRequest;

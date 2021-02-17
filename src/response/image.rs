@@ -37,19 +37,22 @@ pub struct Image {
     pub regions: Vec<String>,
     pub created_at: String,
     pub min_disk_size: f64,
-    #[serde(rename = "type")]
-    pub image_type: String,
+    pub size_gigabytes: f64,
+    pub description: String,
+    pub tags: Vec<String>,
+    pub status: String,
+    pub error_message: String,
 }
 
 impl response::NotArray for Image {}
 
 impl fmt::Display for Image {
+    //Need to update fields
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
             "ID: {:.0}\n\
                   Name: {}\n\
-                  Type: {}\n\
                   Distribution: {}\n\
                   Slug: {}\n\
                   Public: {} MB\n\
@@ -57,7 +60,7 @@ impl fmt::Display for Image {
                   Minimum Disk Size: {} GB",
             self.id,
             self.name,
-            self.image_type,
+            //self.image_type,
             self.distribution,
             if let Some(ref s) = self.slug {
                 s.clone()

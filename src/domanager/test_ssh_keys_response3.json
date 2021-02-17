@@ -1,0 +1,32 @@
+{
+    "links": {
+        "pages": {
+            "first": "base_url/account/keys?page=1",
+            "last": "base_url/account/keys?page=3",
+            "prev": "base_url/account/keys?page=2"
+        }
+    },
+    "meta": {
+        "total": 43
+    },
+    "ssh_keys": [
+        {
+            "fingerprint": "34:97:4e:de:22:7d:7e:22:a8:29:e3:b8:58:0c:62:ae",
+            "id": 512229,
+            "name": "Key 41",
+            "public_key": "ssh-rsa AEXAMPLE+KPZazEIli+HGDIij+yhyGKnErEtYxhoDXVjEAotLVIWKyEjiTJsmeqpbzgVyMhgUbRONyGXZCyVdthVb/GdgaALLXf/pduFk+ylrtXVpVgM example-40"
+        },
+        {
+            "fingerprint": "ef:02:3d:22:88:05:cf:1c:2d:ef:c5:17:fd:35:36:97",
+            "id": 512230,
+            "name": "Key 42",
+            "public_key": "ssh-rsa AEXAMPLElMHSJyBypGatVQhZHLKfKcdqx/uDANnDTWEzIuBFEpXvA/JPtCFkvY+ZkcSiaZLjSuUCSSEzQzpgLbFayfjdLnF/thSkIjeCWdYiYjrZnZye example-41"
+        },
+        {
+            "fingerprint": "88:0e:ce:3b:fe:62:ac:72:ee:0a:5e:4a:b9:d8:52:94",
+            "id": 512231,
+            "name": "Key 43",
+            "public_key": "ssh-rsa AEXAMPLEniBHFXXJBDFWhVh/wYOeKUmMHtuvikZZqTiMkLRuMcmPuMlYpjDdpQdBlNyGiuLJ+SiZHqrUMERz/DP+qNqplChFUZxCileDy/WVUwdvjtFV example-42"
+        }
+    ]
+}

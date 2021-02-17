@@ -11,6 +11,7 @@ pub struct Pages {
 #[derive(Deserialize)]
 pub struct RawPagedResponse<T> {
     pub collection: Vec<T>,
+    #[serde(default)] // Required for collections that are a single page.
     pub links: Links,
     pub meta: Meta,
 }

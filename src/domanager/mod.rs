@@ -153,7 +153,7 @@ impl<'t> DoManager<'t> {
         let url = self
             .endpoint_url
             .clone()
-            .join(&format!("images/{}", id))
+            .join(&format!("image/{}", id))
             .unwrap();
         self.request_builder(Method::GET, url)
     }
@@ -192,7 +192,7 @@ impl<'t> DoManager<'t> {
     /// }
     /// ```
     pub fn ssh_keys(&self) -> RequestBuilder<'_, 't, response::SshKeys> {
-        let url = self.endpoint_url.clone().join("accounts/keys").unwrap();
+        let url = self.endpoint_url.clone().join("account/keys").unwrap();
         self.request_builder(Method::GET, url)
     }
 
@@ -218,7 +218,7 @@ impl<'t> DoManager<'t> {
         let url = self
             .endpoint_url
             .clone()
-            .join(&format!("keys/{}", id))
+            .join(&format!("account/keys/{}", id))
             .unwrap();
         self.request_builder(Method::GET, url)
     }
@@ -309,77 +309,10 @@ impl<'t> DoManager<'t> {
             .clone()
             .join(&format!("domains/{}", name))
             .unwrap();
+
         self.request_builder(Method::GET, url)
     }
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    use httpmock::Method::GET;
-    use httpmock::MockServer;
-
-    use crate::tests::{BEARER_HEADER, TEST_TOKEN};
-    use crate::DoRequest;
-
-    #[test]
-    fn test_do_manager() {
-        let url = Url::parse("https://api.digitalocean.com/v2/").unwrap();
-        let domgr = DoManager::with_token(TEST_TOKEN);
-
-        assert_eq!(domgr.endpoint_url, url);
-        assert_eq!(domgr.auth, TEST_TOKEN);
-    }
-
-    #[test]
-    fn test_account() {
-        let server = MockServer::start();
-
-        let mock = server.mock(|when, then| {
-            when.method(GET)
-                .path("/account")
-                .header("Authorization", &BEARER_HEADER);
-
-            then.status(200)
-                .header("Content-Type", "application/json; charset=utf-8")
-                .header("ratelimit-limit", "1200")
-                .header("ratelimit-remaining", "1137")
-                .header("ratelimit-reset", "1415984218")
-                .body(
-                    r#"{
-                    "account": {
-                      "droplet_limit": 25,
-                      "floating_ip_limit": 5,
-                      "volume_limit": 10,
-                      "email": "sammy@digitalocean.com",
-                      "uuid": "b6fr89dbf6d9156cace5f3c78dc9851d957381ef",
-                      "email_verified": true,
-                      "status": "active",
-                      "status_message": ""
-                    }
-                  }"#,
-                );
-        });
-
-        let url = Url::parse(&server.url("/account")).unwrap();
-
-        let domgr = DoManager::builder()
-            .token(TEST_TOKEN)
-            .endpoint_url(url)
-            .build();
-
-        let account = domgr.account().retrieve().unwrap();
-
-        assert_eq!(account.droplet_limit as u32, 25);
-        assert_eq!(account.floating_ip_limit as u32, 5);
-        assert_eq!(account.volume_limit as u32, 10);
-        assert_eq!(account.email, "sammy@digitalocean.com");
-        assert_eq!(account.uuid, "b6fr89dbf6d9156cace5f3c78dc9851d957381ef");
-        assert_eq!(account.email_verified, true);
-        assert_eq!(account.status, "active");
-        assert_eq!(account.status_message, "");
-
-        mock.assert();
-    }
-}
+mod tests;

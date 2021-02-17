@@ -3,8 +3,8 @@ extern crate serde;
 
 mod domanager;
 
-#[macro_use]
-mod macros;
+/*#[macro_use]
+mod macros;*/
 
 pub mod request;
 pub mod response;

@@ -44,3 +44,24 @@ mod ssh_key;
 mod upgrades;
 
 pub trait NotArray {}
+
+mod apps;
+mod balance;
+mod billing_history;
+mod cdn;
+mod certificates;
+mod databases;
+mod firewalls;
+mod floating_ips;
+mod invoices;
+mod kubernetes;
+mod load_balancers;
+mod one_clicks;
+mod projects;
+mod regions;
+mod registry;
+mod sizes;
+mod snapshots;
+mod tags;
+mod volumes;
+mod vpcs;
